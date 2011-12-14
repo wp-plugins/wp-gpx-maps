@@ -37,8 +37,15 @@ This plugin will print a small amout of points in orther to speedup javascript a
 
 == Screenshots ==
 
+1. Result
+2. Admin are
 
 == Changelog ==
 
-= 0.5 =
+= 1.0.0 =
 * Initial release.
+
+== Upgrade Notice ==
+
+= 1.0.0 =
+Initial release.
