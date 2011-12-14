@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
-Description: Add a gpx trak with altitude graph
+Description: Add a gpx track with altitude graph
 Version: 1.0.1
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/

@@ -7,7 +7,7 @@ Tested up to: 3.3
 Stable tag: 1.0.1
 License: GPLv2 or later
 
-Add a gpx trak with altitude graph
+Add a gpx track with altitude graph
 
 == Description ==
 
@@ -31,7 +31,7 @@ e.g.
 
 = What happening if I've a very large gpx? =
 
-This plugin will print a small amout of points in orther to speedup javascript and pageload.
+This plugin will print a small amout of points to to speedup javascript and pageload.
 
 = Is it free? =
 
