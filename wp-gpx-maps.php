@@ -147,4 +147,3 @@ function WP_GPX_Maps_html_page() {
 <?php
 }
 ?>
-

@@ -1,6 +1,5 @@
 <?php
 
-
 	function getPoints($gpxPath,$gpxOffset = 10)
 	{
 		$points = array();
