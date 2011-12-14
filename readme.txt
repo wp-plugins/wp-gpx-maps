@@ -13,9 +13,7 @@ Add a gpx track with altitude graph
 
 This plugin has, as input, the GPX file with the track you've made. As output it shows the map of the track, fixed with an altitude graph.
 
-- Working also on iphone/ipad/ipod
-
-WP-GPX-Maps
+- Also working on iphone/ipad/ipod
 
 == Installation ==
 
