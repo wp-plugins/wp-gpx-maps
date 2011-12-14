@@ -15,11 +15,14 @@ This plugin has, as input, the GPX file with the track you've made. As output it
 
 - Also working on iphone/ipad/ipod
 
+Try this plugin on <a href="http://www.pedemontanadelgrappa.it/category/mappe/">http://www.pedemontanadelgrappa.it/category/mappe/</a>
+
+Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="http://www.darwinner.it/">www.darwinner.it</a>, <a href="http://www.pedemontanadelgrappa.it/">www.pedemontanadelgrappa.it</a>, 
+
+<a href="http://www.darwinner.it/featured/wp-gpx-maps/">Bugs, problems, thanks and anything else here!</a>
+
+
 == Installation ==
-
-This section describes how to install the plugin and get it working.
-
-e.g.
 
 1. Use the classic wordpress plugin installer or copy the plugins folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
