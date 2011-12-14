@@ -1,3 +1,17 @@
+var loc_en = 
+{
+  "length"  : "Length",
+  "altitude": "Altitude"
+};
+
+var loc_it = 
+{
+  "length"  : "Lunghezza",
+  "altitude": "Altitudine"
+};
+
+var loc = loc_en;
+
 function wpgpxmaps(targhetId,mapType,mapData,graphData)
 {
 	var el = document.getElementById(targhetId);
@@ -17,14 +31,14 @@ function wpgpxmaps(targhetId,mapType,mapData,graphData)
 	if (graphData!= '')
 	{
 		var data = new google.visualization.DataTable();
-		data.addColumn('number', 'Lunghezza');		
-		data.addColumn('number', 'Altezza');
+		data.addColumn('number', loc['length']);		
+		data.addColumn('number', loc['altitude']);
 		data.addRows(graphData);
 		var chart = new google.visualization.AreaChart(el_chart);
 		var options = { curveType: "function",
 						strictFirstColumnType: true, 
-						hAxis : {format : '#,###m', title : "Lunghezza"},
-						vAxis : {format : '#,###m', title : "Altitudine"},
+						hAxis : {format : '#,###m', title : loc['length']},
+						vAxis : {format : '#,###m', title : loc['altitude']},
 						legend : {position : 'none'},
 						chartArea: {left:70,top:10,width:"100%",height:"75%"}
 						};

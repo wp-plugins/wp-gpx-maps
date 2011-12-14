@@ -4,15 +4,16 @@ Donate link: http://www.darwinner.it/
 Tags: maps, gpx, graph, google maps, google chart
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 
 Add a gpx trak with altitude graph
 
 == Description ==
 
-This plugin has, as input, the GPX file with the track you've made. As output it shows the map of the track, fixed with an altitude map.
-You can also point the track and move your cursor both in the usual map or in the altitude map.
+This plugin has, as input, the GPX file with the track you've made. As output it shows the map of the track, fixed with an altitude graph.
+
+- Working also on iphone/ipad/ipod
 
 WP-GPX-Maps
 
@@ -46,7 +47,12 @@ Yes!
 = 1.0.0 =
 * Initial release.
 
+= 1.0.1 =
+* Small changes on javascript localization.
+
 == Upgrade Notice ==
 
 = 1.0.0 =
 Initial release.
+
+= 1.0.1 =

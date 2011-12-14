@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Add a gpx trak with altitude graph
-Version: 1.0.0
+Version: 1.0.1
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -17,8 +17,8 @@ function enqueue_WP_GPX_Maps_scripts()
 {
 ?>
 	<script type='text/javascript' src='https://www.google.com/jsapi?ver=3.2.1'></script>
-	<script type="text/javascript">
-		google.load("maps", "3", {other_params: "sensor=false"});
+	<script type='text/javascript'>
+		google.load('maps', '3', {other_params: 'sensor=false'});
 		google.load('visualization', '1', {'packages':['corechart']});
 	</script>
 	<script type='text/javascript' src='<?php echo plugins_url('/wp-gpx-maps.js', __FILE__) ?>'></script>
