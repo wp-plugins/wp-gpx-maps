@@ -21,7 +21,7 @@ function enqueue_WP_GPX_Maps_scripts()
 		google.load('maps', '3', {other_params: 'sensor=false'});
 		google.load('visualization', '1', {'packages':['corechart']});
 	</script>
-	<script type='text/javascript' src='<?php echo plugins_url('/wp-gpx-maps.js', __FILE__) ?>'></script>
+	<script type='text/javascript' src='<?php echo plugins_url('/WP-GPX-Maps.js', __FILE__) ?>'></script>
 <?php
 }
  
