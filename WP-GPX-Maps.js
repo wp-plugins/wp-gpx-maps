@@ -14,9 +14,11 @@ var loc = loc_en;
 
 function wpgpxmaps(targhetId,mapType,mapData,graphData)
 {
-	var el = document.getElementById(targhetId);
-	var el_map = el.childNodes[0];
-	var el_chart = el.childNodes[1];
+
+	var el = document.getElementById("wpgpxmaps_" + targhetId);
+	var el_map = document.getElementById("map_" + targhetId);
+	var el_chart = document.getElementById("chart_" + targhetId);
+	
 	switch (mapType)
 	{
 		case 'TERRAIN': { mapType = google.maps.MapTypeId.TERRAIN; break;}
