@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Add a gpx trak with altitude graph
-Version: 1.0.2
+Version: 1.0.1
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -25,10 +25,10 @@ function enqueue_WP_GPX_Maps_scripts()
 <?php
 }
  
- add_shortcode('sgpx','handle_WP_GPX_Maps_Shortcodes');
+add_shortcode('sgpx','handle_WP_GPX_Maps_Shortcodes');
 
- function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
- {
+function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
+{
 	$gpx = $attr["gpx"];
 	$key = get_option("wpgpxmaps_bing_license");
 	$w = get_option("wpgpxmaps_width");
@@ -118,13 +118,13 @@ function WP_GPX_Maps_html_page() {
 ?>
 
 <div style="padding:10px 10px 30px 10px;">
-	<b>Tips:</b> The fastest way to use this plugin upload the fule using the uploader below, than put this 
+	<b>The fastest way to use this plugin:</b> upload the file using the uploader below, than put this 
 				shotcode: <b>[sgpx gpx="/wp-content/uploads/gpx/&lt gpx file name &gt"]</b> in the pages/posts.
 </div>
 
 <form method="post" action="options.php">
 
-	<?php wp_nonce_field('update-options'); ?>
+	<?php wp_nonce_field('update-options') ?>
 
 	<table width="100%">
 		<tr valign="top">
@@ -156,6 +156,7 @@ function WP_GPX_Maps_html_page() {
 	</table>
 
 	<input type="hidden" name="action" value="update" />
+	<input name="page_options" type="hidden" value="wpgpxmaps_map_type,wpgpxmaps_height,wpgpxmaps_width" />
 
 	<p>
 		<input type="submit" value="<?php _e('Save Changes') ?>" />
@@ -242,7 +243,7 @@ function WP_GPX_Maps_html_page() {
 						</td>
 						<td class="column-description desc">
 							<div class="plugin-description">
-								<p><?php echo number_format ( filesize( $file ) , 2, '.', ',' ) ?></p>
+								<p><?php echo number_format ( filesize( $file ) , 0, '.', ',' ) ?></p>
 							</div>
 						</td>
 					</tr>	
