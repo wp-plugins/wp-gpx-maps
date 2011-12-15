@@ -4,7 +4,7 @@ Donate link: http://www.darwinner.it/
 Tags: maps, gpx, graph, google maps, google chart
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 
 Add a gpx track with altitude graph
@@ -51,9 +51,14 @@ Yes!
 = 1.0.1 =
 * Small changes on javascript localization.
 
+= 1.0.2 =
+* You can manage your gpx files in the admin area.
+
 == Upgrade Notice ==
 
 = 1.0.0 =
 Initial release.
 
 = 1.0.1 =
+
+= 1.0.2 =
