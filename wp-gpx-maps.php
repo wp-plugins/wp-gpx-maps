@@ -78,7 +78,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	
 	if ($gh == '')
 	{
-		$gh = "150px";
+		$gh = "200px";
 	}
 
 	$r = rand(1,5000000);
