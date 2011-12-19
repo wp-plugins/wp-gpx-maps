@@ -3,18 +3,14 @@ var loc_en =
   "length"  : "Length",
   "altitude": "Altitude"
 };
-
 var loc_it = 
 {
   "length"  : "Lunghezza",
   "altitude": "Altitudine"
 };
-
 var loc = loc_en;
-
 function wpgpxmaps(targhetId,mapType,mapData,graphData)
 {
-
 	var el = document.getElementById("wpgpxmaps_" + targhetId);
 	var el_map = document.getElementById("map_" + targhetId);
 	var el_chart = document.getElementById("chart_" + targhetId);

@@ -1,4 +1,13 @@
-<?php 
+<?php
+
+if ( is_admin() ){
+
+	add_action('admin_menu', 'wpgpxmaps_admin_menu');
+
+	function wpgpxmaps_admin_menu() {
+		add_options_page('WP GPX Maps', 'WP GPX Maps', 'administrator', 'WP-GPX-Maps', 'WP_GPX_Maps_html_page');
+	}
+}
 
 function WP_GPX_Maps_html_page() {
 
@@ -28,46 +37,45 @@ function WP_GPX_Maps_html_page() {
 
 ?>
 
-<div style="padding:10px 10px 30px 10px;">
+<div style="padding:10px;">
 	<b>The fastest way to use this plugin:</b> upload the file using the uploader below, than put this 
 				shotcode: <b>[sgpx gpx="/wp-content/uploads/gpx/&lt gpx file name &gt"]</b> in the pages/posts.
+	<p>
+		<i>Full set of attributes:</i> <b>[sgpx gpx="/wp-content/uploads/gpx/&lt gpx file name &gt" width=100% mheight=450px gheight=200px mtype=SATELLITE]</b>
+	</p>
 </div>
 
 <form method="post" action="options.php">
 
 	<?php wp_nonce_field('update-options') ?>
-
+	
 	<table width="100%">
-		<tr valign="top">
-			<th width="200" scope="row">Maps Width:</th>
+		<tr>
+			<th width="150" scope="row">Default Options:</th>
 			<td>
-				<input name="wpgpxmaps_width" type="text" id="wpgpxmaps_width" value="<?php echo get_option('wpgpxmaps_width'); ?>" style="width:50px;" />
-			</td>
-		</tr>
-		<tr valign="top">
-			<th width="200" scope="row">Maps Height:</th>
-			<td>
-				<input name="wpgpxmaps_height" type="text" id="wpgpxmaps_height" value="<?php echo get_option('wpgpxmaps_height'); ?>" style="width:50px;" />
+				<i>Width:</i> <input name="wpgpxmaps_width" type="text" id="wpgpxmaps_width" value="<?php echo get_option('wpgpxmaps_width'); ?>" style="width:50px;" />, 
+				<i>Maps Height:</i> <input name="wpgpxmaps_height" type="text" id="wpgpxmaps_height" value="<?php echo get_option('wpgpxmaps_height'); ?>" style="width:50px;" />, 
+				<i>Graph Height:</i> <input name="wpgpxmaps_height" type="text" id="wpgpxmaps_height" value="<?php echo get_option('wpgpxmaps_height'); ?>" style="width:50px;" />
 			</td>
 		</tr>
 		<tr>
-			<th width="200" scope="row">Default Map Type:</th>
+			<th width="150" scope="row">Default Map Type:</th>
 			<td>
 				<?php 
 					$t = get_option('wpgpxmaps_map_type');
 					if (!($t))
 						$t = 'HYBRID';
 				?>
-				<input type="radio" name="wpgpxmaps_map_type" value="HYBRID" <?php if ($t == 'HYBRID') echo 'checked'; ?> > This map type displays a transparent layer of major streets on satellite images.<br />
-				<input type="radio" name="wpgpxmaps_map_type" value="ROADMAP" <?php if ($t == 'ROADMAP') echo 'checked'; ?>> This map type displays a normal street map.<br />
-				<input type="radio" name="wpgpxmaps_map_type" value="SATELLITE" <?php if ($t == 'SATELLITE') echo 'checked'; ?>> This map type displays satellite images.<br />
-				<input type="radio" name="wpgpxmaps_map_type" value="TERRAIN" <?php if ($t == 'TERRAIN') echo 'checked'; ?>> This map type displays maps with physical features such as terrain and vegetation.<br />
+				<input type="radio" name="wpgpxmaps_map_type" value="HYBRID" <?php if ($t == 'HYBRID') echo 'checked'; ?> > HYBRID: transparent layer of major streets on satellite images.<br />
+				<input type="radio" name="wpgpxmaps_map_type" value="ROADMAP" <?php if ($t == 'ROADMAP') echo 'checked'; ?>> ROADMAP: normal street map.<br />
+				<input type="radio" name="wpgpxmaps_map_type" value="SATELLITE" <?php if ($t == 'SATELLITE') echo 'checked'; ?>> SATELLITE: satellite images.<br />
+				<input type="radio" name="wpgpxmaps_map_type" value="TERRAIN" <?php if ($t == 'TERRAIN') echo 'checked'; ?>> TERRAIN: maps with physical features such as terrain and vegetation.<br />
 			</td>
 		</tr>
 	</table>
 
 	<input type="hidden" name="action" value="update" />
-	<input name="page_options" type="hidden" value="wpgpxmaps_map_type,wpgpxmaps_height,wpgpxmaps_width" />
+	<input name="page_options" type="hidden" value="wpgpxmaps_map_type,wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width" />
 
 	<p>
 		<input type="submit" value="<?php _e('Save Changes') ?>" />
@@ -86,7 +94,8 @@ function WP_GPX_Maps_html_page() {
 		}
 	}
 
-	if ( is_readable ( $realGpxPath ) && $handle = opendir($realGpxPath)) { ?>
+	if ( is_readable ( $realGpxPath ) && $handle = opendir($realGpxPath)) { 
+?>
 	
 		<div class="tablenav top">
 			<form enctype="multipart/form-data" method="POST">
