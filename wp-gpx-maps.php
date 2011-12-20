@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.0.4
+Version: 1.0.5
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -36,17 +36,19 @@ function WP_GPX_Maps_action_links($links, $file) {
     return $links;
 }
 
+
 function enqueue_WP_GPX_Maps_scripts()
 {
 ?>
 	<script type='text/javascript' src='https://www.google.com/jsapi?ver=3.2.1'></script>
 	<script type='text/javascript'>
-		google.load('maps', '3', {other_params: 'sensor=false'});
 		google.load('visualization', '1', {'packages':['corechart']});
+		google.load("maps", "3", {other_params: 'sensor=false'});
 	</script>
-	<script type='text/javascript' src='<?php echo plugins_url('/WP-GPX-Maps.js', __FILE__) ?>'></script>
+	<script type='text/javascript' src='<?php echo plugins_url('/WP-GPX-Maps.js', __FILE__) ?>'></script>	
 <?php
 }
+
  
 function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 {
@@ -100,11 +102,12 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			<div id="chart_'.$r.'" class="plot" style="width:'.$w.'; height:'.$gh.'"></div>
 		</div>
 		<script type="text/javascript">
-			jQuery(document).ready(function () {
-				var m_'.$r.' = ['.$points_maps.'];
-				var c_'.$r.' = ['.$points_graph.'];
-				wpgpxmaps("'.$r.'",\''.$mt.'\',m_'.$r.',c_'.$r.');
-			});
+		
+			var m_'.$r.' = ['.$points_maps.'];
+			var c_'.$r.' = ['.$points_graph.'];	
+
+			wpgpxmaps("'.$r.'","'.$mt.'",m_'.$r.',c_'.$r.');		
+
 		</script>';	
 }
 

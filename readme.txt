@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=basti
 Tags: maps, gpx, gps, graph, google maps, google chart
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -66,6 +66,8 @@ Yes!
 2. Screenshot Admin area
 
 == Changelog ==
+= 1.0.5 =
+* Fixed javscript errors with slow javascript loading
 = 1.0.4 =
 * Fixed Upload file error
 * Added support for Garmin gpx (http://www.garmin.com/xmlschemas/GpxExtensions/v3 namespace)
@@ -80,6 +82,7 @@ Yes!
 * Initial release.
 
 == Upgrade Notice ==
+= 1.0.5 =
 = 1.0.4 =
 = 1.0.3 =
 = 1.0.2 =

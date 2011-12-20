@@ -9,7 +9,31 @@ var loc_it =
   "altitude": "Altitudine"
 };
 var loc = loc_en;
+
+function sleep(ms)
+{
+	var dt = new Date();
+	dt.setTime(dt.getTime() + ms);
+	while (new Date().getTime() < dt.getTime());
+}
+
 function wpgpxmaps(targhetId,mapType,mapData,graphData)
+{
+	var i = 0;
+	while ((google == undefined || google.maps == undefined || google.visualization == undefined))
+	{
+		sleep(100);
+		i++;
+		if (i== 100)
+		{
+			return;
+		}
+	}
+	_wpgpxmaps(targhetId,mapType,mapData,graphData);
+}
+
+
+function _wpgpxmaps(targhetId,mapType,mapData,graphData)
 {
 	var el = document.getElementById("wpgpxmaps_" + targhetId);
 	var el_map = document.getElementById("map_" + targhetId);
