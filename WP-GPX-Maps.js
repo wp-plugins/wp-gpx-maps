@@ -10,28 +10,33 @@ var loc_it =
 };
 var loc = loc_en;
 
-function sleep(ms)
-{
-	var dt = new Date();
-	dt.setTime(dt.getTime() + ms);
-	while (new Date().getTime() < dt.getTime());
+var t;
+var funqueue = [];
+var wrapFunction = function(fn, context, params) {
+    return function() {
+        fn.apply(context, params);
+    };
 }
 
 function wpgpxmaps(targhetId,mapType,mapData,graphData)
 {
-	var i = 0;
-	while ((google == undefined || google.maps == undefined || google.visualization == undefined))
-	{
-		sleep(100);
-		i++;
-		if (i== 100)
-		{
-			return;
-		}
-	}
-	_wpgpxmaps(targhetId,mapType,mapData,graphData);
+	funqueue.push( wrapFunction(_wpgpxmaps, this, [targhetId,mapType,mapData,graphData]));
+	unqueue();
 }
 
+function unqueue()
+{
+	if ((google == undefined || google.maps == undefined || google.visualization == undefined))
+	{
+		t = setTimeout("unqueue()",200);
+	}
+	else
+	{
+		while (funqueue.length > 0) {
+			(funqueue.shift())();   
+		}
+	}
+}
 
 function _wpgpxmaps(targhetId,mapType,mapData,graphData)
 {
