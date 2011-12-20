@@ -99,14 +99,10 @@ function WP_GPX_Maps_html_page() {
 	
 		<div class="tablenav top">
 			<form enctype="multipart/form-data" method="POST">
-				<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
 				Choose a file to upload: <input name="uploadedfile" type="file" onchange="this.parentNode.submit()" />
 				<?php
-					if ( isset($_FILES['uploadedfile']) )
-					{
-						$target_path = $realGpxPath ."/". basename( $_FILES['uploadedfile']['name']); 
-						if (preg_match($gpxRegEx,$target_path ))
-						{
+					if ( isset($_FILES['uploadedfile']) )									{						$target_path = $realGpxPath ."/". basename( $_FILES['uploadedfile']['name']); 						if (preg_match($gpxRegEx, $target_path))
+						{				
 							if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
 								echo "The file ".  basename( $_FILES['uploadedfile']['name']). " has been uploaded";
 							} else{

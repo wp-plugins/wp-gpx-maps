@@ -4,35 +4,60 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=basti
 Tags: maps, gpx, gps, graph, google maps, google chart
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
 
 == Description ==
-This plugin has, as input, the GPX file with the track you've made. As output it shows the map of the track, fixed with an altitude graph.
+This plugin has, as input, the GPX file with the track you've made. As output it shows the map of the track, fixed with an altitude graph (where aviable).
+
 - iphone/ipad/ipod Compatible
+
 Try this plugin on <a href="http://www.pedemontanadelgrappa.it/category/mappe/">http://www.pedemontanadelgrappa.it/category/mappe/</a>
+
 Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="http://www.darwinner.it/">www.darwinner.it</a>, <a href="http://www.pedemontanadelgrappa.it/">www.pedemontanadelgrappa.it</a>, 
-<a href="http://www.darwinner.it/featured/wp-gpx-maps/">Bugs, problems, thanks and anything else here!</a>
+<a href="http://www.darwinner.it/featured/wp-gpx-maps/">
+
+Bugs, problems, thanks and anything else here!</a>
+
+Supported gpx namespace are:
+
+1. http://www.topografix.com/GPX/1/0
+
+1. http://www.topografix.com/GPX/1/1
+
+1. http://www.garmin.com/xmlschemas/GpxExtensions/v3
 
 == Installation ==
+
 1. Use the classic wordpress plugin installer or copy the plugins folder to the `/wp-content/plugins/` directory
+
 1. Activate the plugin through the 'Plugins' menu in WordPress
+
 1. Add the shortcode [sgpx gpx="&gt;relative path to your gpx&lt;"]
 
 == Frequently Asked Questions ==
+
 = what are all available shortcode attributes? =
+
 The attributes are:
+
 1. gpx: relative path to gpx
+
 1. width: width in pixels
+
 1. mheight: map height
+
 1. gheight: graph height
+
 1. mtype: map aviable types are: HYBRID, ROADMAP, SATELLITE, TERRAIN
+
 shortcode with all the attributes : [sgpx gpx="&gt;relative path to your gpx&lt;" width=100% mheight=300px gheight=200px mtype=SATELLITE]
 
 = What happening if I've a very large gpx? =
 This plugin will print a small amout of points to to speedup javascript and pageload.
+
 = Is it free? =
 Yes!
 
@@ -41,6 +66,9 @@ Yes!
 2. Screenshot Admin area
 
 == Changelog ==
+= 1.0.4 =
+* Fixed Upload file error
+* Added support for Garmin gpx (http://www.garmin.com/xmlschemas/GpxExtensions/v3 namespace)
 = 1.0.3 =
 * Added Settings link on plugins list
 * Added attributes width, mheight, gheight, mtype on shortcode. 
@@ -52,6 +80,7 @@ Yes!
 * Initial release.
 
 == Upgrade Notice ==
+= 1.0.4 =
 = 1.0.3 =
 = 1.0.2 =
 = 1.0.1 =

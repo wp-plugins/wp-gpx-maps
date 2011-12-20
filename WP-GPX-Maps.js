@@ -46,7 +46,7 @@ function wpgpxmaps(targhetId,mapType,mapData,graphData)
 			if (marker)
 			{
 				var point = getItemFromArray(mapData,r)
-				marker.setPosition(new google.maps.LatLng(point[0],point[1]));			
+				marker.setPosition(new google.maps.LatLng(point[0],point[1]));					marker.setTitle("Current Position");
 			}
 		});
 		google.visualization.events.addListener(chart, 'onmouseout', function (e) {
@@ -56,13 +56,12 @@ function wpgpxmaps(targhetId,mapType,mapData,graphData)
 				{
 					var r = chart.getSelection()[0]['row'];
 					var point = getItemFromArray(mapData,r)
-					marker.setPosition(new google.maps.LatLng(point[0], point[1]));
+					marker.setPosition(new google.maps.LatLng(point[0], point[1]));					marker.setTitle("Graph Selection");
 				}
 			}
 		});
-	}		
-	if (mapData != '')
-	{
+	}	else	{		el_chart.style.display='none';	}
+	if (mapData != '')		{
 		var points = [];
 		var bounds = new google.maps.LatLngBounds();
 		for(var i in mapData)
@@ -83,10 +82,10 @@ function wpgpxmaps(targhetId,mapType,mapData,graphData)
 		var first = getItemFromArray(mapData,0)
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(first[0], first[1]),
-			title:"Hello World!"
+			title:"Start"
 		});
 		marker.setMap(map);
-	}	
+	}
 }
 function getItemFromArray(arr,index)
 {
