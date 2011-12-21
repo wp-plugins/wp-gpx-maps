@@ -1,10 +1,10 @@
 === WP-GPX-Maps ===
 Contributors: bastianonm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=bastianonm@hotmail.com&item_name=WP-GRX-Maps&item_number=WP-GRX-Maps&amount=5&currency_code=EUR
-Tags: maps, gpx, gps, graph, google maps, google chart
+Tags: maps, gpx, gps, graph, google maps, google chart, track, garmin
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -17,9 +17,8 @@ This plugin has, as input, the GPX file with the track you've made. As output it
 Try this plugin on <a href="http://www.pedemontanadelgrappa.it/category/mappe/">http://www.pedemontanadelgrappa.it/category/mappe/</a>
 
 Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="http://www.darwinner.it/">www.darwinner.it</a>, <a href="http://www.pedemontanadelgrappa.it/">www.pedemontanadelgrappa.it</a>, 
-<a href="http://www.darwinner.it/featured/wp-gpx-maps/">
 
-Bugs, problems, thanks and anything else here!</a>
+<a href="http://www.darwinner.it/featured/wp-gpx-maps/">Bugs, problems, thanks and anything else here!</a>
 
 Supported gpx namespace are:
 
@@ -66,6 +65,8 @@ Yes!
 2. Screenshot Admin area
 
 == Changelog ==
+= 1.0.6 =
+* Minor bug fix
 = 1.0.5 =
 * Fixed javscript errors with slow javascript loading
 = 1.0.4 =
@@ -82,6 +83,7 @@ Yes!
 * Initial release.
 
 == Upgrade Notice ==
+= 1.0.6 =
 = 1.0.5 =
 = 1.0.4 =
 = 1.0.3 =
