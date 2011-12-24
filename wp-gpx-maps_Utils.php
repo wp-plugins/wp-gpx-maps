@@ -24,6 +24,7 @@
 		else
 		{
 			array_push($points, array((float)0,(float)0,(float)0,(float)0));
+			echo "File $realGpxPath not found!";
 		}
 		// riduco l'array a circa 200 punti per non appensantire la pagina(mappa e grafico)!
 		$count=sizeof($points);
@@ -136,9 +137,41 @@
 				echo "Gpx Empty or not supported!";
 			}
 		}
-
 		return $points;
 	}	
+	
+	function getWayPoints($gpxPath)
+	{
+		$points = array();
+		$realGpxPath = substr (__FILE__, 0, strrpos(__FILE__,'/wp-content/')).$gpxPath;
+		if (file_exists($realGpxPath))
+		{
+			$points = array();
+			$gpx = simplexml_load_file($realGpxPath);	
+			$gpx->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
+			$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 
+			$nodes = $gpx->xpath('//wpt | //10:wpt | //11:wpt');
+			
+			if ( count($nodes) > 0 )	
+			{
+				// normal case
+				foreach($nodes as $wpt)
+				{
+					$lat = $wpt['lat'];
+					$lon = $wpt['lon'];
+					$ele = $wpt->ele;
+					$time = $wpt->time;
+					$name = $wpt->name;
+					$desc = $wpt->desc;
+					$sym = $wpt->sym;
+					$type = $wpt->type;
+					array_push($points, array((float)$lat,(float)$lon,(float)$ele,$time,$name,$desc,$sym,$type));
+				}
+			}
+		}
+		return $points;
+	}
+	
 	function toRadians($degrees)
 	{
 		return $degrees * 3.1415926535897932385 / 180;

@@ -34,14 +34,16 @@ function WP_GPX_Maps_html_page() {
 				  </div>';
 		}
 	}
-
+	
+	$showW = get_option("wpgpxmaps_show_waypoint");
+		
 ?>
 
 <div style="padding:10px;">
 	<b>The fastest way to use this plugin:</b> upload the file using the uploader below, than put this 
 				shotcode: <b>[sgpx gpx="/wp-content/uploads/gpx/&lt gpx file name &gt"]</b> in the pages/posts.
 	<p>
-		<i>Full set of attributes:</i> <b>[sgpx gpx="/wp-content/uploads/gpx/&lt gpx file name &gt" width=100% mheight=450px gheight=200px mtype=SATELLITE]</b>
+		<i>Full set of attributes:</i> <b>[sgpx gpx="/wp-content/uploads/gpx/&lt gpx file name &gt" width=100% mheight=450px gheight=200px mtype=SATELLITE waypoints=true]</b>
 	</p>
 </div>
 
@@ -55,7 +57,9 @@ function WP_GPX_Maps_html_page() {
 			<td>
 				<i>Width:</i> <input name="wpgpxmaps_width" type="text" id="wpgpxmaps_width" value="<?php echo get_option('wpgpxmaps_width'); ?>" style="width:50px;" />, 
 				<i>Maps Height:</i> <input name="wpgpxmaps_height" type="text" id="wpgpxmaps_height" value="<?php echo get_option('wpgpxmaps_height'); ?>" style="width:50px;" />, 
-				<i>Graph Height:</i> <input name="wpgpxmaps_height" type="text" id="wpgpxmaps_height" value="<?php echo get_option('wpgpxmaps_height'); ?>" style="width:50px;" />
+				<i>Graph Height:</i> <input name="wpgpxmaps_height" type="text" id="wpgpxmaps_height" value="<?php echo get_option('wpgpxmaps_height'); ?>" style="width:50px;" />,
+				<input name="wpgpxmaps_show_waypoint" type="checkbox" value="true" <?php if($showW == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Waypoints</i>
+				
 			</td>
 		</tr>
 		<tr>
@@ -75,7 +79,7 @@ function WP_GPX_Maps_html_page() {
 	</table>
 
 	<input type="hidden" name="action" value="update" />
-	<input name="page_options" type="hidden" value="wpgpxmaps_map_type,wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width" />
+	<input name="page_options" type="hidden" value="wpgpxmaps_map_type,wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_show_waypoint" />
 
 	<p>
 		<input type="submit" value="<?php _e('Save Changes') ?>" />

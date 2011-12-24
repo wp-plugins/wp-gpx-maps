@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.0.6
+Version: 1.0.7
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -57,6 +57,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$mh = $attr["mheight"];
 	$mt = $attr["mtype"];
 	$gh = $attr["gheight"];
+	$showW = $attr['waypoints'];
 	
 	if ($w == '')
 	{
@@ -82,33 +83,63 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	{
 		$gh = "200px";
 	}
-
+	
+	if ($showW == '')
+	{
+		$showW = get_option("wpgpxmaps_show_waypoint");
+	}
+	
 	$r = rand(1,5000000);
 	
 	$points = getPoints($gpx);
 	$points_maps = '';
 	$points_graph = '';
+	$waypoints = '';
 
 	foreach ($points as $p) {
 		$points_maps .= "[".(float)$p[0].",".(float)$p[1]."],";
 		$points_graph .= "[".(float)$p[3].",".(float)$p[2]."],";
 	}		//all the points are [0,0]	$points_graph = preg_replace("/^(\[0,0\],)+$/", "", $points_graph);	
+	
+	if ($showW == true)
+	{
+		$wpoints = getWayPoints($gpx);
+		foreach ($wpoints as $p) {
+			$waypoints .= "[".(float)$p[0].",".(float)$p[1].",'".unescape($p[4])."','".unescape($p[5])."','".unescape($p[7])."'],";
+		}
+	}
+	
 	$p="/,$/";
 	$points_maps = preg_replace($p, "", $points_maps);
-	$points_graph = preg_replace($p, "", $points_graph);			if (preg_match("/^(\[0,0\],?)+$/", $points_graph)) {		$points_graph = "";	} 
-	return '
+	$points_graph = preg_replace($p, "", $points_graph);			
+	$waypoints = preg_replace($p, "", $waypoints);
+	
+	if (preg_match("/^(\[0,0\],?)+$/", $points_graph)) 
+	{		
+		$points_graph = "";	
+	} 
+
+	$output = '
 		<div id="wpgpxmaps_'.$r.'" style="clear:both;">
 			<div id="map_'.$r.'" style="width:'.$w.'; height:'.$mh.'"></div>
 			<div id="chart_'.$r.'" class="plot" style="width:'.$w.'; height:'.$gh.'"></div>
 		</div>
 		<script type="text/javascript">
-		
 			var m_'.$r.' = ['.$points_maps.'];
 			var c_'.$r.' = ['.$points_graph.'];	
-
-			wpgpxmaps("'.$r.'","'.$mt.'",m_'.$r.',c_'.$r.');		
-
+			var w_'.$r.' = ['.$waypoints.'];	
+			wpgpxmaps("'.$r.'","'.$mt.'",m_'.$r.',c_'.$r.', w_'.$r.');		
 		</script>';	
+	
+	return $output;
+}
+
+
+function unescape($value)
+{
+	$value = str_replace("'", "\'", $value);
+	$value = str_replace(array("\n","\r"), "", $value);
+	return $value;
 }
 
 function WP_GPX_Maps_install() {
@@ -116,6 +147,7 @@ function WP_GPX_Maps_install() {
 	add_option("wpgpxmaps_graph_height", '200px', '', 'yes');
 	add_option("wpgpxmaps_height", '450px', '', 'yes');
 	add_option('wpgpxmaps_map_type','HYBRID','','yes');
+	add_option('wpgpxmaps_show_waypoint','','','yes');
 }
 
 function WP_GPX_Maps_remove() {
@@ -123,6 +155,7 @@ function WP_GPX_Maps_remove() {
 	delete_option('wpgpxmaps_graph_height');
 	delete_option('wpgpxmaps_height');
 	delete_option('wpgpxmaps_map_type');
+	delete_option('wpgpxmaps_show_waypoint');
 }
 
 ?>
