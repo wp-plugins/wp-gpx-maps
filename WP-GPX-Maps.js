@@ -3,6 +3,7 @@
 	WP-GPX-Maps
 
 */
+
 var loc_en = 
 {
   "length"  : "Length",
@@ -104,12 +105,31 @@ function _wpgpxmaps(targhetId,mapType,mapData,graphData,waypoints)
 		map.fitBounds(bounds);
 		var first = getItemFromArray(mapData,0)
 		
+		var current = new google.maps.MarkerImage("http://maps.google.com/mapfiles/kml/pal4/icon25.png",
+			new google.maps.Size(32, 32),
+			new google.maps.Point(0,0),
+			new google.maps.Point(16, 16)
+		);
+		
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(first[0], first[1]),
 			title:"Start",
-			icon: "/wp-content/plugins/wp-gpx-maps/img/map_start.png",
+			icon: current,
 			map: map,
 			zIndex: 10
+		});
+		
+		google.maps.event.addListener(poly,'mouseover',function(event){
+			if (marker)
+			{
+				marker.setPosition(event.latLng);	
+				marker.setTitle("Current Position");
+				if ( chart )
+				{
+					var ci = getClosestIndex(mapData,event.latLng.Qa,event.latLng.Ra);
+					var r = chart.setSelection([{'row': parseInt(ci) + 1}]);
+				}
+			}
 		});
 	}
 	
@@ -130,42 +150,20 @@ function _wpgpxmaps(targhetId,mapType,mapData,graphData,waypoints)
 						};
 		chart.draw(data, options);
 		
-		var current = new google.maps.MarkerImage('/wp-content/plugins/wp-gpx-maps/img/map_current.png',
-			new google.maps.Size(32, 32),
-			new google.maps.Point(0,0),
-			new google.maps.Point(8, 0)
-		);
-		
 		google.visualization.events.addListener(chart, 'onmouseover', function (e) {
 			var r = e['row'];
+			chart.setSelection([e]);
 			if (marker)
 			{
 				var point = getItemFromArray(mapData,r)
 				marker.setPosition(new google.maps.LatLng(point[0],point[1]));	
-				marker.setIcon(current);
 				marker.setTitle("Current Position");
 			}
 		});
-		google.visualization.events.addListener(chart, 'onmouseout', function (e) {
-			if (marker)
-			{
-				if (chart.getSelection() != '')
-				{
-					var r = chart.getSelection()[0]['row'];
-					var point = getItemFromArray(mapData,r)
-					marker.setPosition(new google.maps.LatLng(point[0], point[1]));	
-					marker.setIcon(current);					
-					marker.setTitle("Graph Selection");
-				}
-				else
-				{
-					var point = getItemFromArray(mapData,0)
-					marker.setPosition(new google.maps.LatLng(point[0], point[1]));	
-					marker.setIcon("/wp-content/plugins/wp-gpx-maps/img/map_start.png");					
-					marker.setTitle("Graph Selection");
-				}
-			}
-		});
+		//google.visualization.events.addListener(chart, 'onmouseout', function (e) {
+			//chart.setSelection([e]);
+		//});
+
 	}	
 	else	
 	{		
@@ -186,12 +184,10 @@ function addWayPoint(map, image, shadow, lat, lon, title, descr)
 						  zIndex: 5
 					  });
 	google.maps.event.addListener(m, 'mouseover', function() {
-	
 		if (infowindow)
 		{
 			infowindow.close(); 		
 		}
-	
 		infowindow = new google.maps.InfoWindow({
 			content: "<b>" + title + "</b></br />" + descr
 		});
@@ -210,3 +206,32 @@ function getItemFromArray(arr,index)
 		return [0,0];
 	}
 }
+
+function getClosestIndex(points,lat,lon)
+{
+	var dd=10000;
+	var ii=0;
+	for(var i in points)
+	{
+		var d = dist(points[i][0], points[i][1], lat, lon);
+		if (d<dd)
+		{
+			ii=i;
+			dd=d;
+		}
+	}
+	return ii;
+}
+
+function dist(lat1,lon1,lat2,lon2)
+{
+	// mathematically not correct but fast
+	var dLat = (lat2-lat1);
+	var dLon = (lon2-lon1);
+	var a = Math.sin(dLat) * Math.sin(dLat) +
+			Math.sin(dLon) * Math.sin(dLon) * Math.cos(lat1) * Math.cos(lat2); 
+	return Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+}
+
+
+

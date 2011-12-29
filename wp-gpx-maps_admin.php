@@ -103,12 +103,15 @@ function WP_GPX_Maps_html_page() {
 	
 		<div class="tablenav top">
 			<form enctype="multipart/form-data" method="POST">
-				Choose a file to upload: <input name="uploadedfile" type="file" onchange="this.parentNode.submit()" />
+				Choose a file to upload: <input name="uploadedfile" type="file" onchange="submitgpx(this);" />
 				<?php
-					if ( isset($_FILES['uploadedfile']) )									{						$target_path = $realGpxPath ."/". basename( $_FILES['uploadedfile']['name']); 						if (preg_match($gpxRegEx, $target_path))
+					if ( isset($_FILES['uploadedfile']) )									
+					{						
+						$target_path = $realGpxPath ."/". basename( $_FILES['uploadedfile']['name']); 						
+						if (preg_match($gpxRegEx, $target_path))
 						{				
 							if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
-								echo "The file ".  basename( $_FILES['uploadedfile']['name']). " has been uploaded";
+								echo "File <b>".  basename( $_FILES['uploadedfile']['name']). "</b> has been uploaded";
 							} else{
 								echo "There was an error uploading the file, please try again!";
 							}		
@@ -180,6 +183,14 @@ function WP_GPX_Maps_html_page() {
 
 </div>
 <script type="text/javascript">
+
+	function submitgpx(el)
+	{
+		 var newEl = document.createElement('span'); 
+		 newEl.innerHTML = 'Uploading file...';
+		 el.parentNode.insertBefore(newEl,el.nextSibling);  
+		 el.parentNode.submit()
+	}
 
 	function delgpx(file)
 	{

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=basti
 Tags: maps, gpx, gps, graph, google maps, google chart, track, garmin
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -68,6 +68,9 @@ Yes!
 2. Admin area
 
 == Changelog ==
+= 1.0.8 =
+* New icons (from google maps)
+* Added interactivity over the map
 = 1.0.7 =
 * Added waypoints support
 * New icons
@@ -89,6 +92,7 @@ Yes!
 * Initial release.
 
 == Upgrade Notice ==
+= 1.0.8 =
 = 1.0.7 =
 * Added waypoints support. To enable this feature please check the plugin settings
 = 1.0.6 =
