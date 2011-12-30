@@ -14,17 +14,15 @@
 		{
 			$gpxOffset = 10;
 		}
-		
-		$realGpxPath = substr (__FILE__, 0, strrpos(__FILE__,'/wp-content/')).$gpxPath;
 			
-		if (file_exists($realGpxPath))
+		if (file_exists($gpxPath))
 		{
-			$points = parseXml($realGpxPath, $gpxOffset);			
+			$points = parseXml($gpxPath, $gpxOffset);			
 		}
 		else
 		{
 			array_push($points, array((float)0,(float)0,(float)0,(float)0));
-			echo "File $realGpxPath not found!";
+			echo "File $gpxPath not found!";
 		}
 		// riduco l'array a circa 200 punti per non appensantire la pagina(mappa e grafico)!
 		$count=sizeof($points);
@@ -143,11 +141,10 @@
 	function getWayPoints($gpxPath)
 	{
 		$points = array();
-		$realGpxPath = substr (__FILE__, 0, strrpos(__FILE__,'/wp-content/')).$gpxPath;
-		if (file_exists($realGpxPath))
+		if (file_exists($gpxPath))
 		{
 			$points = array();
-			$gpx = simplexml_load_file($realGpxPath);	
+			$gpx = simplexml_load_file($gpxPath);	
 			$gpx->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
 			$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 
 			$nodes = $gpx->xpath('//wpt | //10:wpt | //11:wpt');

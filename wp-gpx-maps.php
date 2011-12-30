@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.0.8
+Version: 1.0.9
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -58,7 +58,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$mt = $attr["mtype"];
 	$gh = $attr["gheight"];
 	$showW = $attr['waypoints'];
-	
+
 	if ($w == '')
 	{
 		$w = get_option("wpgpxmaps_width");
@@ -91,9 +91,15 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	
 	$r = rand(1,5000000);
 	
+	$sitePath = substr (__FILE__, 0, strrpos(__FILE__,'wp-content')).DIRECTORY_SEPARATOR;
+	
 	$gpx = trim($gpx);
 	
-	$points = getPoints($gpx);
+	$gpx = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $gpx);
+	
+	$gpx = $sitePath . $gpx;
+	
+	$points = getPoints( $gpx );
 	$points_maps = '';
 	$points_graph = '';
 	$waypoints = '';

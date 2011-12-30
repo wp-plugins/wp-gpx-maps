@@ -11,7 +11,8 @@ if ( is_admin() ){
 
 function WP_GPX_Maps_html_page() {
 
-	$realGpxPath = substr (__FILE__, 0, strrpos(__FILE__,'/wp-content/'))."/wp-content/uploads/gpx";
+	$uploadsPath = substr (__FILE__, 0, strrpos(__FILE__,'wp-content')).DIRECTORY_SEPARATOR."wp-content".DIRECTORY_SEPARATOR."uploads";
+	$realGpxPath = substr (__FILE__, 0, strrpos(__FILE__,'wp-content')).DIRECTORY_SEPARATOR."wp-content".DIRECTORY_SEPARATOR."uploads".DIRECTORY_SEPARATOR."gpx";
 	$gpxRegEx = '/.gpx$/';
 
 ?>
@@ -27,7 +28,13 @@ function WP_GPX_Maps_html_page() {
 	}
 	else
 	{
-		if (!@mkdir($dir)) {
+	
+		if(!file_exists($uploadsPath))
+		{
+			@mkdir($uploadsPath);
+		}
+	
+		if (!@mkdir($realGpxPath)) {
 			echo '<div class="error" style="padding:10px">
 					Can\'t create <b>'.$realGpxPath.'</b> folder. Please create it and make it writable!<br />
 					If not, you will must update the file manually!
@@ -57,9 +64,9 @@ function WP_GPX_Maps_html_page() {
 			<td>
 				<i>Width:</i> <input name="wpgpxmaps_width" type="text" id="wpgpxmaps_width" value="<?php echo get_option('wpgpxmaps_width'); ?>" style="width:50px;" />, 
 				<i>Maps Height:</i> <input name="wpgpxmaps_height" type="text" id="wpgpxmaps_height" value="<?php echo get_option('wpgpxmaps_height'); ?>" style="width:50px;" />, 
-				<i>Graph Height:</i> <input name="wpgpxmaps_height" type="text" id="wpgpxmaps_height" value="<?php echo get_option('wpgpxmaps_height'); ?>" style="width:50px;" />,
+				<i>Graph Height:</i> <input name="wpgpxmaps_graph_height" type="text" id="wpgpxmaps_graph_height" value="<?php echo get_option('wpgpxmaps_graph_height'); ?>" style="width:50px;" />,
 				<input name="wpgpxmaps_show_waypoint" type="checkbox" value="true" <?php if($showW == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Waypoints</i>
-				
+			
 			</td>
 		</tr>
 		<tr>
@@ -98,8 +105,10 @@ function WP_GPX_Maps_html_page() {
 		}
 	}
 
-	if ( is_readable ( $realGpxPath ) && $handle = opendir($realGpxPath)) { 
-?>
+	
+	if ( is_writable ( $realGpxPath ) ){
+	
+	?>
 	
 		<div class="tablenav top">
 			<form enctype="multipart/form-data" method="POST">
@@ -123,7 +132,21 @@ function WP_GPX_Maps_html_page() {
 					}
 				?>
 			</form>
-		</div>
+		</div>	
+	
+	<?php
+	
+	}
+	
+?>
+	
+
+		
+		<?php
+		
+	if ( is_readable ( $realGpxPath ) && $handle = opendir($realGpxPath)) { 		
+		
+		?>
 
 		<table cellspacing="0" class="wp-list-table widefat plugins">
 			<thead>
