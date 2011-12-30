@@ -69,7 +69,7 @@ Yes!
 
 == Changelog ==
 = 1.0.9 =
-* Minor bug fix
+* minor bug fixes
 * Windows/IIS compatibility
 = 1.0.8 =
 * New icons (from google maps)
@@ -78,7 +78,7 @@ Yes!
 * Added waypoints support
 * New icons
 = 1.0.6 =
-* Minor bug fix
+* minor bug fixes
 = 1.0.5 =
 * Fixed javscript errors with slow javascript loading
 = 1.0.4 =
