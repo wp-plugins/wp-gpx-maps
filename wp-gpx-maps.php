@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.0.9
+Version: 1.1.0
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -58,6 +58,8 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$mt = $attr["mtype"];
 	$gh = $attr["gheight"];
 	$showW = $attr['waypoints'];
+	$donotreducegpx = $attr['donotreducegpx'];
+	$pointsoffset = $attr['pointsoffset'];
 
 	if ($w == '')
 	{
@@ -73,22 +75,36 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	{
 		$gh = get_option("wpgpxmaps_graph_height");
 	}
+	if ($gh == '')
+	{
+		$gh = "200px";
+	}	
+	
+	if ($pointsoffset == '')
+	{
+		$pointsoffset = get_option("wpgpxmaps_pointsoffset");
+	}
+	if ($pointsoffset == '')
+	{
+		$pointsoffset = 10;
+	}	
+	
 	
 	if ($mt == '')
 	{
 		$mt = get_option("wpgpxmaps_map_type");
 	}
-	
-	if ($gh == '')
+
+	if ($donotreducegpx == '')
 	{
-		$gh = "200px";
+		$donotreducegpx = get_option("wpgpxmaps_donotreducegpx");
 	}
 	
 	if ($showW == '')
 	{
 		$showW = get_option("wpgpxmaps_show_waypoint");
 	}
-	
+
 	$r = rand(1,5000000);
 	
 	$sitePath = substr (__FILE__, 0, strrpos(__FILE__,'wp-content')).DIRECTORY_SEPARATOR;
@@ -99,7 +115,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	
 	$gpx = $sitePath . $gpx;
 	
-	$points = getPoints( $gpx );
+	$points = getPoints( $gpx, $pointsoffset, $donotreducegpx);
 	$points_maps = '';
 	$points_graph = '';
 	$waypoints = '';
@@ -155,6 +171,8 @@ function WP_GPX_Maps_install() {
 	add_option("wpgpxmaps_height", '450px', '', 'yes');
 	add_option('wpgpxmaps_map_type','HYBRID','','yes');
 	add_option('wpgpxmaps_show_waypoint','','','yes');
+	add_option('wpgpxmaps_pointsoffset','10','','yes');
+	add_option('wpgpxmaps_donotreducegpx','true','','yes');
 }
 
 function WP_GPX_Maps_remove() {
@@ -163,6 +181,8 @@ function WP_GPX_Maps_remove() {
 	delete_option('wpgpxmaps_height');
 	delete_option('wpgpxmaps_map_type');
 	delete_option('wpgpxmaps_show_waypoint');
+	delete_option('wpgpxmaps_pointsoffset');
+	delete_option('wpgpxmaps_donotreducegpx');
 }
 
 ?>

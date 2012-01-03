@@ -1,6 +1,7 @@
 <?php
-	function getPoints($gpxPath,$gpxOffset = 10)
+	function getPoints($gpxPath,$gpxOffset = 10, $donotreducegpx)
 	{
+	
 		$points = array();
 		$dist=0;
 		
@@ -8,13 +9,7 @@
 		$lastLon=0;
 		$lastEle=0;
 		$lastOffset=0;
-			
-		//Default Offset = 10 mt
-		if (!($gpxOffset > 0))
-		{
-			$gpxOffset = 10;
-		}
-			
+				
 		if (file_exists($gpxPath))
 		{
 			$points = parseXml($gpxPath, $gpxOffset);			
@@ -24,16 +19,24 @@
 			array_push($points, array((float)0,(float)0,(float)0,(float)0));
 			echo "File $gpxPath not found!";
 		}
-		// riduco l'array a circa 200 punti per non appensantire la pagina(mappa e grafico)!
-		$count=sizeof($points);
-		if ($count>200)
+		
+		// reduce the points to around 200 to speedup
+		if ( $donotreducegpx != true)
 		{
-			$f = round($count/200);
-			if ($f>1)
-				for($i=$count;$i>0;$i--)
-					if ($i % $f != 0)
-						unset($points[$i]);
+	
+			$count=sizeof($points);
+			if ($count>200)
+			{
+				$f = round($count/200);
+				if ($f>1)
+					for($i=$count;$i>0;$i--)
+						if ($i % $f != 0)
+							unset($points[$i]);
+			}		
 		}
+		
+		
+
 		return $points;
 	}
 
@@ -77,6 +80,8 @@
 					}
 					else
 					{
+						echo "j";	
+					
 						//Smoller Offset -> continue..
 						$lastOffset= (float) $lastOffset + (float) $offset ;
 					}

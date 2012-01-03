@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=basti
 Tags: maps, gpx, gps, graph, google maps, google chart, track, garmin
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.0.9
+Stable tag: 1.1.0
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -54,6 +54,10 @@ The attributes are:
 
 1. waypoints: print the gpx waypoints inside the map (default is FALSE)
 
+1. donotreducegpx: Print all the point without reduce it (default is FALSE)
+
+1. pointsoffset: Skip points closer than XX meters(default is 10)
+
 shortcode with all the attributes : [sgpx gpx="&gt;relative path to your gpx&lt;" width=100% mheight=300px gheight=200px mtype=SATELLITE waypoints=true]
 
 = What happening if I've a very large gpx? =
@@ -68,6 +72,9 @@ Yes!
 2. Admin area
 
 == Changelog ==
+= 1.1.0 =
+* Added Advanced Setting in the Admin Area
+* Added the shortcode for every entry in the admin area (easy to copy and paste in your posts)
 = 1.0.9 =
 * minor bug fixes
 * Windows/IIS compatibility
@@ -95,6 +102,7 @@ Yes!
 * Initial release.
 
 == Upgrade Notice ==
+= 1.1.0 =
 = 1.0.9 =
 = 1.0.8 =
 = 1.0.7 =
