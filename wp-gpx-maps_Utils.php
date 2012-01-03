@@ -23,7 +23,6 @@
 		// reduce the points to around 200 to speedup
 		if ( $donotreducegpx != true)
 		{
-	
 			$count=sizeof($points);
 			if ($count>200)
 			{
@@ -34,9 +33,6 @@
 							unset($points[$i]);
 			}		
 		}
-		
-		
-
 		return $points;
 	}
 
@@ -80,8 +76,6 @@
 					}
 					else
 					{
-						echo "j";	
-					
 						//Smoller Offset -> continue..
 						$lastOffset= (float) $lastOffset + (float) $offset ;
 					}

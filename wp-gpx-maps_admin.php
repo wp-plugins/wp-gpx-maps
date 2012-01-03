@@ -41,12 +41,14 @@ function WP_GPX_Maps_html_page() {
 				  </div>';
 		}
 	}
-	
+	$po = get_option('wpgpxmaps_pointsoffset');
 	$showW = get_option("wpgpxmaps_show_waypoint");	
 	$donotreducegpx = get_option("wpgpxmaps_donotreducegpx");
 	$t = get_option('wpgpxmaps_map_type');
 	if (!($t))
 		$t = 'HYBRID';
+	if (!($po))
+		$po = 10;
 		
 ?>
 
@@ -87,7 +89,7 @@ function WP_GPX_Maps_html_page() {
 			<td>
 				<br />
 				<b>Do not edit if you don't know what you are doing!</b><br />				
-				<i>Skip points closer than </i> <input name="wpgpxmaps_pointsoffset" type="text" id="wpgpxmaps_pointsoffset" value="<?php echo get_option('wpgpxmaps_pointsoffset'); ?>" style="width:50px;" /><i>meters</i>.
+				<i>Skip points closer than </i> <input name="wpgpxmaps_pointsoffset" type="text" id="wpgpxmaps_pointsoffset" value="<?php echo $po ?>" style="width:50px;" /><i>meters</i>.
 				<input name="wpgpxmaps_donotreducegpx" type="checkbox" value="true" <?php if($donotreducegpx == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Do not reduce gpx</i>.
 			</td>
 		</tr>

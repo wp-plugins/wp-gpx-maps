@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=basti
 Tags: maps, gpx, gps, graph, google maps, google chart, track, garmin
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -72,6 +72,8 @@ Yes!
 2. Admin area
 
 == Changelog ==
+= 1.1.1 =
+* minor bug fixes
 = 1.1.0 =
 * Added Advanced Setting in the Admin Area
 * Added the shortcode for every entry in the admin area (easy to copy and paste in your posts)
@@ -102,6 +104,7 @@ Yes!
 * Initial release.
 
 == Upgrade Notice ==
+= 1.1.1 =
 = 1.1.0 =
 = 1.0.9 =
 = 1.0.8 =
