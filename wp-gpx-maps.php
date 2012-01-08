@@ -3,11 +3,13 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.1
+Version: 1.1.2
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
 */
+
+//error_reporting (E_ALL);
 
 include 'wp-gpx-maps_Utils.php';
 include 'wp-gpx-maps_admin.php';
@@ -36,7 +38,6 @@ function WP_GPX_Maps_action_links($links, $file) {
     return $links;
 }
 
-
 function enqueue_WP_GPX_Maps_scripts()
 {
 ?>
@@ -49,65 +50,39 @@ function enqueue_WP_GPX_Maps_scripts()
 <?php
 }
 
- 
+function findValue($attr, $attributeName, $optionName, $defaultValue)
+{
+	$val = '';
+	if ( isset($attr[$attributeName]) )
+	{
+		$val = $attr[$attributeName];
+	}
+	if ($val == '')
+	{
+		$val = get_option($optionName);
+	}
+	if ($val == '')
+	{
+		$val = $defaultValue;
+	}
+	return $val;
+}
+
 function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 {
-	$gpx = $attr["gpx"];
-	$w = $attr["width"];
-	$mh = $attr["mheight"];
-	$mt = $attr["mtype"];
-	$gh = $attr["gheight"];
-	$showW = $attr['waypoints'];
-	$donotreducegpx = $attr['donotreducegpx'];
-	$pointsoffset = $attr['pointsoffset'];
 
-	if ($w == '')
-	{
-		$w = get_option("wpgpxmaps_width");
-	}
-	
-	if ($mh == '')
-	{
-		$mh = get_option("wpgpxmaps_height");
-	}
-	
-	if ($gh == '')
-	{
-		$gh = get_option("wpgpxmaps_graph_height");
-	}
-	if ($gh == '')
-	{
-		$gh = "200px";
-	}	
-	
-	if ($pointsoffset == '')
-	{
-		$pointsoffset = get_option("wpgpxmaps_pointsoffset");
-	}
-	if ($pointsoffset == '')
-	{
-		$pointsoffset = 10;
-	}	
-	
-	
-	if ($mt == '')
-	{
-		$mt = get_option("wpgpxmaps_map_type");
-	}
-
-	if ($donotreducegpx == '')
-	{
-		$donotreducegpx = get_option("wpgpxmaps_donotreducegpx");
-	}
-	
-	if ($showW == '')
-	{
-		$showW = get_option("wpgpxmaps_show_waypoint");
-	}
+	$gpx = findValue($attr, "gpx", "", "");
+	$w =   findValue($attr, "width", "wpgpxmaps_width", "100%");
+	$mh =  findValue($attr, "mheight", "wpgpxmaps_height", "450px");
+	$mt =  findValue($attr, "mtype", "wpgpxmaps_map_type", "HYBRID");
+	$gh =  findValue($attr, "gheight", "wpgpxmaps_graph_height", "200px");
+	$showW = findValue($attr, "waypoints", "wpgpxmaps_show_waypoint", false);
+	$donotreducegpx = findValue($attr, "donotreducegpx", "wpgpxmaps_donotreducegpx", false);
+	$pointsoffset = findValue($attr, "pointsoffset", "wpgpxmaps_pointsoffset", 10);
 
 	$r = rand(1,5000000);
 	
-	$sitePath = substr (__FILE__, 0, strrpos(__FILE__,'wp-content')).DIRECTORY_SEPARATOR;
+	$sitePath = sitePath();
 	
 	$gpx = trim($gpx);
 	
@@ -121,15 +96,15 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$waypoints = '';
 
 	foreach ($points as $p) {
-		$points_maps .= "[".(float)$p[0].",".(float)$p[1]."],";
-		$points_graph .= "[".(float)$p[3].",".(float)$p[2]."],";
+		$points_maps .= '['.(float)$p[0].','.(float)$p[1].'],';
+		$points_graph .= '['.(float)$p[3].','.(float)$p[2].'],';
 	}		//all the points are [0,0]	$points_graph = preg_replace("/^(\[0,0\],)+$/", "", $points_graph);	
 	
 	if ($showW == true)
 	{
 		$wpoints = getWayPoints($gpx);
 		foreach ($wpoints as $p) {
-			$waypoints .= "[".(float)$p[0].",".(float)$p[1].",'".unescape($p[4])."','".unescape($p[5])."','".unescape($p[7])."'],";
+			$waypoints .= '['.(float)$p[0].','.(float)$p[1].',\''.unescape($p[4]).'\',\''.unescape($p[5]).'\',\''.unescape($p[7]).'\'],';
 		}
 	}
 	

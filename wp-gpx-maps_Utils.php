@@ -1,4 +1,28 @@
 <?php
+
+
+	function sitePath()
+	{
+		return substr(substr(__FILE__, 0, strrpos(__FILE__,'wp-content')), 0, -1);
+		//		$uploadsPath = 	substr($uploadsPath, 0, -1);
+	}
+
+	function gpxFolderPath()
+	{
+		$upload_dir = wp_upload_dir();
+		$uploadsPath = $upload_dir['basedir'];	
+		$ret = $uploadsPath.DIRECTORY_SEPARATOR."gpx";
+		return str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $ret);
+	}
+	
+	function relativeGpxFolderPath()
+	{
+		$sitePath = sitePath();
+		$realGpxPath = gpxFolderPath();
+		$ret = str_replace($sitePath,'',$realGpxPath).DIRECTORY_SEPARATOR;
+		return str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $ret);
+	}
+
 	function getPoints($gpxPath,$gpxOffset = 10, $donotreducegpx)
 	{
 	
@@ -41,6 +65,10 @@
 
 		$points = array();
 		$gpx = simplexml_load_file($filePath);	
+		
+		if($gpx ===  FALSE) 
+			return;
+		
 		$gpx->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
 		$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 
 		$gpx->registerXPathNamespace('gpxx', 'http://www.garmin.com/xmlschemas/GpxExtensions/v3'); 		
@@ -49,6 +77,13 @@
 		
 		if ( count($nodes) > 0 )	
 		{
+		
+			$lastLat = 0;
+			$lastLon = 0;
+			$lastEle = 0;
+			$dist = 0;
+			$lastOffset = 0;
+		
 			// normal case
 			foreach($nodes as $trkpt)
 			{ 
@@ -84,6 +119,7 @@
 				$lastLon=$lon;
 				$lastEle=$ele;
 			}
+			unset($nodes);
 		
 		}
 		else
@@ -93,6 +129,12 @@
 		
 			if ( count($nodes) > 0 )	
 			{
+			
+				$lastLat = 0;
+				$lastLon = 0;
+				$lastEle = 0;
+				$dist = 0;
+				$lastOffset = 0;
 			
 				// Garmin case
 				foreach($nodes as $rpt)
@@ -127,13 +169,14 @@
 					$lastLat=$lat;
 					$lastLon=$lon;
 				}
-				
+				unset($nodes);
 			}
 			else
 			{	
-				echo "Gpx Empty or not supported!";
+				echo "Empty Gpx or not supported File!";
 			}
 		}
+		unset($gpx);
 		return $points;
 	}	
 	

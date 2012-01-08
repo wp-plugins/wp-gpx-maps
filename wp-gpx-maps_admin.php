@@ -10,11 +10,10 @@ if ( is_admin() ){
 }
 
 function WP_GPX_Maps_html_page() {
-
-	$uploadsPath = substr (__FILE__, 0, strrpos(__FILE__,'wp-content')).DIRECTORY_SEPARATOR."wp-content".DIRECTORY_SEPARATOR."uploads";
-	$realGpxPath = substr (__FILE__, 0, strrpos(__FILE__,'wp-content')).DIRECTORY_SEPARATOR."wp-content".DIRECTORY_SEPARATOR."uploads".DIRECTORY_SEPARATOR."gpx";
+	$realGpxPath = gpxFolderPath();
+	$relativeGpxPath = relativeGpxFolderPath();
+	$relativeGpxPath = str_replace("\\","/", $relativeGpxPath);
 	$gpxRegEx = '/.gpx$/';
-
 ?>
 
 <div>
@@ -28,13 +27,7 @@ function WP_GPX_Maps_html_page() {
 	}
 	else
 	{
-	
-		if(!file_exists($uploadsPath))
-		{
-			@mkdir($uploadsPath);
-		}
-	
-		if (!@mkdir($realGpxPath)) {
+		if (!@mkdir($realGpxPath,755,true)) {
 			echo '<div class="error" style="padding:10px">
 					Can\'t create <b>'.$realGpxPath.'</b> folder. Please create it and make it writable!<br />
 					If not, you will must update the file manually!
@@ -54,9 +47,9 @@ function WP_GPX_Maps_html_page() {
 
 <div style="padding:10px;">
 	<b>The fastest way to use this plugin:</b> upload the file using the uploader below, than put this 
-				shotcode: <b>[sgpx gpx="/wp-content/uploads/gpx/&lt gpx file name &gt"]</b> in the pages/posts.
+				shotcode: <b>[sgpx gpx="<?php echo $relativeGpxPath; ?>&lt gpx file name &gt"]</b> in the pages/posts.
 	<p>
-		<i>Full set of attributes:</i> <b>[sgpx gpx="/wp-content/uploads/gpx/&lt gpx file name &gt" width=100% mheight=450px gheight=200px mtype=SATELLITE waypoints=true donotreducegpx=false pointsoffset=10]</b>
+		<i>Full set of attributes:</i> <b>[sgpx gpx="<?php echo $relativeGpxPath; ?>&lt gpx file name &gt" width=100% mheight=450px gheight=200px mtype=SATELLITE waypoints=true donotreducegpx=false pointsoffset=10]</b>
 	</p>
 </div>
 
@@ -115,7 +108,6 @@ function WP_GPX_Maps_html_page() {
 		}
 	}
 
-	
 	if ( is_writable ( $realGpxPath ) ){
 	
 	?>
@@ -194,7 +186,7 @@ function WP_GPX_Maps_html_page() {
 							|	
 							<a href="../wp-content/uploads/gpx/<?php echo $entry?>">Download</a>
 							|
-							Shortcode: [sgpx gpx="/wp-content/uploads/gpx/<?php echo $entry?>"]
+							Shortcode: [sgpx gpx="<?php echo  $relativeGpxPath . $entry; ?>"]
 					</td>
 				</tr>
 				<?php
