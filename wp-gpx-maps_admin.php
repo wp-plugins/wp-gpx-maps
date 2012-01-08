@@ -213,7 +213,7 @@ function WP_GPX_Maps_html_page() {
 
 	function delgpx(file)
 	{
-		if (confirm('Delte this file: ' + file + '?'))
+		if (confirm('Delete this file: ' + file + '?'))
 		{
 			document.formdelgpx.delete.value = file;	
 			document.formdelgpx.submit();	
