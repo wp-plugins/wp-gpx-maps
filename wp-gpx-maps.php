@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.2
+Version: 1.1.3
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -86,9 +86,17 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	
 	$gpx = trim($gpx);
 	
-	$gpx = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $gpx);
+	if (strpos($gpx, "http://") !== 0)
+	{
+		$gpx = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $gpx);
+		$gpx = $sitePath . $gpx;
+	}
+	else
+	{
+		$gpx = downloadRemoteFile($gpx);
+		print_r($gpx);
+	}
 	
-	$gpx = $sitePath . $gpx;
 	
 	$points = getPoints( $gpx, $pointsoffset, $donotreducegpx);
 	$points_maps = '';
@@ -131,6 +139,24 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		</script>';	
 	
 	return $output;
+}
+
+function downloadRemoteFile($remoteFile)
+{
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $remoteFile); 
+	curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+	curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
+	curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+	$resp = curl_exec($ch); 
+	curl_close($ch);
+	$tmpfname = tempnam ( '/tmp', 'gpx' );
+	
+	$fp = fopen($tmpfname, "w");
+	fwrite($fp, $resp);
+	fclose($fp);
+	
+	return $tmpfname;
 }
 
 function unescape($value)

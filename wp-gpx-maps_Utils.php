@@ -25,7 +25,7 @@
 
 	function getPoints($gpxPath,$gpxOffset = 10, $donotreducegpx)
 	{
-	
+
 		$points = array();
 		$dist=0;
 		
