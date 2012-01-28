@@ -91,8 +91,8 @@ function WP_GPX_Maps_html_page() {
 				<li><b>mtype</b>: map aviable types are: HYBRID, ROADMAP, SATELLITE, TERRAIN</li>
 				<li><b>waypoints</b>: print the gpx waypoints inside the map (default is FALSE)</li>
 				<li><b>donotreducegpx</b>: Print all the point without reduce it (default is FALSE)</li>
-				<li><b>pointsoffset</b>: Skip points closer than XX metres(default is 10)</li>
-				<li><b>uom</b>: the unit of measure values are: 0, 1 (0 = metres, 1 = miles/feet)</li>
+				<li><b>pointsoffset</b>: Skip points closer than XX meters(default is 10)</li>
+				<li><b>uom</b>: the unit of measure values are: 0, 1 (0 = meters, 1 = miles/feet)</li>
 				<li><b>mlinecolor</b>: map line color (default is #3366cc)</li>
 				<li><b>glinecolor</b>: graph line color (default is #3366cc)</li>
 			</ul>
