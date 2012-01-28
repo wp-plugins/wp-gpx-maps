@@ -51,7 +51,7 @@
 			<th scope="row">Unit of measure:</th>
 			<td>
 				<select name='wpgpxmaps_unit_of_measure'>
-					<option value="0" <?php if ($uom == '0') echo 'selected'; ?>>meters</option>
+					<option value="0" <?php if ($uom == '0') echo 'selected'; ?>>metres</option>
 					<option value="1" <?php if ($uom == '1') echo 'selected'; ?>>miles/feet</option>
 				</select>
 			</td>
@@ -73,7 +73,7 @@
 			<td>
 				<br />
 				<b>Do not edit if you don't know what you are doing!</b><br />				
-				<i>Skip points closer than </i> <input name="wpgpxmaps_pointsoffset" type="text" id="wpgpxmaps_pointsoffset" value="<?php echo $po ?>" style="width:50px;" /><i>meters</i>.
+				<i>Skip points closer than </i> <input name="wpgpxmaps_pointsoffset" type="text" id="wpgpxmaps_pointsoffset" value="<?php echo $po ?>" style="width:50px;" /><i>metres</i>.
 				<input name="wpgpxmaps_donotreducegpx" type="checkbox" value="true" <?php if($donotreducegpx == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Do not reduce gpx</i>.
 			</td>
 		</tr>		
