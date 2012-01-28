@@ -56,9 +56,9 @@ The attributes are:
 
 1. donotreducegpx: Print all the point without reduce it (default is FALSE)
 
-1. pointsoffset: Skip points closer than XX metres(default is 10)
+1. pointsoffset: Skip points closer than XX meters(default is 10)
 
-1. uom: the unit of measure values are: 0, 1 (0 = metres, 1 = miles/feet)
+1. uom: the unit of measure values are: 0, 1 (0 = meters, 1 = miles/feet)
 
 1. mlinecolor: map line color (default is #3366cc)
 

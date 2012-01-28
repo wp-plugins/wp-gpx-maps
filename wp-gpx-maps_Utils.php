@@ -220,7 +220,7 @@
 	{
 		$alpha = (float)sin((float)toRadians((float) $lat2 - (float) $lat1) / 2);
 		$beta = (float)sin((float)toRadians((float) $lon2 - (float) $lon1) / 2);
-		//Distance in metres
+		//Distance in meters
 		$a = (float) ( (float)$alpha * (float)$alpha) +  (float) ( (float)cos( (float)toRadians($lat1)) * (float)cos( (float)toRadians($lat2)) * (float)$beta * (float)$beta );
 		$dist = 2 * 6369628.75 * (float)atan2((float)sqrt((float)$a), (float)sqrt(1 - (float) $a));
 		$d = (float)sqrt((float)pow((float)$dist, 2) + pow((float) $lat1 - (float)$lat2, 2));	
