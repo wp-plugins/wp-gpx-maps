@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=basti
 Tags: maps, gpx, gps, graph, google maps, google chart, track, garmin
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -58,6 +58,12 @@ The attributes are:
 
 1. pointsoffset: Skip points closer than XX meters(default is 10)
 
+1. uom: the unit of measure values are: 0, 1 (0 = meters, 1 = miles/feet)
+
+1. mlinecolor: map line color (default is #3366cc)
+
+1. glinecolor: graph line color (default is #3366cc)
+
 shortcode with all the attributes : [sgpx gpx="&gt;relative path to your gpx&lt;" width=100% mheight=300px gheight=200px mtype=SATELLITE waypoints=true]
 
 = What happening if I've a very large gpx? =
@@ -69,9 +75,15 @@ Yes!
 == Screenshots ==
 1. Simple Gpx
 1. Gpx with waypoints
-2. Admin area
+2. Admin area - List of tracks
+2. Admin area - Settings
 
 == Changelog ==
+= 1.1.4 =
+* improved admin area
+* added miles/feet unit of measure 
+* added map line color and graph line color
+* minor bug fixes
 = 1.1.3 =
 * Allowed gpx files from http url
 = 1.1.2 =
@@ -109,6 +121,7 @@ Yes!
 * Initial release.
 
 == Upgrade Notice ==
+= 1.1.4 =
 = 1.1.3 =
 = 1.1.2 =
 = 1.1.1 =

@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.3
+Version: 1.1.4
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -79,6 +79,9 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$showW = findValue($attr, "waypoints", "wpgpxmaps_show_waypoint", false);
 	$donotreducegpx = findValue($attr, "donotreducegpx", "wpgpxmaps_donotreducegpx", false);
 	$pointsoffset = findValue($attr, "pointsoffset", "wpgpxmaps_pointsoffset", 10);
+	$uom =  findValue($attr, "uom", "wpgpxmaps_unit_of_measure", "0");
+	$color_map =  findValue($attr, "mlinecolor", "wpgpxmaps_map_line_color", "#3366cc");
+	$color_graph =  findValue($attr, "glinecolor", "wpgpxmaps_graph_line_color", "#3366cc");
 
 	$r = rand(1,5000000);
 	
@@ -105,8 +108,17 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 
 	foreach ($points as $p) {
 		$points_maps .= '['.(float)$p[0].','.(float)$p[1].'],';
-		$points_graph .= '['.(float)$p[3].','.(float)$p[2].'],';
-	}		//all the points are [0,0]	$points_graph = preg_replace("/^(\[0,0\],)+$/", "", $points_graph);	
+		
+		if ($uom == '1')
+		{
+			// Miles and feet
+			$points_graph .= '['.((float)$p[3]*0.000621371192).','.((float)$p[2]*3.2808399).'],';	
+		}
+		else
+		{
+			$points_graph .= '['.(float)$p[3].','.(float)$p[2].'],';		
+		}
+	}
 	
 	if ($showW == true)
 	{
@@ -135,7 +147,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			var m_'.$r.' = ['.$points_maps.'];
 			var c_'.$r.' = ['.$points_graph.'];	
 			var w_'.$r.' = ['.$waypoints.'];	
-			wpgpxmaps("'.$r.'","'.$mt.'",m_'.$r.',c_'.$r.', w_'.$r.');		
+			wpgpxmaps("'.$r.'","'.$mt.'",m_'.$r.',c_'.$r.', w_'.$r.', "'.$uom.'", "'.$color_map.'", "'.$color_graph.'");
 		</script>';	
 	
 	return $output;
@@ -174,6 +186,9 @@ function WP_GPX_Maps_install() {
 	add_option('wpgpxmaps_show_waypoint','','','yes');
 	add_option('wpgpxmaps_pointsoffset','10','','yes');
 	add_option('wpgpxmaps_donotreducegpx','true','','yes');
+	add_option("wpgpxmaps_unit_of_measure", 'mt', '', 'yes');
+	add_option("wpgpxmaps_graph_line_color", '#3366cc', '', 'yes');
+	add_option("wpgpxmaps_map_line_color", '#3366cc', '', 'yes');
 }
 
 function WP_GPX_Maps_remove() {
@@ -184,6 +199,10 @@ function WP_GPX_Maps_remove() {
 	delete_option('wpgpxmaps_show_waypoint');
 	delete_option('wpgpxmaps_pointsoffset');
 	delete_option('wpgpxmaps_donotreducegpx');
+	delete_option('wpgpxmaps_unit_of_measure');
+	delete_option('wpgpxmaps_graph_line_color');
+	delete_option('wpgpxmaps_map_line_color');
+	
 }
 
 ?>

@@ -26,9 +26,9 @@ var wrapFunction = function(fn, context, params) {
     };
 }
 
-function wpgpxmaps(targhetId,mapType,mapData,graphData,waypoints)
+function wpgpxmaps(targhetId,mapType,mapData,graphData,waypoints,unit,color1,color2)
 {
-	funqueue.push( wrapFunction(_wpgpxmaps, this, [targhetId,mapType,mapData,graphData,waypoints]));
+	funqueue.push( wrapFunction(_wpgpxmaps, this, [targhetId,mapType,mapData,graphData,waypoints,unit,color1,color2]));
 	unqueue();
 }
 
@@ -46,7 +46,7 @@ function unqueue()
 	}
 }
 
-function _wpgpxmaps(targhetId,mapType,mapData,graphData,waypoints)
+function _wpgpxmaps(targhetId,mapType,mapData,graphData,waypoints,unit,color1,color2)
 {
 	var el = document.getElementById("wpgpxmaps_" + targhetId);
 	var el_map = document.getElementById("map_" + targhetId);
@@ -96,7 +96,7 @@ function _wpgpxmaps(targhetId,mapType,mapData,graphData,waypoints)
 		}
 		var poly = new google.maps.Polyline({
 			path: points,
-			strokeColor: "#3366cc",
+			strokeColor: color1,
 			strokeOpacity: .7,
 			strokeWeight: 4
 		});
@@ -126,7 +126,13 @@ function _wpgpxmaps(targhetId,mapType,mapData,graphData,waypoints)
 				marker.setTitle("Current Position");
 				if ( chart )
 				{
-					var ci = getClosestIndex(mapData,event.latLng.Qa,event.latLng.Ra);
+					var l1 = event.latLng.Qa;				
+					if (!(l1))
+						l1 = event.latLng.Oa;
+					var l2 = event.latLng.Ra;
+					if (!(l2))
+						l2 = event.latLng.Pa;					
+					var ci = getClosestIndex(mapData,l1,l2);
 					var r = chart.setSelection([{'row': parseInt(ci) + 1}]);
 				}
 			}
@@ -136,6 +142,16 @@ function _wpgpxmaps(targhetId,mapType,mapData,graphData,waypoints)
 	// Print Graph
 	if (graphData!= '')
 	{
+	
+		var numberFormat1 = "#,###m";
+		var numberFormat2 = "#,###m";
+		
+		if (unit=="1")
+		{
+			var numberFormat1 = "#,##0.#mi";
+			var numberFormat2 = "#,###ft";		
+		}
+
 		var data = new google.visualization.DataTable();
 		data.addColumn('number', loc['length']);		
 		data.addColumn('number', loc['altitude']);
@@ -143,10 +159,11 @@ function _wpgpxmaps(targhetId,mapType,mapData,graphData,waypoints)
 		var chart = new google.visualization.AreaChart(el_chart);
 		var options = { curveType: "function",
 						strictFirstColumnType: true, 
-						hAxis : {format : '#,###m', title : loc['length']},
-						vAxis : {format : '#,###m', title : loc['altitude']},
+						hAxis : {format : numberFormat1, title : loc['length']},
+						vAxis : {format : numberFormat2, title : loc['altitude']},
 						legend : {position : 'none'},
-						chartArea: {left:70,top:10,width:"100%",height:"75%"}
+						chartArea: {left:70,top:10,width:"100%",height:"75%"},
+						colors:[color2]
 						};
 		chart.draw(data, options);
 		
@@ -163,7 +180,6 @@ function _wpgpxmaps(targhetId,mapType,mapData,graphData,waypoints)
 		//google.visualization.events.addListener(chart, 'onmouseout', function (e) {
 			//chart.setSelection([e]);
 		//});
-
 	}	
 	else	
 	{		

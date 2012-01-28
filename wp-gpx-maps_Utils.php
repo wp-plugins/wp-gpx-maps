@@ -93,7 +93,7 @@
 				if ($lastLat == 0 && $lastLon == 0)
 				{
 					//Base Case
-					array_push($points, array((float)$lat,(float)$lon,(float)round($ele,1),(float)round($dist,1)));
+					array_push($points, array((float)$lat,(float)$lon,(float)round($ele,2),(float)round($dist,2)));
 					$lastLat=$lat;
 					$lastLon=$lon;
 					$lastEle=$ele;				
@@ -101,7 +101,7 @@
 				else
 				{
 					//Normal Case
-					$offset = calculateDistance($lat, $lon, $ele,$lastLat, $lastLon, $lastEle);
+					$offset = calculateDistance((float)$lat, (float)$lon, (float)$ele, (float)$lastLat, (float)$lastLon, (float)$lastEle);
 					$dist = $dist + $offset;
 					if (((float) $offset + (float) $lastOffset) > $gpxOffset)
 					{
@@ -213,17 +213,18 @@
 	
 	function toRadians($degrees)
 	{
-		return $degrees * 3.1415926535897932385 / 180;
+		return (float)($degrees * 3.1415926535897932385 / 180);
 	}
 	
 	function calculateDistance($lat1,$lon1,$ele1,$lat2,$lon2,$ele2)
 	{
+		$alpha = (float)sin((float)toRadians((float) $lat2 - (float) $lat1) / 2);
+		$beta = (float)sin((float)toRadians((float) $lon2 - (float) $lon1) / 2);
 		//Distance in meters
-		$dLat = toRadians((float) $lat2 - (float) $lat1);
-		$dLng = toRadians((float) $lon2 - (float) $lon1);
-		$a = (float) ( sin($dLat / 2) * sin($dLat / 2)) +  (float) ( cos( toRadians($lat1)) * cos( toRadians($lat2)) * sin($dLng / 2) * sin($dLng / 2) );
-		$dist = 2 * 3958.75 * atan2(sqrt($a), sqrt(1 - (float) $a));
-		return sqrt(pow($dist * 1609.00, 2) + pow((float) $lat1 - (float)$lat2, 2));	
+		$a = (float) ( (float)$alpha * (float)$alpha) +  (float) ( (float)cos( (float)toRadians($lat1)) * (float)cos( (float)toRadians($lat2)) * (float)$beta * (float)$beta );
+		$dist = 2 * 6369628.75 * (float)atan2((float)sqrt((float)$a), (float)sqrt(1 - (float) $a));
+		$d = (float)sqrt((float)pow((float)$dist, 2) + pow((float) $lat1 - (float)$lat2, 2));	
+		return sqrt((float)pow((float)$ele1-(float)$ele2,2)+(float)pow((float)$d,2));
 	}
 
 	
