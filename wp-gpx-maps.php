@@ -97,9 +97,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	else
 	{
 		$gpx = downloadRemoteFile($gpx);
-		print_r($gpx);
 	}
-	
 	
 	$points = getPoints( $gpx, $pointsoffset, $donotreducegpx);
 	$points_maps = '';
