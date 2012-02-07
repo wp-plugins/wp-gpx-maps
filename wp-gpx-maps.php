@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.4
+Version: 1.1.5
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -82,60 +82,98 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$uom =  findValue($attr, "uom", "wpgpxmaps_unit_of_measure", "0");
 	$color_map =  findValue($attr, "mlinecolor", "wpgpxmaps_map_line_color", "#3366cc");
 	$color_graph =  findValue($attr, "glinecolor", "wpgpxmaps_graph_line_color", "#3366cc");
-
+	
 	$r = rand(1,5000000);
-	
-	$sitePath = sitePath();
-	
-	$gpx = trim($gpx);
-	
-	if (strpos($gpx, "http://") !== 0)
-	{
-		$gpx = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $gpx);
-		$gpx = $sitePath . $gpx;
-	}
-	else
-	{
-		$gpx = downloadRemoteFile($gpx);
-	}
-	
-	$points = getPoints( $gpx, $pointsoffset, $donotreducegpx);
-	$points_maps = '';
-	$points_graph = '';
-	$waypoints = '';
 
-	foreach ($points as $p) {
-		$points_maps .= '['.(float)$p[0].','.(float)$p[1].'],';
+	$cacheFileName = md5($gpx.$w.$mh.$mt.$gh.$showW.$donotreducegpx.$pointsoffset);
+	$gpxcache = gpxCacheFolderPath();
+	
+	if(!(file_exists($gpxcache) && is_dir($gpxcache)))
+	{
+		@mkdir($gpxcache,0755,true);
+	}
+	
+	$gpxcache.= DIRECTORY_SEPARATOR.$cacheFileName.".tmp";
+	
+	// Try to load cache
+	if (file_exists($gpxcache))
+	{
+		try {
+			$cache_str = file_get_contents($gpxcache);
+			$cache_obj = unserialize($cache_str);
+			$points_maps = $cache_obj["points_maps"];
+			$points_graph = $cache_obj["points_graph"];
+			$waypoints = $cache_obj["waypoints"];
+		} catch (Exception $e) {
+			$points_maps= '';
+			$points_graph= '';
+			$waypoints= '';
+		}
+	}
+	
+	if ($points_maps == '')
+	{
+
+		$sitePath = sitePath();
 		
-		if ($uom == '1')
+		$gpx = trim($gpx);
+		
+		if (strpos($gpx, "http://") !== 0)
 		{
-			// Miles and feet
-			$points_graph .= '['.((float)$p[3]*0.000621371192).','.((float)$p[2]*3.2808399).'],';	
+			$gpx = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $gpx);
+			$gpx = $sitePath . $gpx;
 		}
 		else
 		{
-			$points_graph .= '['.(float)$p[3].','.(float)$p[2].'],';		
+			$gpx = downloadRemoteFile($gpx);
 		}
-	}
-	
-	if ($showW == true)
-	{
-		$wpoints = getWayPoints($gpx);
-		foreach ($wpoints as $p) {
-			$waypoints .= '['.(float)$p[0].','.(float)$p[1].',\''.unescape($p[4]).'\',\''.unescape($p[5]).'\',\''.unescape($p[7]).'\'],';
-		}
-	}
-	
-	$p="/,$/";
-	$points_maps = preg_replace($p, "", $points_maps);
-	$points_graph = preg_replace($p, "", $points_graph);			
-	$waypoints = preg_replace($p, "", $waypoints);
-	
-	if (preg_match("/^(\[0,0\],?)+$/", $points_graph)) 
-	{		
-		$points_graph = "";	
-	} 
+		
+		$points = getPoints( $gpx, $pointsoffset, $donotreducegpx);
+		$points_maps = '';
+		$points_graph = '';
+		$waypoints = '';
 
+		foreach ($points as $p) {
+			$points_maps .= '['.(float)$p[0].','.(float)$p[1].'],';
+			
+			if ($uom == '1')
+			{
+				// Miles and feet
+				$points_graph .= '['.((float)$p[3]*0.000621371192).','.((float)$p[2]*3.2808399).'],';	
+			}
+			else
+			{
+				$points_graph .= '['.(float)$p[3].','.(float)$p[2].'],';		
+			}
+		}
+		
+		if ($showW == true)
+		{
+			$wpoints = getWayPoints($gpx);
+			foreach ($wpoints as $p) {
+				$waypoints .= '['.(float)$p[0].','.(float)$p[1].',\''.unescape($p[4]).'\',\''.unescape($p[5]).'\',\''.unescape($p[7]).'\'],';
+			}
+		}
+		
+		$p="/,$/";
+		$points_maps = preg_replace($p, "", $points_maps);
+		$points_graph = preg_replace($p, "", $points_graph);			
+		$waypoints = preg_replace($p, "", $waypoints);
+		
+		if (preg_match("/^(\[0,0\],?)+$/", $points_graph)) 
+		{		
+			$points_graph = "";	
+		} 	
+		
+		@file_put_contents($gpxcache, 
+						   serialize(array("points_maps" => $points_maps, 
+											"points_graph" => $points_graph, 
+											"waypoints" => $waypoints)
+									), 
+						   LOCK_EX);
+	    @chmod($gpxcache,0755);
+	}
+	
 	$output = '
 		<div id="wpgpxmaps_'.$r.'" style="clear:both;">
 			<div id="map_'.$r.'" style="width:'.$w.'; height:'.$mh.'"></div>

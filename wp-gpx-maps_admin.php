@@ -21,6 +21,7 @@ function ilc_admin_tabs( $current  ) {
 
 function WP_GPX_Maps_html_page() {
 	$realGpxPath = gpxFolderPath();
+	$cacheGpxPath = gpxCacheFolderPath();
 	$relativeGpxPath = relativeGpxFolderPath();
 	$relativeGpxPath = str_replace("\\","/", $relativeGpxPath);
 	$gpxRegEx = '/.gpx$/';
@@ -42,10 +43,24 @@ function WP_GPX_Maps_html_page() {
 	}
 	else
 	{
-		if (!@mkdir($realGpxPath,755,true)) {
+		if (!@mkdir($realGpxPath,0755,true)) {
 			echo '<div class="error" style="padding:10px">
 					Can\'t create <b>'.$realGpxPath.'</b> folder. Please create it and make it writable!<br />
 					If not, you will must update the file manually!
+				  </div>';
+		}
+	}
+	
+	if(file_exists($cacheGpxPath) && is_dir($cacheGpxPath))
+	{
+		//dir exsist!
+	}
+	else
+	{
+		if (!@mkdir($cacheGpxPath,0755,true)) {
+			echo '<div class="error" style="padding:10px">
+					Can\'t create <b>'.$cacheGpxPath.'</b> folder. Please create it and make it writable!<br />
+					If not, cache will not created and your site could be slower!
 				  </div>';
 		}
 	}

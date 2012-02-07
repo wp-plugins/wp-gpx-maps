@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=basti
 Tags: maps, gpx, gps, graph, google maps, google chart, track, garmin
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -79,6 +79,9 @@ Yes!
 2. Admin area - Settings
 
 == Changelog ==
+= 1.1.5 =
+* implemented cache (the plugin is much faster, especially on slow servers or external gpx)
+* minor bug fixes
 = 1.1.4 =
 * improved admin area
 * added miles/feet unit of measure 
@@ -121,6 +124,7 @@ Yes!
 * Initial release.
 
 == Upgrade Notice ==
+= 1.1.5 =
 = 1.1.4 =
 = 1.1.3 =
 = 1.1.2 =

@@ -8,13 +8,19 @@
 			unlink($realGpxPath ."/". $del);
 		}
 	}
+	
+	if ( isset($_POST['clearcache']) )
+	{
+		echo "pulisco la cahce";
+		recursive_remove_directory($cacheGpxPath,true);
+	}
 
 	if ( is_writable ( $realGpxPath ) ){
 	
 	?>
 	
 		<div class="tablenav top">
-			<form enctype="multipart/form-data" method="POST">
+			<form enctype="multipart/form-data" method="POST" style="float:left; margin:5px 20px 0 0">
 				Choose a file to upload: <input name="uploadedfile" type="file" onchange="submitgpx(this);" />
 				<?php
 					if ( isset($_FILES['uploadedfile']) )									
@@ -35,6 +41,11 @@
 					}
 				?>
 			</form>
+			
+			<form method="POST" style="float:left; margin:5px 20px 0 0">
+				<input type="submit" name="clearcache" value="Clear Cache" />
+			</form>		
+			
 		</div>	
 	
 	<?php
@@ -83,11 +94,11 @@
 				</tr>	
 				<tr>
 					<td colspan=3 style="padding: 0px 7px 7px 7px;">
-							<a href="#" onclick="delgpx('<?php echo $entry ?>'); return false;">Delete</a>
-							|	
-							<a href="../wp-content/uploads/gpx/<?php echo $entry?>">Download</a>
-							|
-							Shortcode: [sgpx gpx="<?php echo  $relativeGpxPath . $entry; ?>"]
+						<a href="#" onclick="delgpx('<?php echo $entry ?>'); return false;">Delete</a>
+						|	
+						<a href="../wp-content/uploads/gpx/<?php echo $entry?>">Download</a>
+						|
+						Shortcode: [sgpx gpx="<?php echo  $relativeGpxPath . $entry; ?>"]
 					</td>
 				</tr>
 				<?php
