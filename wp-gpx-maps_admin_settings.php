@@ -92,7 +92,7 @@
 		<tr>
 			<th scope="row">Show speed:</th>
 			<td>
-				<input name="wpgpxmaps_show_speed" type="checkbox" value="true" <?php if($showW == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Speed (where aviable)</i>
+				<input name="wpgpxmaps_show_speed" type="checkbox" value="true" <?php if($showW == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Speed (where available)</i>
 			</td>
 		</tr>		
 		<tr>
