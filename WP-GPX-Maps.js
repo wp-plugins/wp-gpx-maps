@@ -161,7 +161,7 @@ function _wpgpxmaps(params)
 
 		var data = new google.visualization.DataTable();
 		data.addColumn('number', "Distance");		
-		data.addColumn('number', "Elevation");
+		data.addColumn('number', "Altitude");
 
 		var options = { curveType: "function",
 						strictFirstColumnType: true, 

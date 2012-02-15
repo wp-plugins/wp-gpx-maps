@@ -84,7 +84,7 @@
 			</td>
 		</tr>
 		<tr>
-			<th scope="row">Elevation line color:</th>
+			<th scope="row">Altitude line color:</th>
 			<td>
 				<input name="wpgpxmaps_graph_line_color" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_graph_line_color'); ?>" />
 			</td>
