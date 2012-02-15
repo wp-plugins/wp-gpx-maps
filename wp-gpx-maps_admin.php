@@ -103,13 +103,16 @@ function WP_GPX_Maps_html_page() {
 				<li><b>width</b>: width in pixels</li>
 				<li><b>mheight</b>: map height</li>
 				<li><b>gheight</b>: graph height</li>
-				<li><b>mtype</b>: map aviable types are: HYBRID, ROADMAP, SATELLITE, TERRAIN</li>
+				<li><b>mtype</b>: map available types are: HYBRID, ROADMAP, SATELLITE, TERRAIN</li>
 				<li><b>waypoints</b>: print the gpx waypoints inside the map (default is FALSE)</li>
-				<li><b>donotreducegpx</b>: Print all the point without reduce it (default is FALSE)</li>
-				<li><b>pointsoffset</b>: Skip points closer than XX meters(default is 10)</li>
+				<li><b>donotreducegpx</b>: print all the point without reduce it (default is FALSE)</li>
+				<li><b>pointsoffset</b>: skip points closer than XX meters(default is 10)</li>
 				<li><b>uom</b>: the unit of measure values are: 0, 1 (0 = meters, 1 = miles/feet)</li>
 				<li><b>mlinecolor</b>: map line color (default is #3366cc)</li>
 				<li><b>glinecolor</b>: graph line color (default is #3366cc)</li>
+				<li><b>showspeed</b>: show speed inside the chart (default is FALSE)</li>
+				<li><b>glinecolorspeed</b>: speed line color (default is #ff0000)</li>
+				<li><b>uomspeed</b>: the unit of measure of speed are: 0, 1, 2 (0 = m/s, 1 = km/h, 2 = miles/h)</li>
 			</ul>
 
 			<p>

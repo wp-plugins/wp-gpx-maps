@@ -10,7 +10,7 @@ License: GPLv2 or later
 Draws a gpx track with altitude graph
 
 == Description ==
-This plugin has, as input, the GPX file with the track you've made. As output it shows the map of the track, fixed with an altitude graph (where aviable).
+This plugin has, as input, the GPX file with the track you've made and as output it shows the map of the track and an interactive altitude graph (where available).
 
 - iphone/ipad/ipod Compatible
 
@@ -20,7 +20,7 @@ Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="h
 
 <a href="http://www.darwinner.it/featured/wp-gpx-maps/">Bugs, problems, thanks and anything else here!</a>
 
-Supported gpx namespace are:
+Supported gpx namespaces are:
 
 1. http://www.topografix.com/GPX/1/0
 
@@ -50,13 +50,13 @@ The attributes are:
 
 1. gheight: graph height
 
-1. mtype: map aviable types are: HYBRID, ROADMAP, SATELLITE, TERRAIN
+1. mtype: map available types are: HYBRID, ROADMAP, SATELLITE, TERRAIN
 
 1. waypoints: print the gpx waypoints inside the map (default is FALSE)
 
-1. donotreducegpx: Print all the point without reduce it (default is FALSE)
+1. donotreducegpx: print all the point without reduce it (default is FALSE)
 
-1. pointsoffset: Skip points closer than XX meters(default is 10)
+1. pointsoffset: skip points closer than XX meters(default is 10)
 
 1. uom: the unit of measure of distance/altitude are values are: 0, 1 (0 = meters, 1 = miles/feet)
 
@@ -71,7 +71,7 @@ The attributes are:
 1. uomspeed: the unit of measure of speed are: 0, 1, 2 (0 = m/s, 1 = km/h, 2 = miles/h)
 
 = What happening if I've a very large gpx? =
-This plugin will print a small amout of points to to speedup javascript and pageload.
+This plugin will print a small amout of points to speedup javascript and pageload.
 
 = Is it free? =
 Yes!
@@ -86,10 +86,10 @@ Yes!
 = 1.1.6 =
 * improved charts
 * improved admin area
-* added speed support (where aviable)
+* added speed support (where available)
 * fixed mootools incompability
 = 1.1.5 =
-* implemented cache (the plugin is much faster, especially on slow servers or external gpx)
+* implemented cache (the plugin is faster, especially on slow servers or external gpx)
 * minor bug fixes
 = 1.1.4 =
 * improved admin area
@@ -102,12 +102,12 @@ Yes!
 * Improved page load time
 * Added compatibility to Wordpress Multisite (WPMU)
 = 1.1.1 =
-* minor bug fixes
+* Minor bug fixes
 = 1.1.0 =
 * Added Advanced Setting in the Admin Area
 * Added the shortcode for every entry in the admin area (easy to copy and paste in your posts)
 = 1.0.9 =
-* minor bug fixes
+* Minor bug fixes
 * Windows/IIS compatibility
 = 1.0.8 =
 * New icons (from google maps)
@@ -116,7 +116,7 @@ Yes!
 * Added waypoints support
 * New icons
 = 1.0.6 =
-* minor bug fixes
+* Minor bug fixes
 = 1.0.5 =
 * Fixed javscript errors with slow javascript loading
 = 1.0.4 =
@@ -124,13 +124,11 @@ Yes!
 * Added support for Garmin gpx (http://www.garmin.com/xmlschemas/GpxExtensions/v3 namespace)
 = 1.0.3 =
 * Added Settings link on plugins list
-* Added attributes width, mheight, gheight, mtype on shortcode. 
+* Added attributes width, mheight, gheight, mtype on shortcode
 = 1.0.2 =
-* You can manage your gpx files in the admin area.
+* You can manage your gpx files in the admin area
 = 1.0.1 =
-* Small changes on javascript localization.
-= 1.0.0 =
-* Initial release.
+* Initial release
 
 == Upgrade Notice ==
 = 1.1.6 =
@@ -151,5 +149,4 @@ Yes!
 = 1.0.3 =
 = 1.0.2 =
 = 1.0.1 =
-= 1.0.0 =
 Initial release.
