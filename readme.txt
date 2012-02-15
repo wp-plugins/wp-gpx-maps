@@ -1,10 +1,10 @@
-=== WP-GPX-Maps ===
+=== WP GPX Maps ===
 Contributors: bastianonm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=bastianonm@hotmail.com&item_name=WP-GRX-Maps&item_number=WP-GRX-Maps&amount=5&currency_code=EUR
 Tags: maps, gpx, gps, graph, google maps, google chart, track, garmin
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -14,7 +14,7 @@ This plugin has, as input, the GPX file with the track you've made. As output it
 
 - iphone/ipad/ipod Compatible
 
-Try this plugin on <a href="http://www.pedemontanadelgrappa.it/category/mappe/">http://www.pedemontanadelgrappa.it/category/mappe/</a>
+Try this plugin: <a href="http://www.pedemontanadelgrappa.it/category/mappe/">http://www.pedemontanadelgrappa.it/category/mappe/</a>
 
 Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="http://www.darwinner.it/">www.darwinner.it</a>, <a href="http://www.pedemontanadelgrappa.it/">www.pedemontanadelgrappa.it</a>, 
 
@@ -58,13 +58,17 @@ The attributes are:
 
 1. pointsoffset: Skip points closer than XX meters(default is 10)
 
-1. uom: the unit of measure values are: 0, 1 (0 = meters, 1 = miles/feet)
+1. uom: the unit of measure of distance/altitude are values are: 0, 1 (0 = meters, 1 = miles/feet)
 
 1. mlinecolor: map line color (default is #3366cc)
 
-1. glinecolor: graph line color (default is #3366cc)
+1. glinecolor: altitude line color (default is #3366cc)
 
-shortcode with all the attributes : [sgpx gpx="&gt;relative path to your gpx&lt;" width=100% mheight=300px gheight=200px mtype=SATELLITE waypoints=true]
+1. showspeed: show speed inside the chart (default is FALSE)
+
+1. glinecolorspeed: speed line color (default is #ff0000)
+
+1. uomspeed: the unit of measure of speed are: 0, 1, 2 (0 = m/s, 1 = km/h, 2 = miles/h)
 
 = What happening if I've a very large gpx? =
 This plugin will print a small amout of points to to speedup javascript and pageload.
@@ -79,6 +83,11 @@ Yes!
 2. Admin area - Settings
 
 == Changelog ==
+= 1.1.6 =
+* improved charts
+* improved admin area
+* added speed support (where aviable)
+* fixed mootools incompability
 = 1.1.5 =
 * implemented cache (the plugin is much faster, especially on slow servers or external gpx)
 * minor bug fixes
@@ -124,6 +133,8 @@ Yes!
 * Initial release.
 
 == Upgrade Notice ==
+= 1.1.6 =
+* Added speed support. To enable this feature please check the plugin settings
 = 1.1.5 =
 = 1.1.4 =
 = 1.1.3 =

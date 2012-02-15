@@ -8,6 +8,7 @@
 	$donotreducegpx = get_option("wpgpxmaps_donotreducegpx");
 	$t = get_option('wpgpxmaps_map_type');
 	$uom = get_option('wpgpxmaps_unit_of_measure');
+	$uomspeed = get_option('wpgpxmaps_unit_of_measure_speed');
 	
 	if (!($t))
 		$t = 'HYBRID';
@@ -20,23 +21,45 @@
 
 	<?php wp_nonce_field('update-options') ?>
 	
-	<table width="100%">
+	
+	<h3 class="title">Map and Chart size</h3>
+	
+	<table class="form-table">
 		<tr>
-			<th width="150" scope="row">Map and Graph size:</th>
+			<th scope="row">Width:</th>
 			<td>
-				<i>Width:</i> <input name="wpgpxmaps_width" type="text" id="wpgpxmaps_width" value="<?php echo get_option('wpgpxmaps_width'); ?>" style="width:50px;" />, 
-				<i>Map Height:</i> <input name="wpgpxmaps_height" type="text" id="wpgpxmaps_height" value="<?php echo get_option('wpgpxmaps_height'); ?>" style="width:50px;" />, 
-				<i>Graph Height:</i> <input name="wpgpxmaps_graph_height" type="text" id="wpgpxmaps_graph_height" value="<?php echo get_option('wpgpxmaps_graph_height'); ?>" style="width:50px;" />
+				<input name="wpgpxmaps_width" type="text" id="wpgpxmaps_width" value="<?php echo get_option('wpgpxmaps_width'); ?>" style="width:50px;" />
 			</td>
 		</tr>
-		<tr><td></td><td></td></tr>
+		<tr>
+			<th scope="row">Map Height:</th>
+			<td>
+				<input name="wpgpxmaps_height" type="text" id="wpgpxmaps_height" value="<?php echo get_option('wpgpxmaps_height'); ?>" style="width:50px;" />
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Graph Height:</th>
+			<td>
+				<input name="wpgpxmaps_graph_height" type="text" id="wpgpxmaps_graph_height" value="<?php echo get_option('wpgpxmaps_graph_height'); ?>" style="width:50px;" />
+			</td>
+		</tr>
+	</table>
+	
+	<h3 class="title">Maps</h3>
+	
+	<table class="form-table">
 		<tr>
 			<th scope="row">Waypoints Support:</th>
 			<td>
 				<input name="wpgpxmaps_show_waypoint" type="checkbox" value="true" <?php if($showW == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Waypoints</i>
 			</td>
 		</tr>
-		<tr><td></td><td></td></tr>
+		<tr>
+			<th scope="row">Map line color:</th>
+			<td>
+				<input name="wpgpxmaps_map_line_color" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_map_line_color'); ?>" />
+			</td>
+		</tr>
 		<tr>
 			<th scope="row">Default Map Type:</th>
 			<td>
@@ -46,7 +69,11 @@
 				<input type="radio" name="wpgpxmaps_map_type" value="TERRAIN" <?php if ($t == 'TERRAIN') echo 'checked'; ?>> TERRAIN: maps with physical features such as terrain and vegetation.<br />
 			</td>
 		</tr>
-		<tr><td></td><td></td></tr>
+	</table>
+	
+	<h3 class="title">Chart</h3>
+	
+	<table class="form-table">
 		<tr>
 			<th scope="row">Unit of measure:</th>
 			<td>
@@ -57,33 +84,58 @@
 			</td>
 		</tr>
 		<tr>
-			<th scope="row">Map line color:</th>
-			<td>
-				<input name="wpgpxmaps_map_line_color" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_map_line_color'); ?>" />
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">Graph line color:</th>
+			<th scope="row">Elevation line color:</th>
 			<td>
 				<input name="wpgpxmaps_graph_line_color" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_graph_line_color'); ?>" />
 			</td>
 		</tr>
 		<tr>
-			<th scope="row">Advanced options:</th>
+			<th scope="row">Show speed:</th>
 			<td>
-				<br />
-				<b>Do not edit if you don't know what you are doing!</b><br />				
-				<i>Skip points closer than </i> <input name="wpgpxmaps_pointsoffset" type="text" id="wpgpxmaps_pointsoffset" value="<?php echo $po ?>" style="width:50px;" /><i>meters</i>.
-				<input name="wpgpxmaps_donotreducegpx" type="checkbox" value="true" <?php if($donotreducegpx == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Do not reduce gpx</i>.
+				<input name="wpgpxmaps_show_speed" type="checkbox" value="true" <?php if($showW == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Speed (where aviable)</i>
 			</td>
 		</tr>		
+		<tr>
+			<th scope="row">Speed line color:</th>
+			<td>
+				<input name="wpgpxmaps_graph_line_color_speed" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_graph_line_color_speed'); ?>" />
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Speed unit of measure:</th>
+			<td>
+				<select name='wpgpxmaps_unit_of_measure_speed'>
+					<option value="0" <?php if ($uomspeed == '0') echo 'selected'; ?>>m/s</option>
+					<option value="1" <?php if ($uomspeed == '1') echo 'selected'; ?>>km/h</option>
+					<option value="2" <?php if ($uomspeed == '2') echo 'selected'; ?>>miles/h</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+	
+	<h3 class="title">Advanced options	<small>(Do not edit if you don't know what you are doing!)</small></h3>
+
+	
+	<table class="form-table">
+		<tr>
+			<th scope="row"></th>
+			<td>
+				<i>Skip points closer than </i> <input name="wpgpxmaps_pointsoffset" type="text" id="wpgpxmaps_pointsoffset" value="<?php echo $po ?>" style="width:50px;" /><i>meters</i>.
+			</td>
+		</tr>		
+		<tr>
+			<th scope="row"></th>
+			<td>
+				<input name="wpgpxmaps_donotreducegpx" type="checkbox" value="true" <?php if($donotreducegpx == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Do not reduce gpx</i>.
+			</td>
+		</tr>	
 	</table>
 
 	<input type="hidden" name="action" value="update" />
-	<input name="page_options" type="hidden" value="wpgpxmaps_map_type,wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_show_waypoint,wpgpxmaps_pointsoffset,wpgpxmaps_donotreducegpx,wpgpxmaps_unit_of_measure,wpgpxmaps_map_line_color,wpgpxmaps_graph_line_color" />
+	<input name="page_options" type="hidden" value="wpgpxmaps_map_type,wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_show_waypoint,wpgpxmaps_pointsoffset,wpgpxmaps_donotreducegpx,wpgpxmaps_unit_of_measure,wpgpxmaps_map_line_color,wpgpxmaps_graph_line_color,wpgpxmaps_show_speed,wpgpxmaps_graph_line_color_speed,wpgpxmaps_unit_of_measure_speed" />
 
-	<p>
-		<input type="submit" value="<?php _e('Save Changes') ?>" />
+	<p class="submit">
+		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 	</p>
 
 </form>

@@ -111,7 +111,7 @@
 		$points = array();
 		$gpx = simplexml_load_file($filePath);	
 		
-		if($gpx ===  FALSE) 
+		if($gpx === FALSE) 
 			return;
 		
 		$gpx->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
@@ -135,10 +135,12 @@
 				$lat = $trkpt['lat'];
 				$lon = $trkpt['lon'];
 				$ele = $trkpt->ele;
+				$speed = (float)$trkpt->speed;
+
 				if ($lastLat == 0 && $lastLon == 0)
 				{
 					//Base Case
-					array_push($points, array((float)$lat,(float)$lon,(float)round($ele,2),(float)round($dist,2)));
+					array_push($points, array((float)$lat,(float)$lon,(float)round($ele,2),(float)round($dist,2), $speed ));
 					$lastLat=$lat;
 					$lastLon=$lon;
 					$lastEle=$ele;				
@@ -152,7 +154,7 @@
 					{
 						//Bigger Offset -> write coordinate
 						$lastOffset=0;
-						array_push($points, array((float)$lat,(float)$lon,(float)round($ele,1),(float)round($dist,1)));
+						array_push($points, array((float)$lat,(float)$lon,(float)round($ele,1),(float)round($dist,1), $speed ));
 					}
 					else
 					{
