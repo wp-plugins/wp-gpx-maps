@@ -114,7 +114,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		}
 	}
 
-	if ($points_maps == '' || true)
+	if ($points_maps == '')
 	{
 	
 		$sitePath = sitePath();
