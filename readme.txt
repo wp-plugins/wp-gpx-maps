@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=basti
 Tags: maps, gpx, gps, graph, google maps, google chart, track, garmin
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -58,7 +58,7 @@ The attributes are:
 
 1. pointsoffset: skip points closer than XX meters(default is 10)
 
-1. uom: the unit of measure of distance/altitude are values are: 0, 1 (0 = meters, 1 = miles/feet)
+1. uom: the unit of measure of distance/altitude are values are: 0, 1, 2 (0 = meters, 1 = feet/miles, 2 = meters/kilometers)
 
 1. mlinecolor: map line color (default is #3366cc)
 
@@ -83,6 +83,10 @@ Yes!
 2. Admin area - Settings
 
 == Changelog ==
+= 1.1.7 =
+* new unit of measure (meters/kilometers)
+* mouse wheel scrolling issue fixed
+* minor bug fixes
 = 1.1.6 =
 * improved charts
 * improved admin area

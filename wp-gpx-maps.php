@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.6
+Version: 1.1.7
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -88,7 +88,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		
 	$r = rand(1,5000000);
 
-	$cacheFileName = md5($gpx.$w.$mh.$mt.$gh.$showW.$donotreducegpx.$pointsoffset,$showSpeed);
+	$cacheFileName = md5($gpx.$w.$mh.$mt.$gh.$showW.$donotreducegpx.$pointsoffset.$showSpeed.$uom);
 	$gpxcache = gpxCacheFolderPath();
 	
 	if(!(file_exists($gpxcache) && is_dir($gpxcache)))
@@ -141,12 +141,25 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		$points_graph = '';
 		$waypoints = '';
 	
-		if ($showSpeed == true)
-		{
-		
-			foreach ($points as $p) {
-				$points_maps .= '['.(float)$p[0].','.(float)$p[1].'],';
-				
+		foreach ($points as $p) {
+			$points_maps .= '['.(float)$p[0].','.(float)$p[1].'],';
+	
+			$_dist = $p[3];
+			$_ele = $p[2];
+			
+			if ($uom == '1')
+			{
+				// Miles and feet			
+				$_dist *= 0.000621371192;
+				$_ele *= 3.2808399;
+			} else if ($uom == '2')
+			{
+				// meters / kilometers
+				$_dist = $_dist/1000;
+			}
+			
+			if ($showSpeed == true) {
+			
 				$_speed = $p[4]; // dafault m/s
 				
 				if ($uomspeed == '2') // miles/h
@@ -156,37 +169,16 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 				else if ($uomspeed == '1') // km/h
 				{
 					$_speed *= 3.6;
-				} 
-				
-				if ($uom == '1')
-				{
-					// Miles and feet
-					$points_graph .= '['.((float)$p[3]*0.000621371192).','.((float)$p[2]*3.2808399).','.$_speed.'],';	
-				}
-				else
-				{
-					$points_graph .= '['.(float)$p[3].','.(float)$p[2].','.$_speed.'],';		
-				}
-			}		
+				} 				
+			
+				$points_graph .= '['.$_dist.','.$_ele.','.$_speed.'],';	
+			}
+			else {
+				$points_graph .= '['.$_dist.','.$_ele.'],';	
+			}
+			
 		}
-		else
-		{
-		
-			foreach ($points as $p) {
-				$points_maps .= '['.(float)$p[0].','.(float)$p[1].'],';
-				
-				if ($uom == '1')
-				{
-					// Miles and feet
-					$points_graph .= '['.((float)$p[3]*0.000621371192).','.((float)$p[2]*3.2808399).'],';	
-				}
-				else
-				{
-					$points_graph .= '['.(float)$p[3].','.(float)$p[2].'],';		
-				}
-			}		
 
-		}
 		
 		if ($showW == true)
 		{

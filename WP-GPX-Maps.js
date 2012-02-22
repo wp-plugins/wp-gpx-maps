@@ -59,8 +59,10 @@ function _wpgpxmaps(params)
 		case 'ROADMAP': { mapType = google.maps.MapTypeId.ROADMAP; break;}
 		default: { mapType = google.maps.MapTypeId.HYBRID; break;}
 	}
+	
 	var mapOptions = {
-	  mapTypeId: mapType
+		mapTypeId: mapType,
+		scrollwheel: false
 	};
 	var map = new google.maps.Map(el_map, mapOptions); 
 	
@@ -129,14 +131,8 @@ function _wpgpxmaps(params)
 				marker.setTitle("Current Position");
 				if ( chart )
 				{
-					var l1 = event.latLng.Qa;				
-					if (!(l1))
-						l1 = event.latLng.Oa;
-						
-					var l2 = event.latLng.Ra;
-					if (!(l2))
-						l2 = event.latLng.Pa;	
-						
+					var l1 = event.latLng.lat();
+					var l2 = event.latLng.lng();					
 					var ci = getClosestIndex(mapData,l1,l2);
 					var r = chart.setSelection([{'row': parseInt(ci) + 1}]);
 				}
@@ -155,6 +151,11 @@ function _wpgpxmaps(params)
 		{
 			numberFormat1 = "#,##0.#mi";
 			numberFormat2 = "#,###ft";		
+		}
+		else if (unit=="2")
+		{
+			numberFormat1 = "#,###0.#km";
+			numberFormat2 = "#,###m";
 		}
 		
 		var showSpeed = (graphData[0].length == 3);

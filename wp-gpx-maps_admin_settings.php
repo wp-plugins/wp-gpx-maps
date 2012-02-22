@@ -78,8 +78,9 @@
 			<th scope="row">Unit of measure:</th>
 			<td>
 				<select name='wpgpxmaps_unit_of_measure'>
-					<option value="0" <?php if ($uom == '0') echo 'selected'; ?>>meters</option>
-					<option value="1" <?php if ($uom == '1') echo 'selected'; ?>>miles/feet</option>
+					<option value="0" <?php if ($uom == '0') echo 'selected'; ?>>meters/meters</option>
+					<option value="1" <?php if ($uom == '1') echo 'selected'; ?>>feet/miles</option>
+					<option value="2" <?php if ($uom == '2') echo 'selected'; ?>>meters/kilometers</option>
 				</select>
 			</td>
 		</tr>
