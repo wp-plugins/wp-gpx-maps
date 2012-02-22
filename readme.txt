@@ -135,6 +135,7 @@ Yes!
 * Initial release
 
 == Upgrade Notice ==
+= 1.1.7 =
 = 1.1.6 =
 * Added speed support. To enable this feature please check the plugin settings
 = 1.1.5 =
