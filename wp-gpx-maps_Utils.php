@@ -126,8 +126,10 @@
 			$lastLat = 0;
 			$lastLon = 0;
 			$lastEle = 0;
+			$lastTime = 0;
 			$dist = 0;
 			$lastOffset = 0;
+			$speedBuffer = array();
 		
 			// normal case
 			foreach($nodes as $trkpt)
@@ -135,36 +137,71 @@
 				$lat = $trkpt['lat'];
 				$lon = $trkpt['lon'];
 				$ele = $trkpt->ele;
+				$time = $trkpt->time;
 				$speed = (float)$trkpt->speed;
 
 				if ($lastLat == 0 && $lastLon == 0)
 				{
 					//Base Case
-					array_push($points, array((float)$lat,(float)$lon,(float)round($ele,2),(float)round($dist,2), $speed ));
+					array_push($points, array((float)$lat,(float)$lon,(float)round($ele,2),(float)round($dist,2), 0 ));
 					$lastLat=$lat;
 					$lastLon=$lon;
 					$lastEle=$ele;				
+					$lastTime=$time;	
 				}
 				else
 				{
 					//Normal Case
 					$offset = calculateDistance((float)$lat, (float)$lon, (float)$ele, (float)$lastLat, (float)$lastLon, (float)$lastEle);
 					$dist = $dist + $offset;
+					
+					if ($speed == 0)
+					{
+						$datediff = (float)date_diff($lastTime,$time);
+						//echo "------------$time-------$lastTime-----";
+						//echo "------------$datediff------------";
+						if ($datediff>0)
+						{
+							$speed = $offset / $datediff;
+						}
+					}
+					
+					array_push($speedBuffer, $speed);
+					
 					if (((float) $offset + (float) $lastOffset) > $gpxOffset)
 					{
 						//Bigger Offset -> write coordinate
+						
+						$avgSpeed = 0;
+						
+						foreach($speedBuffer as $s)
+						{ 
+							$avgSpeed += $s;
+						}
+						
+						$avgSpeed = $avgSpeed / count($speedBuffer);
+						$speedBuffer = array();
+						
 						$lastOffset=0;
-						array_push($points, array((float)$lat,(float)$lon,(float)round($ele,1),(float)round($dist,1), $speed ));
+						array_push($points, array(
+													(float)$lat,
+													(float)$lon,
+													(float)round($ele,1),
+													(float)round($dist,1), 
+													(float)round($avgSpeed,1) 
+												)
+									);
 					}
 					else
 					{
 						//Smoller Offset -> continue..
-						$lastOffset= (float) $lastOffset + (float) $offset ;
+						$lastOffset = (float) $lastOffset + (float) $offset ;
 					}
 				}
 				$lastLat=$lat;
 				$lastLon=$lon;
 				$lastEle=$ele;
+				$lastTime=$time;	
 			}
 			unset($nodes);
 		
@@ -273,6 +310,35 @@
 		$d = (float)sqrt((float)pow((float)$dist, 2) + pow((float) $lat1 - (float)$lat2, 2));	
 		return sqrt((float)pow((float)$ele1-(float)$ele2,2)+(float)pow((float)$d,2));
 	}
+	
+	function date_diff($old_date, $new_date) {
+	
+		$t1 = strtotime($new_date);
+		$t2 = strtotime($old_date);
+		
+		// milliceconds fix
+		$t1 += date_getDecimals($new_date);
+		$t2 += date_getDecimals($old_date);
+	
+		$offset = (float)($t1 - $t2);
+	  
+		//echo "$offset = $new_date - $old_date; ".strtotime($new_date)." ".strtotime($old_date)." <br />";
+	  
+	  return $offset;
+	}
+
+	function date_getDecimals($date)
+	{
+		if (preg_match('(\.([0-9]{2})Z?)', $date, $matches))
+		{
+			return (float)((float)$matches[1] / 100);
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
 
 	
 ?>

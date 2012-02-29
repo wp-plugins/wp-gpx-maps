@@ -11,7 +11,7 @@
 	
 	if ( isset($_POST['clearcache']) )
 	{
-		echo "pulisco la cahce";
+		echo "Cache is now empty!";
 		recursive_remove_directory($cacheGpxPath,true);
 	}
 
