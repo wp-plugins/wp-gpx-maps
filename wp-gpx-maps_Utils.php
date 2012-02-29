@@ -157,7 +157,7 @@
 					
 					if ($speed == 0)
 					{
-						$datediff = (float)date_diff($lastTime,$time);
+						$datediff = (float)my_date_diff($lastTime,$time);
 						//echo "------------$time-------$lastTime-----";
 						//echo "------------$datediff------------";
 						if ($datediff>0)
@@ -311,7 +311,7 @@
 		return sqrt((float)pow((float)$ele1-(float)$ele2,2)+(float)pow((float)$d,2));
 	}
 	
-	function date_diff($old_date, $new_date) {
+	function my_date_diff($old_date, $new_date) {
 	
 		$t1 = strtotime($new_date);
 		$t2 = strtotime($old_date);
