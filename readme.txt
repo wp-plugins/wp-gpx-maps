@@ -18,7 +18,9 @@ Try this plugin: <a href="http://www.pedemontanadelgrappa.it/category/mappe/">ht
 
 Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="http://www.darwinner.it/">www.darwinner.it</a>, <a href="http://www.pedemontanadelgrappa.it/">www.pedemontanadelgrappa.it</a>, 
 
-<a href="http://www.darwinner.it/featured/wp-gpx-maps/">Bugs, problems, thanks and anything else here!</a>
+<a href="http://www.darwinner.it/featured/wp-gpx-maps/">Plugin page</a>
+
+<a href="http://www.darwinner.it/forums/forum/wp-gpx-maps/">Support Forum</a>
 
 Supported gpx namespaces are:
 
