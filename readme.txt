@@ -1,16 +1,19 @@
 === WP GPX Maps ===
 Contributors: bastianonm
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=bastianonm@hotmail.com&item_name=WP-GRX-Maps&item_number=WP-GRX-Maps&amount=5&currency_code=EUR
-Tags: maps, gpx, gps, graph, google maps, google chart, track, garmin
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=bastianonm@hotmail.com&item_name=WP%20GPX%20Maps&item_number=Donation
+Tags: maps, gpx, gps, graph, chart, google maps, google chart, track, garmin
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.1.9
+Stable tag: 1.1.10
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
 
 == Description ==
+
 This plugin has, as input, the GPX file with the track you've made and as output it shows the map of the track and an interactive altitude graph (where available).
+
+Fully configurable: custom colors and icons to make the map look like your site.
 
 - iphone/ipad/ipod Compatible
 
@@ -72,6 +75,21 @@ The attributes are:
 
 1. uomspeed: the unit of measure of speed are: 0, 1, 2 (0 = m/s, 1 = km/h, 2 = miles/h)
 
+1. chartFrom1: minimun value for altitude chart
+
+1. chartTo1: maxumin value for altitude chart
+
+1. chartFrom2: minimun value for speed chart
+
+1. chartTo2: maxumin value for speed chart
+
+1. startIcon: Start track icon
+
+1. endIcon: End track icon
+
+1. currentIcon: Current position icon (when mouse hover)
+
+
 = What happening if I've a very large gpx? =
 This plugin will print a small amout of points to speedup javascript and pageload.
 
@@ -85,6 +103,10 @@ Yes!
 2. Admin area - Settings
 
 == Changelog ==
+= 1.1.10 =
+* Configurable Map Icons 
+* Chart scale configuration (max and min values)
+= 1.1.9 =
 = 1.1.8 =
 * cache issues fixed
 * added speed when not present in the gpx (derived from datetime)
@@ -140,6 +162,8 @@ Yes!
 * Initial release
 
 == Upgrade Notice ==
+= 1.1.10 =
+= 1.1.9 =
 = 1.1.8 =
 = 1.1.7 =
 = 1.1.6 =

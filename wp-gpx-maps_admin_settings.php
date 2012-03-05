@@ -21,7 +21,6 @@
 
 	<?php wp_nonce_field('update-options') ?>
 	
-	
 	<h3 class="title">Map and Chart size</h3>
 	
 	<table class="form-table">
@@ -44,6 +43,18 @@
 			</td>
 		</tr>
 	</table>
+	
+	<p class="submit">
+		<input type="hidden" name="action" value="update" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width" />
+		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+	</p>
+
+</form>
+	<hr />
+<form method="post" action="options.php">
+
+	<?php wp_nonce_field('update-options') ?>
 	
 	<h3 class="title">Maps</h3>
 	
@@ -69,12 +80,52 @@
 				<input type="radio" name="wpgpxmaps_map_type" value="TERRAIN" <?php if ($t == 'TERRAIN') echo 'checked'; ?>> TERRAIN: maps with physical features such as terrain and vegetation.<br />
 			</td>
 		</tr>
+		
+		<tr>
+			<th scope="row">Start Icon:</th>
+			<td>
+				<input name="wpgpxmaps_map_start_icon" value="<?php echo get_option('wpgpxmaps_map_start_icon'); ?>" style="width:400px" /> <em>(Url to image) Leave empty to hide</em>
+			</td>
+		</tr>
+		
+		<tr>
+			<th scope="row">End Icon:</th>
+			<td>
+				<input name="wpgpxmaps_map_end_icon" value="<?php echo get_option('wpgpxmaps_map_end_icon'); ?>" style="width:400px" /> <em>(Url to image) Leave empty to hide</em>
+			</td>
+		</tr>
+		
+		<tr>
+			<th scope="row">Current Position Icon:</th>
+			<td>
+				<input name="wpgpxmaps_map_current_icon" value="<?php echo get_option('wpgpxmaps_map_current_icon'); ?>" style="width:400px" /> <em>(Url to image) Leave empty for default</em>
+			</td>
+		</tr>
+		
 	</table>
+
+	<p class="submit">
+		<input type="hidden" name="action" value="update" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_show_waypoint,wpgpxmaps_map_line_color,wpgpxmaps_map_type,wpgpxmaps_map_start_icon,wpgpxmaps_map_end_icon,wpgpxmaps_map_current_icon" />
+		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+	</p>
+
+</form>
+	<hr />
+<form method="post" action="options.php">
+
+	<?php wp_nonce_field('update-options') ?>
 	
 	<h3 class="title">Chart</h3>
 	
 	<table class="form-table">
 		<tr>
+			<tr>
+				<th scope="row">Altitude line color:</th>
+				<td>
+					<input name="wpgpxmaps_graph_line_color" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_graph_line_color'); ?>" />
+				</td>
+			</tr>		
 			<th scope="row">Unit of measure:</th>
 			<td>
 				<select name='wpgpxmaps_unit_of_measure'>
@@ -85,15 +136,19 @@
 			</td>
 		</tr>
 		<tr>
-			<th scope="row">Altitude line color:</th>
+			<th scope="row">Altitude display offset:</th>
 			<td>
-				<input name="wpgpxmaps_graph_line_color" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_graph_line_color'); ?>" />
+				From
+				<input name="wpgpxmaps_graph_offset_from1" value="<?php echo get_option('wpgpxmaps_graph_offset_from1'); ?>" style="width:50px;" />
+				To
+				<input name="wpgpxmaps_graph_offset_to1" value="<?php echo get_option('wpgpxmaps_graph_offset_to1'); ?>" style="width:50px;" />
+				<em>(leave empty for auto scale)</em>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">Show speed:</th>
 			<td>
-				<input name="wpgpxmaps_show_speed" type="checkbox" value="true" <?php if($showW == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Speed (where available)</i>
+				<input name="wpgpxmaps_show_speed" type="checkbox" value="true" <?php if($showW == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Speed</i>
 			</td>
 		</tr>		
 		<tr>
@@ -111,8 +166,31 @@
 					<option value="2" <?php if ($uomspeed == '2') echo 'selected'; ?>>miles/h</option>
 				</select>
 			</td>
+		</tr>		
+		<tr>
+			<th scope="row">Speed display offset:</th>
+			<td>
+				From
+				<input name="wpgpxmaps_graph_offset_from2" value="<?php echo get_option('wpgpxmaps_graph_offset_from2'); ?>" style="width:50px;" />
+				To
+				<input name="wpgpxmaps_graph_offset_to2" value="<?php echo get_option('wpgpxmaps_graph_offset_to2'); ?>" style="width:50px;" />
+				<em>(leave empty for auto scale)</em>
+			</td>
 		</tr>
 	</table>
+	
+
+	<p class="submit">
+		<input type="hidden" name="action" value="update" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_unit_of_measure,wpgpxmaps_graph_line_color,wpgpxmaps_show_speed,wpgpxmaps_graph_line_color_speed,wpgpxmaps_unit_of_measure_speed,wpgpxmaps_graph_offset_from1,wpgpxmaps_graph_offset_to1,wpgpxmaps_graph_offset_from2,wpgpxmaps_graph_offset_to2" />
+		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+	</p>
+
+</form>
+	<hr />
+<form method="post" action="options.php">
+
+	<?php wp_nonce_field('update-options') ?>
 	
 	<h3 class="title">Advanced options	<small>(Do not edit if you don't know what you are doing!)</small></h3>
 
@@ -133,10 +211,11 @@
 	</table>
 
 	<input type="hidden" name="action" value="update" />
-	<input name="page_options" type="hidden" value="wpgpxmaps_map_type,wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_show_waypoint,wpgpxmaps_pointsoffset,wpgpxmaps_donotreducegpx,wpgpxmaps_unit_of_measure,wpgpxmaps_map_line_color,wpgpxmaps_graph_line_color,wpgpxmaps_show_speed,wpgpxmaps_graph_line_color_speed,wpgpxmaps_unit_of_measure_speed" />
+	<input name="page_options" type="hidden" value="wpgpxmaps_pointsoffset,wpgpxmaps_donotreducegpx" />
 
 	<p class="submit">
 		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 	</p>
 
 </form>
+<hr />

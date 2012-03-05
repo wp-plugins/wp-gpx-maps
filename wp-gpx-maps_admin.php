@@ -85,21 +85,11 @@ function WP_GPX_Maps_html_page() {
 		<p>You can also use gpx from other sites: <b>[sgpx gpx="http://www.someone.com/somewhere/somefile.gpx"]</b></p>
 		<hr />
 		<p>
-			<i>Full set of attributes:</i> <b>[sgpx 
-													gpx="<?php echo $relativeGpxPath; ?>&lt gpx file name &gt" 
-													width=100% 
-													mheight=450px 
-													gheight=200px 
-													mtype=SATELLITE 
-													waypoints=true 
-													donotreducegpx=false 
-													pointsoffset=10
-													uom=0
-													mlinecolor=#3366cc
-													glinecolor=#3366cc]</b>
+			<i>Full set of attributes:</i> <b>[sgpx gpx="<?php echo $relativeGpxPath; ?>&lt gpx file name &gt" </b>
+													&nbsp;&nbsp;&nbsp;<em>&gt&gt read below all the optional attributes &lt&lt</em>&nbsp;&nbsp;&nbsp;
+											<b>]</b>
 
 			<ul>
-				<li><b>gpx</b>: relative path to gpx</li>
 				<li><b>width</b>: width in pixels</li>
 				<li><b>mheight</b>: map height</li>
 				<li><b>gheight</b>: graph height</li>
@@ -113,6 +103,13 @@ function WP_GPX_Maps_html_page() {
 				<li><b>showspeed</b>: show speed inside the chart (default is FALSE)</li>
 				<li><b>glinecolorspeed</b>: speed line color (default is #ff0000)</li>
 				<li><b>uomspeed</b>: the unit of measure of speed are: 0, 1, 2 (0 = m/s, 1 = km/h, 2 = miles/h)</li>
+				<li><b>chartFrom1</b>: minimun value for altitude chart</li>
+				<li><b>chartTo1</b>: maxumin value for altitude chart</li>
+				<li><b>chartFrom2</b>: minimun value for speed chart</li>
+				<li><b>chartTo2</b>: maxumin value for speed chart</li>				
+				<li><b>startIcon</b>: Start track icon</li>
+				<li><b>endIcon</b>: End track icon</li>
+				<li><b>currentIcon</b>: Current position icon (when mouse hover)</li>	
 			</ul>
 
 			<p>

@@ -47,7 +47,14 @@ function _wpgpxmaps(params)
 	var color1 = params.color1;
 	var color2 = params.color2;
 	var color3 = params.color3;
-
+	var chartFrom1 = params.chartFrom1;
+	var chartTo1 = params.chartTo1;
+	var chartFrom2 = params.chartFrom2;
+	var chartTo2 = params.chartTo2;
+	var startIcon = params.startIcon;
+	var endIcon = params.endIcon;
+	var currentIcon = params.currentIcon;
+	
 	var el = document.getElementById("wpgpxmaps_" + targetId);
 	var el_map = document.getElementById("map_" + targetId);
 	var el_chart = document.getElementById("chart_" + targetId);
@@ -99,6 +106,33 @@ function _wpgpxmaps(params)
 			bounds.extend(p);
 		}
 		
+		if (startIcon != '')
+		{
+			var startIconImage = new google.maps.MarkerImage(startIcon);
+			var startMarker = new google.maps.Marker({
+					  position: points[0],
+					  map: map,
+					  title: "Start",
+					  animation: google.maps.Animation.DROP,
+					  icon: startIconImage,
+					  zIndex: 10
+				  });
+		}
+
+		if (endIcon != '')
+		{
+			var endIconImage = new google.maps.MarkerImage(endIcon);
+			var startMarker = new google.maps.Marker({
+					  position: points[ points.length -1 ],
+					  map: map,
+					  title: "Start",
+					  animation: google.maps.Animation.DROP,
+					  icon: endIconImage,
+					  zIndex: 10
+				  });
+		
+		}
+		
 		var poly = new google.maps.Polyline({
 			path: points,
 			strokeColor: color1,
@@ -110,7 +144,12 @@ function _wpgpxmaps(params)
 		map.fitBounds(bounds);
 		var first = getItemFromArray(mapData,0)
 		
-		var current = new google.maps.MarkerImage("http://maps.google.com/mapfiles/kml/pal4/icon25.png",
+		if (currentIcon == '')
+		{
+			currentIcon = "http://maps.google.com/mapfiles/kml/pal4/icon25.png";
+		}
+		
+		var current = new google.maps.MarkerImage(currentIcon,
 			new google.maps.Size(32, 32),
 			new google.maps.Point(0,0),
 			new google.maps.Point(16, 16)
@@ -164,6 +203,18 @@ function _wpgpxmaps(params)
 		data.addColumn('number', "Distance");		
 		data.addColumn('number', "Altitude");
 
+		if (!isNumeric(chartFrom1))
+			chartFrom1 = null;
+			
+		if (!isNumeric(chartTo1))
+			chartTo1 = null;
+		
+		if (!isNumeric(chartFrom2))
+			chartFrom2 = null;
+
+		if (!isNumeric(chartTo2))
+			chartTo2 = null;		
+			
 		var options = { curveType: "function",
 						strictFirstColumnType: true, 
 						hAxis : {format : numberFormat1},
@@ -174,6 +225,12 @@ function _wpgpxmaps(params)
 						tooltip: { showColorCode: true},
 						fontSize:11
 						};
+
+		if ( chartFrom1 != null || chartTo1 != null )
+		{
+			options.vAxis.viewWindowMode = "explicit";
+			options.vAxis.viewWindow = { min : chartFrom1, max : chartTo1};
+		}
 						
 		if (showSpeed)
 		{
@@ -192,12 +249,27 @@ function _wpgpxmaps(params)
 				speedFormat = "#,##0.#m/s";
 			}
 			data.addColumn('number', "Speed");
+			
 			options.vAxes = { 0:{format : numberFormat2, targetAxisIndex : 0},
 							  1:{format : speedFormat,    targetAxisIndex : 1}
 							};
+							
+			if ( chartFrom1 != null || chartTo1 != null )
+			{
+				options.vAxes[0].viewWindowMode = "explicit";
+				options.vAxes[0].viewWindow = { min : chartFrom1, max : chartTo1};
+			}
+			
+			if ( chartFrom2 != null || chartTo2 != null )
+			{
+				options.vAxes[1].viewWindowMode = "explicit";
+				options.vAxes[1].viewWindow = { min : chartFrom2, max : chartTo2};
+			}							
+							
 			options.series = {	0:{color: color2, visibleInLegend: true, targetAxisIndex : 0}, 
 								1:{color: color3, visibleInLegend: true, targetAxisIndex : 1}
 							 };
+							 
 			options.chartArea.width="85%";
 			//alert(el_chart.clientWidth);
 		}
@@ -276,6 +348,11 @@ function getClosestIndex(points,lat,lon)
 		}
 	}
 	return ii;
+}
+
+function isNumeric(input){
+    var RE = /^-{0,1}\d*\.{0,1}\d+$/;
+    return (RE.test(input));
 }
 
 function dist(lat1,lon1,lat2,lon2)
