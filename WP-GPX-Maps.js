@@ -34,6 +34,87 @@ function unqueue()
 	}
 }
 
+
+
+  function CustomMarker( map, latlng, src, img_w, img_h) {
+    this.latlng_ = latlng;
+
+    // Once the LatLng and text are set, add the overlay to the map.  This will
+    // trigger a call to panes_changed which should in turn call draw.
+    this.setMap(map);
+	this.src_ = src;
+	this.img_w_ = img_w;
+	this.img_h_ = img_h;
+  }
+
+  CustomMarker.prototype = new google.maps.OverlayView();
+
+  CustomMarker.prototype.draw = function() {
+    var me = this;
+
+    // Check if the div has been created.
+    var div = this.div_;
+    if (!div) {
+      // Create a overlay text DIV
+      div = this.div_ = document.createElement('DIV');
+	  div.style.cssText = "border:1px solid #fff;position:absolute;cursor:pointer;margin:0;background:url('"+this.src_+"') center;width:"+(this.img_w_/3)+"px;height:"+(this.img_h_/3)+"px;";
+	  div.setAttribute("lat",this.latlng_.lat());
+	  div.setAttribute("lon",this.latlng_.lng());
+      google.maps.event.addDomListener(div, "click", function(event) {
+        google.maps.event.trigger(me, "click",div);
+      });
+
+		google.maps.event.addDomListener(div, "mouseover", function(event) {
+		
+			var _t = div.style.top.replace('px','');
+			var _l = div.style.left.replace('px','');
+		
+			jQuery(div).animate({
+				height: me.img_h_,
+				width : me.img_w_,
+				top   : _t - (me.img_h_ / 3),
+				left  : _l - (me.img_w_ / 3)
+			  }, 100);
+		});
+
+		google.maps.event.addDomListener(div, "mouseout", function(event) {
+			jQuery(div).animate({
+				height: me.img_h_ / 3,
+				width: me.img_w_ / 3,
+				top   : me.orig_top,
+				left  : me.orig_left
+			  }, 100);
+		});
+
+      // Then add the overlay to the DOM
+      var panes = this.getPanes();
+      panes.overlayImage.appendChild(div);
+    }
+
+    // Position the overlay 
+    var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+    if (point) {
+      div.style.left = point.x + 'px';
+      div.style.top = point.y + 'px';
+	  
+	  this.orig_left = point.x;
+	  this.orig_top = point.y;
+	  
+    }
+  };
+
+  CustomMarker.prototype.remove = function() {
+    // Check if the overlay was on the map and needs to be removed.
+    if (this.div_) {
+      this.div_.parentNode.removeChild(this.div_);
+      this.div_ = null;
+    }
+  };
+
+
+
+
+
 function _wpgpxmaps(params)
 {
 
@@ -59,6 +140,8 @@ function _wpgpxmaps(params)
 	var el_map = document.getElementById("map_" + targetId);
 	var el_chart = document.getElementById("chart_" + targetId);
 	
+	var mapWidth = el_map.style.width;
+	
 	switch (mapType)
 	{
 		case 'TERRAIN': { mapType = google.maps.MapTypeId.TERRAIN; break;}
@@ -72,6 +155,7 @@ function _wpgpxmaps(params)
 		scrollwheel: false
 	};
 	var map = new google.maps.Map(el_map, mapOptions); 
+	var bounds = new google.maps.LatLngBounds();
 	
 	// Print WayPoints
 	if (waypoints != '')
@@ -93,11 +177,54 @@ function _wpgpxmaps(params)
 		}
 	}
 	
+	// Print Images
+	
+	var divImages = document.getElementById("ngimages_"+targetId);
+	
+	divImages.style.display='block';	
+	divImages.style.position='absolute';
+	divImages.style.left='-500px';	
+	
+	var img_spans = divImages.getElementsByTagName("span");   
+	
+
+	if (img_spans.length > 0)
+	{
+		var bb = new google.maps.LatLngBounds();
+		for (var i = 0; i < img_spans.length; i++) {   
+		
+			var imageLat  = img_spans[i].getAttribute("lat");
+			var imageLon  = img_spans[i].getAttribute("lon");	
+			var imageImg  = img_spans[i].getElementsByTagName('img')[0];
+			var imageUrl  = imageImg.getAttribute("src");
+			
+			var img_w = imageImg.clientWidth;
+			var img_h = imageImg.clientHeight;
+			
+			var p = new google.maps.LatLng(imageLat, imageLon);
+			bounds.extend(p);
+
+			var mc = new CustomMarker(map, p, imageUrl, img_w, img_h );
+			
+			google.maps.event.addListener(mc, "click", function(div) {
+				var lat = div.getAttribute("lat");
+				var lon = div.getAttribute("lon");
+				var a = getClosestImage(lat,lon,targetId).childNodes[0];			
+				if (a)
+				{
+					a.click();
+				}
+			});
+			
+		}  
+
+	}
+	
+
 	// Print Track
 	if (mapData != '')		
 	{
 		var points = [];
-		var bounds = new google.maps.LatLngBounds();
 
 		for (i=0; i < mapData.length; i++) 
 		{
@@ -140,8 +267,7 @@ function _wpgpxmaps(params)
 			strokeWeight: 4
 		});
 		poly.setMap(map);
-		map.setCenter(bounds.getCenter()); 
-		map.fitBounds(bounds);
+
 		var first = getItemFromArray(mapData,0)
 		
 		if (currentIcon == '')
@@ -178,6 +304,9 @@ function _wpgpxmaps(params)
 			}
 		});
 	}
+	
+	map.setCenter(bounds.getCenter()); 
+	map.fitBounds(bounds);
 	
 	// Print Graph
 	if (graphData!= '')
@@ -288,6 +417,16 @@ function _wpgpxmaps(params)
 				marker.setTitle("Current Position");
 			}
 		});
+
+		if( mapWidth = "100%")
+		{
+			var resizeChart = function(){
+				el_chart.style.width = el_chart.clientWidth + "px";
+				chart.draw(data, options);
+			};
+			google.maps.event.addListener(map, "idle", resizeChart);
+		}
+
 		//google.visualization.events.addListener(chart, 'onmouseout', function (e) {
 			//chart.setSelection([e]);
 		//});
@@ -315,9 +454,16 @@ function addWayPoint(map, image, shadow, lat, lon, title, descr)
 		{
 			infowindow.close(); 		
 		}
-		infowindow = new google.maps.InfoWindow({
-			content: "<b>" + title + "</b></br />" + descr
-		});
+		var cnt = '';	
+		if (title=='')
+		{
+			cnt = "<center>" + descr + "</center>";
+		}
+		else
+		{
+			cnt = "<b>" + title + "</b></br />" + descr;
+		}
+		infowindow = new google.maps.InfoWindow({ content: cnt});
 		infowindow.open(map,m);
 	});	
 }
@@ -348,6 +494,25 @@ function getClosestIndex(points,lat,lon)
 		}
 	}
 	return ii;
+}
+
+function getClosestImage(lat,lon,targetId)
+{
+	var dd=10000;
+	var img;
+	var divImages = document.getElementById("ngimages_"+targetId);
+	var img_spans = divImages.getElementsByTagName("span");   
+	for (var i = 0; i < img_spans.length; i++) {   
+		var imageLat = img_spans[i].getAttribute("lat");
+		var imageLon = img_spans[i].getAttribute("lon");	
+		var d = dist(imageLat, imageLon, lat, lon);
+		if ( d < dd )
+		{
+			img = img_spans[i];
+			dd = d;
+		}		
+	}
+	return img;
 }
 
 function isNumeric(input){

@@ -109,7 +109,9 @@ function WP_GPX_Maps_html_page() {
 				<li><b>chartTo2</b>: maxumin value for speed chart</li>				
 				<li><b>startIcon</b>: Start track icon</li>
 				<li><b>endIcon</b>: End track icon</li>
-				<li><b>currentIcon</b>: Current position icon (when mouse hover)</li>	
+				<li><b>currentIcon</b>: Current position icon (when mouse hover)</li>					
+				<li><b>nggalleries</b>: NextGen Gallery id or a list of Galleries id separated by a comma</li>	
+				<li><b>ngimages</b>: NextGen Image id or a list of Images id separated by a comma</li>	
 			</ul>
 
 			<p>

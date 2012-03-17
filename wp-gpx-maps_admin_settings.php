@@ -8,7 +8,8 @@
 	$donotreducegpx = get_option("wpgpxmaps_donotreducegpx");
 	$t = get_option('wpgpxmaps_map_type');
 	$uom = get_option('wpgpxmaps_unit_of_measure');
-	$uomspeed = get_option('wpgpxmaps_unit_of_measure_speed');
+	$uomSpeed = get_option('wpgpxmaps_unit_of_measure_speed');
+	$showSpeed = get_option('wpgpxmaps_show_speed');
 	
 	if (!($t))
 		$t = 'HYBRID';
@@ -148,7 +149,7 @@
 		<tr>
 			<th scope="row">Show speed:</th>
 			<td>
-				<input name="wpgpxmaps_show_speed" type="checkbox" value="true" <?php if($showW == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Speed</i>
+				<input name="wpgpxmaps_show_speed" type="checkbox" value="true" <?php if($showSpeed == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Speed</i>
 			</td>
 		</tr>		
 		<tr>
@@ -161,9 +162,9 @@
 			<th scope="row">Speed unit of measure:</th>
 			<td>
 				<select name='wpgpxmaps_unit_of_measure_speed'>
-					<option value="0" <?php if ($uomspeed == '0') echo 'selected'; ?>>m/s</option>
-					<option value="1" <?php if ($uomspeed == '1') echo 'selected'; ?>>km/h</option>
-					<option value="2" <?php if ($uomspeed == '2') echo 'selected'; ?>>miles/h</option>
+					<option value="0" <?php if ($uomSpeed == '0') echo 'selected'; ?>>m/s</option>
+					<option value="1" <?php if ($uomSpeed == '1') echo 'selected'; ?>>km/h</option>
+					<option value="2" <?php if ($uomSpeed == '2') echo 'selected'; ?>>miles/h</option>
 				</select>
 			</td>
 		</tr>		

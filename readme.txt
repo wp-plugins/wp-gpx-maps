@@ -1,10 +1,10 @@
 === WP GPX Maps ===
 Contributors: bastianonm
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=bastianonm@hotmail.com&item_name=WP%20GPX%20Maps&item_number=Donation
-Tags: maps, gpx, gps, graph, chart, google maps, google chart, track, garmin
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8VHWLRW6JBTML
+Tags: maps, gpx, gps, graph, chart, google maps, google chart, track, garmin, image, nextgen-gallery, nextgen, exif
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.1.10
+Stable tag: 1.1.11
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -14,6 +14,8 @@ Draws a gpx track with altitude graph
 This plugin has, as input, the GPX file with the track you've made and as output it shows the map of the track and an interactive altitude graph (where available).
 
 Fully configurable: custom colors and icons to make the map look like your site.
+
+Display your NextGen Gallery images inside the map! Take a look at nexgen gallery EXIF support..
 
 - iphone/ipad/ipod Compatible
 
@@ -89,6 +91,10 @@ The attributes are:
 
 1. currentIcon: Current position icon (when mouse hover)
 
+1. nggalleries: NextGen Gallery id or a list of Galleries id separated by a comma
+
+1. ngimages: NextGen Image id or a list of Images id separated by a comma
+
 
 = What happening if I've a very large gpx? =
 This plugin will print a small amout of points to speedup javascript and pageload.
@@ -103,6 +109,9 @@ Yes!
 2. Admin area - Settings
 
 == Changelog ==
+= 1.1.11 =
+* nextgen gallery integration
+* minor bug fixes
 = 1.1.10 =
 * Configurable Map Icons 
 * Chart scale configuration (max and min values)
@@ -162,6 +171,7 @@ Yes!
 * Initial release
 
 == Upgrade Notice ==
+= 1.1.11 =
 = 1.1.10 =
 = 1.1.9 =
 = 1.1.8 =

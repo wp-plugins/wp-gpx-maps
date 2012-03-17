@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.10
+Version: 1.1.11
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -11,7 +11,7 @@ License: GPL
 
 //error_reporting (E_ALL);
 
-include 'wp-gpx-maps_Utils.php';
+include 'wp-gpx-maps_utils.php';
 include 'wp-gpx-maps_admin.php';
 
 add_action( 'wp_print_scripts', 'enqueue_WP_GPX_Maps_scripts' );
@@ -46,7 +46,7 @@ function enqueue_WP_GPX_Maps_scripts()
 		google.load('visualization', '1', {'packages':['corechart']});
 		google.load("maps", "3", {other_params: 'sensor=false'});
 	</script>
-	<script type='text/javascript' src='<?php echo plugins_url('/WP-GPX-Maps.js', __FILE__) ?>?ver=1.1.10'></script>	
+	<script type='text/javascript' src='<?php echo plugins_url('/WP-GPX-Maps.js', __FILE__) ?>?ver=1.1.11'></script>
 <?php
 }
 
@@ -92,14 +92,14 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$startIcon =          findValue($attr, "starticon",          "wpgpxmaps_map_start_icon", 		 "");
 	$endIcon =            findValue($attr, "endicon",            "wpgpxmaps_map_end_icon", 			 "");
 	$currentIcon =        findValue($attr, "currenticon",        "wpgpxmaps_map_current_icon", 		 "");
+	$ngGalleries =        findValue($attr, "nggalleries",        "wpgpxmaps_map_ngGalleries", 		 "");
+	$ngImages =           findValue($attr, "ngimages",           "wpgpxmaps_map_ngImages", 		     "");
 
 	$r = rand(1,5000000);
 
-	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$donotreducegpx,$pointsoffset,$showSpeed,$uom";
-	
-	//echo "----------cacheFileName---------$cacheFileName-------------------";	
-	
-	$cacheFileName = md5($gpx.$w.$mh.$mt.$gh.$showW.$donotreducegpx.$pointsoffset.$showSpeed.$uom);
+	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$donotreducegpx,$pointsoffset,$showSpeed,$uom,$ngGallery";
+
+	$cacheFileName = md5($cacheFileName);
 	
 	$gpxcache = gpxCacheFolderPath();
 	
@@ -119,14 +119,30 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			$points_maps = $cache_obj["points_maps"];
 			$points_graph = $cache_obj["points_graph"];
 			$waypoints = $cache_obj["waypoints"];
+			$ngimgs_data = $cache_obj["ngimgs"];
 		} catch (Exception $e) {
 			$points_maps= '';
 			$points_graph= '';
 			$waypoints= '';
+			$ngimgs_data='';
 		}
 	}
+	
+	if ($ngimgs_data == '' && ( $ngGalleries != '' || $ngImages != '' ))
+	{
+		$ngimgs = getNGGalleryImages($ngGalleries,$ngImages);
+		
+		$ngimgs_data ='';
+		
+		foreach ($ngimgs as $img) {		
+			$data = $img['data'];
+			$data = str_replace("\n","",$data);
+			$ngimgs_data .= '<span lat="'.$img['lat'].'" lon="'.$img['lon'].'">'.$data.'</span>';
+		}
+		
+	}
 
-	if ($points_maps == '')
+	if ($points_maps == '' && $gpx != '')
 	{
 	
 		$sitePath = sitePath();
@@ -152,6 +168,8 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		$points_maps = '';
 		$points_graph = '';
 		$waypoints = '';
+		
+
 	
 		foreach ($points as $p) {
 			$points_maps .= '['.(float)$p[0].','.(float)$p[1].'],';
@@ -197,7 +215,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 				$waypoints .= '['.(float)$p[0].','.(float)$p[1].',\''.unescape($p[4]).'\',\''.unescape($p[5]).'\',\''.unescape($p[7]).'\'],';
 			}
 		}
-		
+
 		$p="/,$/";
 		$points_maps = preg_replace($p, "", $points_maps);
 		$points_graph = preg_replace($p, "", $points_graph);			
@@ -207,20 +225,23 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		{		
 			$points_graph = "";	
 		} 	
-		
-		@file_put_contents($gpxcache, 
-						   serialize(array("points_maps" => $points_maps, 
-											"points_graph" => $points_graph, 
-											"waypoints" => $waypoints)
-									), 
-						   LOCK_EX);
-	    @chmod($gpxcache,0755);
+
 	}
+	
+		@file_put_contents($gpxcache, 
+					   serialize(array( "points_maps" => $points_maps, 
+										"points_graph" => $points_graph, 
+										"waypoints" => $waypoints,
+										"ngimgs" => $ngimgs_data)
+								), 
+					   LOCK_EX);
+	@chmod($gpxcache,0755);	
 	
 	$output = '
 		<div id="wpgpxmaps_'.$r.'" style="clear:both;">
 			<div id="map_'.$r.'" style="width:'.$w.'; height:'.$mh.'"></div>
 			<div id="chart_'.$r.'" class="plot" style="width:'.$w.'; height:'.$gh.'"></div>
+			<div id="ngimages_'.$r.'" style="display:none">'.$ngimgs_data.'</div>
 		</div>
 		<script type="text/javascript">
 			wpgpxmaps({ targetId    : "'.$r.'",
@@ -297,6 +318,8 @@ function WP_GPX_Maps_install() {
 	add_option("wpgpxmaps_map_start_icon", '', '', 'yes');
 	add_option("wpgpxmaps_map_end_icon", '', '', 'yes');
 	add_option("wpgpxmaps_map_current_icon", '', '', 'yes');
+	add_option("wpgpxmaps_map_nggallery", '', '', 'yes');
+	
 }
 
 function WP_GPX_Maps_remove() {
@@ -320,6 +343,7 @@ function WP_GPX_Maps_remove() {
 	delete_option('wpgpxmaps_map_start_icon');
 	delete_option('wpgpxmaps_map_end_icon');
 	delete_option('wpgpxmaps_map_current_icon');
+	delete_option('wpgpxmaps_map_nggallery');
 }
 
 ?>

@@ -1,5 +1,6 @@
 <?php
 
+	require_once("wp-gpx-maps_utils_nggallery.php");
 
 	function sitePath()
 	{
@@ -30,7 +31,7 @@
 		$ret = str_replace($sitePath,'',$realGpxPath).DIRECTORY_SEPARATOR;
 		return str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $ret);
 	}
-	
+
 	function recursive_remove_directory($directory, $empty=FALSE)
 	{
 		if(substr($directory,-1) == '/')
