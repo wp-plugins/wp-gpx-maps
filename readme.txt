@@ -15,7 +15,7 @@ This plugin has, as input, the GPX file with the track you've made and as output
 
 Fully configurable: custom colors and icons to make the map look like your site.
 
-Display your NextGen Gallery images inside the map! Take a look at nexgen gallery EXIF support..
+Display your NextGen Gallery images inside the map! Check nexgen gallery EXIF support..
 
 - iphone/ipad/ipod Compatible
 
