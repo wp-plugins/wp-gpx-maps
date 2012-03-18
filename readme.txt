@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, google chart, track, garmin, image, nextgen-gallery, nextgen, exif
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.1.11
+Stable tag: 1.1.12
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -109,6 +109,8 @@ Yes!
 2. Admin area - Settings
 
 == Changelog ==
+= 1.1.12 =
+* nextgen gallery display bug fixes
 = 1.1.11 =
 * nextgen gallery integration
 * minor bug fixes
@@ -171,6 +173,7 @@ Yes!
 * Initial release
 
 == Upgrade Notice ==
+= 1.1.12 =
 = 1.1.11 =
 = 1.1.10 =
 = 1.1.9 =

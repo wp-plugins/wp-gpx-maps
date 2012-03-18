@@ -52,50 +52,53 @@ function unqueue()
   CustomMarker.prototype.draw = function() {
     var me = this;
 
-    // Check if the div has been created.
-    var div = this.div_;
-    if (!div) {
-      // Create a overlay text DIV
-      div = this.div_ = document.createElement('DIV');
-	  div.style.cssText = "border:1px solid #fff;position:absolute;cursor:pointer;margin:0;background:url('"+this.src_+"') center;width:"+(this.img_w_/3)+"px;height:"+(this.img_h_/3)+"px;";
-	  div.setAttribute("lat",this.latlng_.lat());
-	  div.setAttribute("lon",this.latlng_.lng());
-      google.maps.event.addDomListener(div, "click", function(event) {
-        google.maps.event.trigger(me, "click",div);
+    // Check if the el has been created.
+    var el = this.img_;
+    if (!el) {
+
+      el = this.img_ = document.createElement('img');
+	  el.style.cssText = "border:1px solid #fff;position:absolute;cursor:pointer;margin:0;width:"+(this.img_w_/3)+"px;height:"+(this.img_h_/3)+"px;z-index:1;";
+	  el.setAttribute("lat",this.latlng_.lat());
+	  el.setAttribute("lon",this.latlng_.lng());
+el.src=this.src_;
+	  
+	  
+      google.maps.event.addDomListener(el, "click", function(event) {
+        google.maps.event.trigger(me, "click",el);
       });
 
-		google.maps.event.addDomListener(div, "mouseover", function(event) {
-		
-			var _t = div.style.top.replace('px','');
-			var _l = div.style.left.replace('px','');
-		
-			jQuery(div).animate({
+		google.maps.event.addDomListener(el, "mouseover", function(event) {
+			var _t = el.style.top.replace('px','');
+			var _l = el.style.left.replace('px','');
+			jQuery(el).animate({
 				height: me.img_h_,
 				width : me.img_w_,
 				top   : _t - (me.img_h_ / 3),
-				left  : _l - (me.img_w_ / 3)
+				left  : _l - (me.img_w_ / 3),
+				'z-index' : 9999
 			  }, 100);
 		});
 
-		google.maps.event.addDomListener(div, "mouseout", function(event) {
-			jQuery(div).animate({
+		google.maps.event.addDomListener(el, "mouseout", function(event) {
+			jQuery(el).animate({
 				height: me.img_h_ / 3,
 				width: me.img_w_ / 3,
 				top   : me.orig_top,
-				left  : me.orig_left
+				left  : me.orig_left,
+				'z-index' : 1
 			  }, 100);
 		});
 
       // Then add the overlay to the DOM
       var panes = this.getPanes();
-      panes.overlayImage.appendChild(div);
+      panes.overlayImage.appendChild(el);
     }
 
     // Position the overlay 
     var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
     if (point) {
-      div.style.left = point.x + 'px';
-      div.style.top = point.y + 'px';
+      el.style.left = point.x + 'px';
+      el.style.top = point.y + 'px';
 	  
 	  this.orig_left = point.x;
 	  this.orig_top = point.y;
@@ -105,9 +108,9 @@ function unqueue()
 
   CustomMarker.prototype.remove = function() {
     // Check if the overlay was on the map and needs to be removed.
-    if (this.div_) {
-      this.div_.parentNode.removeChild(this.div_);
-      this.div_ = null;
+    if (this.img_) {
+      this.img_.parentNode.removeChild(this.img_);
+      this.img_ = null;
     }
   };
 
@@ -183,7 +186,7 @@ function _wpgpxmaps(params)
 	
 	divImages.style.display='block';	
 	divImages.style.position='absolute';
-	divImages.style.left='-500px';	
+	divImages.style.left='-50000px';	
 	
 	var img_spans = divImages.getElementsByTagName("span");   
 	
