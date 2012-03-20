@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.12
+Version: 1.1.13
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -46,7 +46,7 @@ function enqueue_WP_GPX_Maps_scripts()
 		google.load('visualization', '1', {'packages':['corechart']});
 		google.load("maps", "3", {other_params: 'sensor=false'});
 	</script>
-	<script type='text/javascript' src='<?php echo plugins_url('/WP-GPX-Maps.js', __FILE__) ?>?ver=1.1.12'></script>
+	<script type='text/javascript' src='<?php echo plugins_url('/WP-GPX-Maps.js', __FILE__) ?>?ver=1.1.13'></script>
 <?php
 }
 
@@ -97,7 +97,9 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 
 	$r = rand(1,5000000);
 	
-	$cacheFileName = md5(serialize($attr));
+	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$donotreducegpx,$pointsoffset,$showSpeed,$uom";
+
+	$cacheFileName = md5($cacheFileName);
 	
 	$gpxcache = gpxCacheFolderPath();
 	
@@ -117,27 +119,11 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			$points_maps = $cache_obj["points_maps"];
 			$points_graph = $cache_obj["points_graph"];
 			$waypoints = $cache_obj["waypoints"];
-			$ngimgs_data = $cache_obj["ngimgs"];
 		} catch (Exception $e) {
 			$points_maps= '';
 			$points_graph= '';
 			$waypoints= '';
-			$ngimgs_data='';
 		}
-	}
-	
-	if ($ngimgs_data == '' && ( $ngGalleries != '' || $ngImages != '' ))
-	{
-		$ngimgs = getNGGalleryImages($ngGalleries,$ngImages);
-		
-		$ngimgs_data ='';
-		
-		foreach ($ngimgs as $img) {		
-			$data = $img['data'];
-			$data = str_replace("\n","",$data);
-			$ngimgs_data .= '<span lat="'.$img['lat'].'" lon="'.$img['lon'].'">'.$data.'</span>';
-		}
-		
 	}
 
 	if ($points_maps == '' && $gpx != '')
@@ -226,13 +212,28 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 
 	}
 	
-		@file_put_contents($gpxcache, 
-					   serialize(array( "points_maps" => $points_maps, 
-										"points_graph" => $points_graph, 
-										"waypoints" => $waypoints,
-										"ngimgs" => $ngimgs_data)
-								), 
-					   LOCK_EX);
+	$ngimgs_data = '';
+	if ( $ngGalleries != '' || $ngImages != '' )
+	{
+		$ngimgs = getNGGalleryImages($ngGalleries,$ngImages);
+		
+		$ngimgs_data ='';
+		
+		foreach ($ngimgs as $img) {		
+			$data = $img['data'];
+			$data = str_replace("\n","",$data);
+			$ngimgs_data .= '<span lat="'.$img['lat'].'" lon="'.$img['lon'].'">'.$data.'</span>';
+		}
+		
+	}
+	
+	@file_put_contents($gpxcache, 
+				   serialize(array( "points_maps" => $points_maps, 
+									"points_graph" => $points_graph, 
+									"waypoints" => $waypoints)
+							), 
+				   LOCK_EX);
+				   
 	@chmod($gpxcache,0755);	
 	
 	$output = '

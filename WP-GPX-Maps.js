@@ -145,19 +145,62 @@ function _wpgpxmaps(params)
 	
 	var mapWidth = el_map.style.width;
 	
+	
+	var mapTypeIds = [];
+	for(var type in google.maps.MapTypeId) {
+		mapTypeIds.push(google.maps.MapTypeId[type]);
+	}
+	mapTypeIds.push("OSM1");
+	mapTypeIds.push("OSM2");
+	mapTypeIds.push("OSM3");
+	
 	switch (mapType)
 	{
 		case 'TERRAIN': { mapType = google.maps.MapTypeId.TERRAIN; break;}
 		case 'SATELLITE': { mapType = google.maps.MapTypeId.SATELLITE; break;}
 		case 'ROADMAP': { mapType = google.maps.MapTypeId.ROADMAP; break;}
+		case 'OSM1': { mapType = "OSM1"; break;}
+		case 'OSM2': { mapType = "OSM2"; break;}
+		case 'OSM3': { mapType = "OSM3"; break;}
 		default: { mapType = google.maps.MapTypeId.HYBRID; break;}
 	}
-	
-	var mapOptions = {
+
+	var map = new google.maps.Map(el_map, {
 		mapTypeId: mapType,
-		scrollwheel: false
-	};
-	var map = new google.maps.Map(el_map, mapOptions); 
+		scrollwheel: false,
+		mapTypeControlOptions: {
+			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+			mapTypeIds: mapTypeIds
+		}
+	}); 
+										
+	map.mapTypes.set("OSM1", new google.maps.ImageMapType({
+		getTileUrl: function(coord, zoom) {
+			return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+		},
+		tileSize: new google.maps.Size(256, 256),
+		name: "Open Street Map",
+		maxZoom: 18
+	}));
+	
+	map.mapTypes.set("OSM2", new google.maps.ImageMapType({
+		getTileUrl: function(coord, zoom) {
+			return "http://a.tile.opencyclemap.org/cycle/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+		},
+		tileSize: new google.maps.Size(256, 256),
+		name: "Open Cycle Map",
+		maxZoom: 18
+	}));
+	
+	map.mapTypes.set("OSM3", new google.maps.ImageMapType({
+		getTileUrl: function(coord, zoom) {
+			return "http://toolserver.org/tiles/hikebike/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+		},
+		tileSize: new google.maps.Size(256, 256),
+		name: "Hike & Bike",
+		maxZoom: 18
+	}));
+
 	var bounds = new google.maps.LatLngBounds();
 	
 	// Print WayPoints
