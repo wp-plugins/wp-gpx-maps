@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, google chart, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike.
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.1.13
+Stable tag: 1.1.14
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -109,6 +109,8 @@ Yes!
 2. Admin area - Settings
 
 == Changelog ==
+= 1.1.14 =
+* added css to avoid map bars display issue
 = 1.1.13 =
 * added new types of maps: Open Street Map, Open Cycle Map, Hike & Bike.
 * fixed nextgen gallery caching problem 

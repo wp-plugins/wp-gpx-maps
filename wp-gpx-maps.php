@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.13
+Version: 1.1.14
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -47,6 +47,11 @@ function enqueue_WP_GPX_Maps_scripts()
 		google.load("maps", "3", {other_params: 'sensor=false'});
 	</script>
 	<script type='text/javascript' src='<?php echo plugins_url('/WP-GPX-Maps.js', __FILE__) ?>?ver=1.1.13'></script>
+	<style type="text/css">
+		.wpgpxmaps { clear:both; }
+		.wpgpxmaps img{ width: auto; max-width: auto; }
+		.wpgpxmaps .ngimages { display:none; }
+	</style>
 <?php
 }
 
@@ -237,10 +242,10 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	@chmod($gpxcache,0755);	
 	
 	$output = '
-		<div id="wpgpxmaps_'.$r.'" style="clear:both;">
+		<div id="wpgpxmaps_'.$r.'" class="wpgpxmaps">
 			<div id="map_'.$r.'" style="width:'.$w.'; height:'.$mh.'"></div>
 			<div id="chart_'.$r.'" class="plot" style="width:'.$w.'; height:'.$gh.'"></div>
-			<div id="ngimages_'.$r.'" style="display:none">'.$ngimgs_data.'</div>
+			<div id="ngimages_'.$r.'" class="ngimages" style="display:none">'.$ngimgs_data.'</div>
 		</div>
 		<script type="text/javascript">
 			wpgpxmaps({ targetId    : "'.$r.'",
