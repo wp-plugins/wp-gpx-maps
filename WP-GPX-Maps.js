@@ -4,37 +4,7 @@
 
 */
 
-var t;
-var funqueue = [];
-var infowindow
-
-var wrapFunction = function(fn, context, params) {
-    return function() {
-        fn.apply(context, params);
-    };
-}
-
-function wpgpxmaps(params)
-{
-	funqueue.push( wrapFunction(_wpgpxmaps, this, [params]));
-	unqueue();
-}
-
-function unqueue()
-{
-	if ((google == undefined || google.maps == undefined || google.visualization == undefined))
-	{
-		t = setTimeout("unqueue()",200);
-	}
-	else
-	{
-		while (funqueue.length > 0) {
-			(funqueue.shift())();   
-		}
-	}
-}
-
-
+var infowindow;
 
   function CustomMarker( map, latlng, src, img_w, img_h) {
     this.latlng_ = latlng;
@@ -60,8 +30,7 @@ function unqueue()
 	  el.style.cssText = "border:1px solid #fff;position:absolute;cursor:pointer;margin:0;width:"+(this.img_w_/3)+"px;height:"+(this.img_h_/3)+"px;z-index:1;";
 	  el.setAttribute("lat",this.latlng_.lat());
 	  el.setAttribute("lon",this.latlng_.lng());
-el.src=this.src_;
-	  
+	  el.src=this.src_;
 	  
       google.maps.event.addDomListener(el, "click", function(event) {
         google.maps.event.trigger(me, "click",el);
@@ -99,10 +68,8 @@ el.src=this.src_;
     if (point) {
       el.style.left = point.x + 'px';
       el.style.top = point.y + 'px';
-	  
 	  this.orig_left = point.x;
 	  this.orig_top = point.y;
-	  
     }
   };
 
@@ -114,23 +81,23 @@ el.src=this.src_;
     }
   };
 
-
-
-
-
-function _wpgpxmaps(params)
+function wpgpxmaps(params)
 {
 
 	var targetId = params.targetId;
 	var mapType = params.mapType;
 	var mapData = params.mapData;
-	var graphData = params.graphData;
+	var graphDist = params.graphDist;
+	var graphEle = params.graphEle;
+	var graphSpeed = params.graphSpeed;
+	var graphHr = params.graphHr;
 	var waypoints = params.waypoints;
 	var unit = params.unit;
 	var unitspeed = params.unitspeed;
 	var color1 = params.color1;
 	var color2 = params.color2;
 	var color3 = params.color3;
+	var color4 = params.color4;
 	var chartFrom1 = params.chartFrom1;
 	var chartTo1 = params.chartTo1;
 	var chartFrom2 = params.chartFrom2;
@@ -144,7 +111,6 @@ function _wpgpxmaps(params)
 	var el_chart = document.getElementById("chart_" + targetId);
 	
 	var mapWidth = el_map.style.width;
-	
 	
 	var mapTypeIds = [];
 	for(var type in google.maps.MapTypeId) {
@@ -216,7 +182,6 @@ function _wpgpxmaps(params)
 			new google.maps.Point(0,0),
 			new google.maps.Point(16, 32)
 		);
-		
 		for (i=0; i < waypoints.length; i++) 
 		{
 			addWayPoint(map, image, shadow, waypoints[i][0], waypoints[i][1], waypoints[i][2], waypoints[i][3]);
@@ -232,7 +197,6 @@ function _wpgpxmaps(params)
 	divImages.style.left='-50000px';	
 	
 	var img_spans = divImages.getElementsByTagName("span");   
-	
 
 	if (img_spans.length > 0)
 	{
@@ -266,7 +230,6 @@ function _wpgpxmaps(params)
 
 	}
 	
-
 	// Print Track
 	if (mapData != '')		
 	{
@@ -340,12 +303,20 @@ function _wpgpxmaps(params)
 			{
 				marker.setPosition(event.latLng);	
 				marker.setTitle("Current Position");
-				if ( chart )
+				if (hchart)
 				{
+					var tooltip = hchart.tooltip;
 					var l1 = event.latLng.lat();
-					var l2 = event.latLng.lng();					
+					var l2 = event.latLng.lng();
 					var ci = getClosestIndex(mapData,l1,l2);
-					var r = chart.setSelection([{'row': parseInt(ci) + 1}]);
+					var items = [];
+					var seriesLen = hchart.series.length;
+					for(var i=0; i<seriesLen;i++)
+					{
+						items.push(hchart.series[i].data[ci]);
+					}
+					if (items.length > 0)
+						tooltip.refresh(items);
 				}
 			}
 		});
@@ -354,133 +325,255 @@ function _wpgpxmaps(params)
 	map.setCenter(bounds.getCenter()); 
 	map.fitBounds(bounds);
 	
-	// Print Graph
-	if (graphData!= '')
+	if (graphDist != '')
 	{
 	
-		var numberFormat1 = "#,###m";
-		var numberFormat2 = "#,###m";
+		var valLen = graphDist.length;
+	
+		var l_x;
+		var l_y;
+		var l_y_arr = [];
 		
 		if (unit=="1")
 		{
-			numberFormat1 = "#,##0.#mi";
-			numberFormat2 = "#,###ft";		
+			l_x = { suf : "mi", dec : 1 };
+			l_y = { suf : "ft", dec : 0 };
 		}
 		else if (unit=="2")
 		{
-			numberFormat1 = "#,###0.#km";
-			numberFormat2 = "#,###m";
+			l_x = { suf : "km", dec : 1 };
+			l_y = { suf : "m", dec : 0 };
 		}
-		
-		var showSpeed = (graphData[0].length == 3);
-
-		var data = new google.visualization.DataTable();
-		data.addColumn('number', "Distance");		
-		data.addColumn('number', "Altitude");
-
-		if (!isNumeric(chartFrom1))
-			chartFrom1 = null;
-			
-		if (!isNumeric(chartTo1))
-			chartTo1 = null;
-		
-		if (!isNumeric(chartFrom2))
-			chartFrom2 = null;
-
-		if (!isNumeric(chartTo2))
-			chartTo2 = null;		
-			
-		var options = { curveType: "function",
-						strictFirstColumnType: true, 
-						hAxis : {format : numberFormat1},
-						vAxis : {format : numberFormat2},
-						legend : {position : 'none'},
-						chartArea: {left:50,top:10,width:"100%",height:"75%"},
-						colors:[color2,color3],
-						tooltip: { showColorCode: true},
-						fontSize:11
-						};
-
-		if ( chartFrom1 != null || chartTo1 != null )
+		else
 		{
-			options.vAxis.viewWindowMode = "explicit";
-			options.vAxis.viewWindow = { min : chartFrom1, max : chartTo1};
+			l_x = { suf : "m", dec : 0 };
+			l_y = { suf : "m", dec : 0 };
 		}
+		
+
+		// define the options
+		var hoptions = {
+			chart: {
+				renderTo: 'hchart_' + params.targetId,
+				type: 'area'
+			},
+			title: {
+				text: null
+			},
+			xAxis: {
+				type: 'integer',
+				gridLineWidth: 1,
+				tickInterval: 100,
+				labels: {
+					align: 'left',
+					x: 3,
+					y: -3
+				}
+			},
+			legend: {
+				align: 'center',
+				verticalAlign: 'top',
+				y: -5,
+				floating: true,
+				borderWidth: 0
+			},
+			tooltip: {
+				shared: true,
+				crosshairs: true,
+				formatter: function() {
+				
+					if (marker)
+					{
+						var hchart_xserie = hchart.xAxis[0].series[0].data;				
+						for(var i=0; i<hchart_xserie.length;i++){
+							var item = hchart_xserie[i];
+							if(item.x == this.x)
+							{
+								var point = getItemFromArray(mapData,i)
+								marker.setPosition(new google.maps.LatLng(point[0],point[1]));	
+								marker.setTitle("Current Position");
+								i+=10000000;
+							}
+						}			
+					}
+				
+					var tooltip = "<b>" + Highcharts.numberFormat(this.x, l_x.dec) + l_x.suf + "</b><br />"; 
+					for (i=0; i < this.points.length; i++)
+					{
+						tooltip += this.points[i].series.name + ": " + Highcharts.numberFormat(this.points[i].y, l_y_arr[i].dec) + l_y_arr[i].suf + "<br />"; 					
+					}
+					return tooltip;
+				}
+			},
+			plotOptions: {
+				area: {
+					fillOpacity: 0.1,
+					marker: {
+						enabled: false,
+						symbol: 'circle',
+						radius: 2,
+						states: {
+							hover: {
+								enabled: true
+							}
+						}
+					}					
+				}
+			},
+			xAxis: { 	
+					labels: {
+							formatter: function() {
+								return Highcharts.numberFormat(this.value, l_x.dec) + l_x.suf;
+							}
+						} 
+					},
+			yAxis: [],			
+			series: []
+		};
+		
+	
+		if (graphEle != '')
+		{
+			
+			var eleData = [];
+		
+			for (i=0; i<valLen; i++) 
+			{
+				eleData.push([graphDist[i],graphEle[i]]);
+			}
+
+			var yaxe = { 
+				title: { text: null },
+				labels: {
+					align: 'left',
+					formatter: function() {
+						return Highcharts.numberFormat(this.value, l_y.dec) + l_y.suf;
+					}
+				}
+			}
 						
-		if (showSpeed)
+			if ( chartFrom1 != '' )
+			{
+				yaxe.min = chartFrom1;
+			}
+			
+			if ( chartTo1 != '' )
+			{
+				yaxe.max = chartTo1;
+			}
+								
+			hoptions.yAxis.push(yaxe);
+			hoptions.series.push({
+									name: 'Altitude',
+									lineWidth: 1,
+									marker: { radius: 0 },
+									data : eleData,
+									color: color2,
+									yAxis: hoptions.series.length
+								});			
+			
+			l_y_arr.push(l_y);
+		}
+		
+		if (graphSpeed != '')
 		{
-			var speedFormat="";
+			
+			var l_s;
 			
 			if (unitspeed == '2') // miles/h
 			{
-				speedFormat = "#,##0.#mi/h";
+				l_s = { suf : "mi/h", dec : 0 };
 			} 
 			else if (unitspeed == '1') // km/h
 			{
-				speedFormat = "#,##0.#km/h";
+				l_s = { suf : "km/h", dec : 0 };
 			} 
 			else
 			{
-				speedFormat = "#,##0.#m/s";
-			}
-			data.addColumn('number', "Speed");
-			
-			options.vAxes = { 0:{format : numberFormat2, targetAxisIndex : 0},
-							  1:{format : speedFormat,    targetAxisIndex : 1}
-							};
-							
-			if ( chartFrom1 != null || chartTo1 != null )
-			{
-				options.vAxes[0].viewWindowMode = "explicit";
-				options.vAxes[0].viewWindow = { min : chartFrom1, max : chartTo1};
+				l_s = { suf : "m/s", dec : 0 };
 			}
 			
-			if ( chartFrom2 != null || chartTo2 != null )
+			var speedData = [];
+		
+			for (i=0; i<valLen; i++) 
 			{
-				options.vAxes[1].viewWindowMode = "explicit";
-				options.vAxes[1].viewWindow = { min : chartFrom2, max : chartTo2};
-			}							
-							
-			options.series = {	0:{color: color2, visibleInLegend: true, targetAxisIndex : 0}, 
-								1:{color: color3, visibleInLegend: true, targetAxisIndex : 1}
-							 };
-							 
-			options.chartArea.width="85%";
-			//alert(el_chart.clientWidth);
+				speedData.push([graphDist[i],graphSpeed[i]]);
+			}
+
+			var yaxe = { 
+				title: { text: null },
+				labels: {
+					//align: 'right',
+					formatter: function() {
+						return Highcharts.numberFormat(this.value, l_s.dec) + l_s.suf;
+					}
+				},
+				opposite: true
+			}
+						
+			if ( chartFrom2 != '' )
+			{
+				yaxe.min = chartFrom2;
+			}
+			
+			if ( chartTo2 != '' )
+			{
+				yaxe.max = chartTo2;
+			}
+								
+			hoptions.yAxis.push(yaxe);
+			hoptions.series.push({
+									name: 'Speed',
+									lineWidth: 1,
+									marker: { radius: 0 },
+									data : speedData,
+									color: color3,
+									yAxis: hoptions.series.length
+								});			
+			
+			l_y_arr.push(l_s);
 		}
 		
-		data.addRows(graphData);
-		var chart = new google.visualization.AreaChart(el_chart);		
-		chart.draw(data, options);
-		
-		google.visualization.events.addListener(chart, 'onmouseover', function (e) {
-			var r = e['row'];
-			chart.setSelection([e]);
-			if (marker)
-			{
-				var point = getItemFromArray(mapData,r)
-				marker.setPosition(new google.maps.LatLng(point[0],point[1]));	
-				marker.setTitle("Current Position");
-			}
-		});
-
-		if( mapWidth = "100%")
+		if (graphHr != '')
 		{
-			var resizeChart = function(){
-				el_chart.style.width = el_chart.clientWidth + "px";
-				chart.draw(data, options);
-			};
-			google.maps.event.addListener(map, "idle", resizeChart);
+			
+			var l_hr = { suf : "", dec : 0 };
+			
+			var hrData = [];
+		
+			for (i=0; i<valLen; i++) 
+			{
+				hrData.push([graphDist[i],graphHr[i]]);
+			}
+
+			var yaxe = { 
+				title: { text: null },
+				labels: {
+					//align: 'right',
+					formatter: function() {
+						return Highcharts.numberFormat(this.value, l_hr.dec) + l_hr.suf;
+					}
+				},
+				opposite: true
+			}
+								
+			hoptions.yAxis.push(yaxe);
+			hoptions.series.push({
+									name: 'Heart rate',
+									lineWidth: 1,
+									marker: { radius: 0 },
+									data : hrData,
+									color: color4,
+									yAxis: hoptions.series.length
+								});			
+			
+			l_y_arr.push(l_hr);
 		}
 
-		//google.visualization.events.addListener(chart, 'onmouseout', function (e) {
-			//chart.setSelection([e]);
-		//});
-	}	
-	else	
-	{		
-		el_chart.style.display='none';	
+		var hchart = new Highcharts.Chart(hoptions);
+	
 	}
+	
 }
 
 function addWayPoint(map, image, shadow, lat, lon, title, descr)

@@ -100,8 +100,10 @@ function WP_GPX_Maps_html_page() {
 				<li><b>uom</b>: the unit of measure values are: 0, 1 (0 = meters, 1 = miles/feet)</li>
 				<li><b>mlinecolor</b>: map line color (default is #3366cc)</li>
 				<li><b>glinecolor</b>: graph line color (default is #3366cc)</li>
-				<li><b>showspeed</b>: show speed inside the chart (default is FALSE)</li>
+				<li><b>glinecolorhr</b>: heart rate line color (default is #ff77bd)</li>
 				<li><b>glinecolorspeed</b>: speed line color (default is #ff0000)</li>
+				<li><b>showspeed</b>: show speed inside the chart (default is FALSE)</li>
+				<li><b>showhr</b>: show heart rate inside the chart (default is FALSE)</li>
 				<li><b>uomspeed</b>: the unit of measure of speed are: 0, 1, 2 (0 = m/s, 1 = km/h, 2 = miles/h)</li>
 				<li><b>chartFrom1</b>: minimun value for altitude chart</li>
 				<li><b>chartTo1</b>: maxumin value for altitude chart</li>
@@ -115,7 +117,7 @@ function WP_GPX_Maps_html_page() {
 			</ul>
 
 			<p>
-				<a href="http://www.darwinner.it/featured/wp-gpx-maps/">Bugs, problems, thanks and anything else here!</a>
+				<a href="http://www.darwinner.it/forums/forum/wp-gpx-maps/">Bugs, problems, thanks and anything else here!</a>
 			</p>
 			
 		</p>

@@ -86,21 +86,27 @@
 		}
 		else
 		{
-			array_push($points, array((float)0,(float)0,(float)0,(float)0));
 			echo "File $gpxPath not found!";
 		}
 		
 		// reduce the points to around 200 to speedup
 		if ( $donotreducegpx != true)
 		{
-			$count=sizeof($points);
+			$count=sizeof($points->lat);
 			if ($count>200)
 			{
 				$f = round($count/200);
 				if ($f>1)
 					for($i=$count;$i>0;$i--)
 						if ($i % $f != 0)
-							unset($points[$i]);
+						{
+							unset($points->lat[$i]);						
+							unset($points->lon[$i]);						
+							unset($points->ele[$i]);						
+							unset($points->dist[$i]);						
+							unset($points->speed[$i]);						
+							unset($points->hr[$i]);
+						}
 			}		
 		}
 		return $points;
@@ -109,7 +115,15 @@
 	function parseXml($filePath, $gpxOffset)
 	{
 
-		$points = array();
+		$points = null;
+		
+		$points->lat = array();
+		$points->lon = array();
+		$points->ele = array();
+		$points->dist = array();
+		$points->speed = array();
+		$points->hr = array();
+		
 		$gpx = simplexml_load_file($filePath);	
 		
 		if($gpx === FALSE) 
@@ -118,6 +132,7 @@
 		$gpx->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
 		$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 
 		$gpx->registerXPathNamespace('gpxx', 'http://www.garmin.com/xmlschemas/GpxExtensions/v3'); 		
+		$gpx->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'); 
 		
 		$nodes = $gpx->xpath('//trkpt | //10:trkpt | //11:trkpt');
 		
@@ -140,11 +155,30 @@
 				$ele = $trkpt->ele;
 				$time = $trkpt->time;
 				$speed = (float)$trkpt->speed;
+				$hr=0;
+				
+				if (isset($trkpt->extensions))
+				{				
+					$_hr = $trkpt->extensions->xpath('gpxtpx:TrackPointExtension/gpxtpx:hr/text()');
+					if ($_hr)
+					{
+						foreach ($_hr as $node) {
+							$hr = (float)$node;
+						}
+					}
+				}
 
 				if ($lastLat == 0 && $lastLon == 0)
 				{
 					//Base Case
-					array_push($points, array((float)$lat,(float)$lon,(float)round($ele,2),(float)round($dist,2), 0 ));
+					
+					array_push($points->lat,  (float)$lat);
+					array_push($points->lon,  (float)$lon);
+					array_push($points->ele,  (float)round($ele,2));
+					array_push($points->dist, (float)round($dist,2));
+					array_push($points->speed, 0);
+					array_push($points->hr, $hr);
+					
 					$lastLat=$lat;
 					$lastLon=$lon;
 					$lastEle=$ele;				
@@ -184,14 +218,14 @@
 						$speedBuffer = array();
 						
 						$lastOffset=0;
-						array_push($points, array(
-													(float)$lat,
-													(float)$lon,
-													(float)round($ele,1),
-													(float)round($dist,1), 
-													(float)round($avgSpeed,1) 
-												)
-									);
+						
+						array_push($points->lat,   (float)$lat );
+						array_push($points->lon,   (float)$lon );
+						array_push($points->ele,   (float)round($ele, 2) );
+						array_push($points->dist,  (float)round($dist, 2) );
+						array_push($points->speed, (float)round($avgSpeed, 1) );
+						array_push($points->hr, $hr);
+						
 					}
 					else
 					{
@@ -230,7 +264,11 @@
 					if ($lastLat == 0 && $lastLon == 0)
 					{
 						//Base Case
-						array_push($points, array((float)$lat,(float)$lon,null,null));
+						array_push($points->lat,   (float)$lat );
+						array_push($points->lon,   (float)$lon );
+						array_push($points->ele,   0 );
+						array_push($points->dist,  0 );
+						array_push($points->speed, 0 );
 						$lastLat=$lat;
 						$lastLon=$lon;
 					}
@@ -243,7 +281,11 @@
 						{
 							//Bigger Offset -> write coordinate
 							$lastOffset=0;
-							array_push($points, array((float)$lat,(float)$lon,null,null));
+							array_push($points->lat,   (float)$lat );
+							array_push($points->lon,   (float)$lon );
+							array_push($points->ele,   0 );
+							array_push($points->dist,  0 );
+							array_push($points->speed, 0 );							
 						}
 						else
 						{
