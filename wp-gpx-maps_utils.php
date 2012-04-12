@@ -162,7 +162,7 @@
 				
 				if (isset($trkpt->extensions))
 				{				
-					$_hr = $trkpt->extensions->xpath('gpxtpx:TrackPointExtension/gpxtpx:hr/text()');
+					$_hr = @$trkpt->extensions->xpath('gpxtpx:TrackPointExtension/gpxtpx:hr/text()');
 					if ($_hr)
 					{
 						foreach ($_hr as $node) {
@@ -170,7 +170,7 @@
 						}
 					}
 					
-					$_cad = $trkpt->extensions->xpath('gpxtpx:TrackPointExtension/gpxtpx:cad/text()');
+					$_cad = @$trkpt->extensions->xpath('gpxtpx:TrackPointExtension/gpxtpx:cad/text()');
 					if ($_cad)
 					{
 						foreach ($_cad as $node) {
