@@ -106,6 +106,7 @@
 							unset($points->dist[$i]);						
 							unset($points->speed[$i]);						
 							unset($points->hr[$i]);
+							unset($points->cad[$i]);
 						}
 			}		
 		}
@@ -123,6 +124,7 @@
 		$points->dist = array();
 		$points->speed = array();
 		$points->hr = array();
+		$points->cad = array();
 		
 		$gpx = simplexml_load_file($filePath);	
 		
@@ -155,15 +157,24 @@
 				$ele = $trkpt->ele;
 				$time = $trkpt->time;
 				$speed = (float)$trkpt->speed;
-				$hr=0;
+				$hr = 0;
+				$cad = 0;
 				
 				if (isset($trkpt->extensions))
 				{				
-					$_hr = @$trkpt->extensions->xpath('gpxtpx:TrackPointExtension/gpxtpx:hr/text()');
+					$_hr = $trkpt->extensions->xpath('gpxtpx:TrackPointExtension/gpxtpx:hr/text()');
 					if ($_hr)
 					{
 						foreach ($_hr as $node) {
 							$hr = (float)$node;
+						}
+					}
+					
+					$_cad = $trkpt->extensions->xpath('gpxtpx:TrackPointExtension/gpxtpx:cad/text()');
+					if ($_cad)
+					{
+						foreach ($_cad as $node) {
+							$cad = (float)$node;
 						}
 					}
 				}
@@ -178,6 +189,7 @@
 					array_push($points->dist, (float)round($dist,2));
 					array_push($points->speed, 0);
 					array_push($points->hr, $hr);
+					array_push($points->cad, $cad);
 					
 					$lastLat=$lat;
 					$lastLon=$lon;
@@ -193,8 +205,6 @@
 					if ($speed == 0)
 					{
 						$datediff = (float)my_date_diff($lastTime,$time);
-						//echo "------------$time-------$lastTime-----";
-						//echo "------------$datediff------------";
 						if ($datediff>0)
 						{
 							$speed = $offset / $datediff;
@@ -206,7 +216,6 @@
 					if (((float) $offset + (float) $lastOffset) > $gpxOffset)
 					{
 						//Bigger Offset -> write coordinate
-						
 						$avgSpeed = 0;
 						
 						foreach($speedBuffer as $s)
@@ -225,6 +234,7 @@
 						array_push($points->dist,  (float)round($dist, 2) );
 						array_push($points->speed, (float)round($avgSpeed, 1) );
 						array_push($points->hr, $hr);
+						array_push($points->cad, $cad);
 						
 					}
 					else
@@ -269,6 +279,8 @@
 						array_push($points->ele,   0 );
 						array_push($points->dist,  0 );
 						array_push($points->speed, 0 );
+						array_push($points->hr,    0 );
+						array_push($points->cad,   0 );
 						$lastLat=$lat;
 						$lastLon=$lon;
 					}
@@ -285,7 +297,9 @@
 							array_push($points->lon,   (float)$lon );
 							array_push($points->ele,   0 );
 							array_push($points->dist,  0 );
-							array_push($points->speed, 0 );							
+							array_push($points->speed, 0 );	
+							array_push($points->hr,    0 );
+							array_push($points->cad,   0 );
 						}
 						else
 						{

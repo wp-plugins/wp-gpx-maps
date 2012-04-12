@@ -4,37 +4,71 @@
 
 */
 
+var t;
+var funqueue = [];
 var infowindow;
+var mapLoading = false;
+var CustomMarker;
 
-  function CustomMarker( map, latlng, src, img_w, img_h) {
-    this.latlng_ = latlng;
+var wrapFunction = function(fn, context, params) {
+    return function() {
+        fn.apply(context, params);
+    };
+}
 
-    // Once the LatLng and text are set, add the overlay to the map.  This will
-    // trigger a call to panes_changed which should in turn call draw.
-    this.setMap(map);
-	this.src_ = src;
-	this.img_w_ = img_w;
-	this.img_h_ = img_h;
-  }
+function wpgpxmaps(params)
+{
+	funqueue.push( wrapFunction(_wpgpxmaps, this, [params]));
+	unqueue();
+}
 
-  CustomMarker.prototype = new google.maps.OverlayView();
+function unqueue()
+{
+	if ((google == undefined || google.maps == undefined || Highcharts == undefined))
+	{
+		t = setTimeout("unqueue()",200);
+	}
+	else
+	{
+		setup();
+		while (funqueue.length > 0) {
+			(funqueue.shift())();   
+		}
+	}
+}
 
-  CustomMarker.prototype.draw = function() {
-    var me = this;
+function setup()
+{
 
-    // Check if the el has been created.
-    var el = this.img_;
-    if (!el) {
+	CustomMarker = function( map, latlng, src, img_w, img_h) {
+		this.latlng_ = latlng;
 
-      el = this.img_ = document.createElement('img');
+		// Once the LatLng and text are set, add the overlay to the map.  This will
+		// trigger a call to panes_changed which should in turn call draw.
+		this.setMap(map);
+		this.src_ = src;
+		this.img_w_ = img_w;
+		this.img_h_ = img_h;
+	}
+
+	CustomMarker.prototype = new google.maps.OverlayView();
+
+	CustomMarker.prototype.draw = function() {
+	var me = this;
+
+	// Check if the el has been created.
+	var el = this.img_;
+	if (!el) {
+
+	  el = this.img_ = document.createElement('img');
 	  el.style.cssText = "border:1px solid #fff;position:absolute;cursor:pointer;margin:0;width:"+(this.img_w_/3)+"px;height:"+(this.img_h_/3)+"px;z-index:1;";
 	  el.setAttribute("lat",this.latlng_.lat());
 	  el.setAttribute("lon",this.latlng_.lng());
 	  el.src=this.src_;
 	  
-      google.maps.event.addDomListener(el, "click", function(event) {
-        google.maps.event.trigger(me, "click",el);
-      });
+	  google.maps.event.addDomListener(el, "click", function(event) {
+		google.maps.event.trigger(me, "click",el);
+	  });
 
 		google.maps.event.addDomListener(el, "mouseover", function(event) {
 			var _t = el.style.top.replace('px','');
@@ -58,30 +92,34 @@ var infowindow;
 			  }, 100);
 		});
 
-      // Then add the overlay to the DOM
-      var panes = this.getPanes();
-      panes.overlayImage.appendChild(el);
-    }
+	  // Then add the overlay to the DOM
+	  var panes = this.getPanes();
+	  panes.overlayImage.appendChild(el);
+	}
 
-    // Position the overlay 
-    var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
-    if (point) {
-      el.style.left = point.x + 'px';
-      el.style.top = point.y + 'px';
+	// Position the overlay 
+	var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+	if (point) {
+	  el.style.left = point.x + 'px';
+	  el.style.top = point.y + 'px';
 	  this.orig_left = point.x;
 	  this.orig_top = point.y;
-    }
-  };
+	}
+	};
 
-  CustomMarker.prototype.remove = function() {
-    // Check if the overlay was on the map and needs to be removed.
-    if (this.img_) {
-      this.img_.parentNode.removeChild(this.img_);
-      this.img_ = null;
-    }
-  };
+	CustomMarker.prototype.remove = function() {
+	// Check if the overlay was on the map and needs to be removed.
+	if (this.img_) {
+	  this.img_.parentNode.removeChild(this.img_);
+	  this.img_ = null;
+	}
+	};
 
-function wpgpxmaps(params)
+}
+
+
+
+function _wpgpxmaps(params)
 {
 
 	var targetId = params.targetId;
@@ -91,6 +129,7 @@ function wpgpxmaps(params)
 	var graphEle = params.graphEle;
 	var graphSpeed = params.graphSpeed;
 	var graphHr = params.graphHr;
+	var graphCad = params.graphCad;
 	var waypoints = params.waypoints;
 	var unit = params.unit;
 	var unitspeed = params.unitspeed;
@@ -98,6 +137,7 @@ function wpgpxmaps(params)
 	var color2 = params.color2;
 	var color3 = params.color3;
 	var color4 = params.color4;
+	var color5 = params.color5;
 	var chartFrom1 = params.chartFrom1;
 	var chartTo1 = params.chartTo1;
 	var chartFrom2 = params.chartFrom2;
@@ -569,9 +609,48 @@ function wpgpxmaps(params)
 			
 			l_y_arr.push(l_hr);
 		}
+		
+		if (graphCad != '')
+		{
+			
+			var l_cad = { suf : "", dec : 0 };
+			
+			var cadData = [];
+		
+			for (i=0; i<valLen; i++) 
+			{
+				cadData.push([graphDist[i],graphCad[i]]);
+			}
 
+			var yaxe = { 
+				title: { text: null },
+				labels: {
+					//align: 'right',
+					formatter: function() {
+						return Highcharts.numberFormat(this.value, l_cad.dec) + l_cad.suf;
+					}
+				},
+				opposite: true
+			}
+								
+			hoptions.yAxis.push(yaxe);
+			hoptions.series.push({
+									name: 'Cadence',
+									lineWidth: 1,
+									marker: { radius: 0 },
+									data : cadData,
+									color: color5,
+									yAxis: hoptions.series.length
+								});			
+			
+			l_y_arr.push(l_cad);
+		}
+		
 		var hchart = new Highcharts.Chart(hoptions);
 	
+	}
+	else  {
+		jQuery("#hchart_" + params.targetId).css("display","none");
 	}
 	
 }

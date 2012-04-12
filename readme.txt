@@ -1,10 +1,10 @@
 === WP GPX Maps ===
 Contributors: bastianonm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8VHWLRW6JBTML
-Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate
+Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.1.15
+Stable tag: 1.1.16
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph
@@ -77,9 +77,13 @@ The attributes are:
 
 1. showhr: show heart rate inside the chart (default is FALSE)
 
+1. showcad: show cadence inside the chart (default is FALSE)
+
 1. glinecolorspeed: speed line color (default is #ff0000)
 
-1. glinecolorhr:  heart rate line color (default is #ff77bd)
+1. glinecolorhr: heart rate line color (default is #ff77bd)
+
+1. glinecolorcad: cadence line color (default is #beecff)
 
 1. uomspeed: the unit of measure of speed are: 0, 1, 2 (0 = m/s, 1 = km/h, 2 = miles/h)
 
@@ -115,8 +119,13 @@ Yes!
 1. Gpx with waypoints
 2. Admin area - List of tracks
 2. Admin area - Settings
+2. Altitude & Speed
+2. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.16 = 
+* Cadence chart (where available)
+* minor bug fixes
 = 1.1.15 =
 * migration from google chart to highcharts. Highcharts are much better than google chart! This is the base for a new serie of improvements. Stay in touch for the next releases!
 * heart rate chart (where available)
@@ -189,6 +198,7 @@ Yes!
 * Initial release
 
 == Upgrade Notice ==
+= 1.1.16 = 
 = 1.1.15 =
 = 1.1.14 =
 = 1.1.13 =

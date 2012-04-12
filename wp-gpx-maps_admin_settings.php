@@ -11,6 +11,7 @@
 	$uomSpeed = get_option('wpgpxmaps_unit_of_measure_speed');
 	$showSpeed = get_option('wpgpxmaps_show_speed');
 	$showHr = get_option('wpgpxmaps_show_hr');
+	$showCad = get_option('wpgpxmaps_show_cadence');
 	
 	if (!($t))
 		$t = 'HYBRID';
@@ -182,13 +183,8 @@
 				<em>(leave empty for auto scale)</em>
 			</td>
 		</tr>
-		
-			$showHr = get_option('wpgpxmaps_show_hr');
-		
-		
-		
 		<tr>
-			<th scope="row">Show heart rate:</th>
+			<th scope="row">Show Heart Rate (where aviable):</th>
 			<td>
 				<input name="wpgpxmaps_show_hr" type="checkbox" value="true" <?php if($showHr == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show heart rate</i>
 			</td>
@@ -201,14 +197,24 @@
 		</tr>
 		
 		
-		
-		
+		<tr>
+			<th scope="row">Show Cadence (where aviable):</th>
+			<td>
+				<input name="wpgpxmaps_show_cadence" type="checkbox" value="true" <?php if($showCad == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Cadence</i>
+			</td>
+		</tr>		
+		<tr>
+			<th scope="row">Cadence line color:</th>
+			<td>
+				<input name="wpgpxmaps_graph_line_color_cad" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_graph_line_color_cad'); ?>" />
+			</td>
+		</tr>
+
 	</table>
-	
 
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
-    	<input name="page_options" type="hidden" value="wpgpxmaps_unit_of_measure,wpgpxmaps_graph_line_color,wpgpxmaps_show_speed,wpgpxmaps_graph_line_color_speed,wpgpxmaps_show_hr,wpgpxmaps_graph_line_color_hr,wpgpxmaps_unit_of_measure_speed,wpgpxmaps_graph_offset_from1,wpgpxmaps_graph_offset_to1,wpgpxmaps_graph_offset_from2,wpgpxmaps_graph_offset_to2" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_unit_of_measure,wpgpxmaps_graph_line_color,wpgpxmaps_show_speed,wpgpxmaps_graph_line_color_speed,wpgpxmaps_show_hr,wpgpxmaps_graph_line_color_hr,wpgpxmaps_unit_of_measure_speed,wpgpxmaps_graph_offset_from1,wpgpxmaps_graph_offset_to1,wpgpxmaps_graph_offset_from2,wpgpxmaps_graph_offset_to2,wpgpxmaps_graph_line_color_cad,wpgpxmaps_show_cadence" />
 		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 	</p>
 

@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.15
+Version: 1.1.16
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -19,9 +19,7 @@ add_shortcode('sgpx','handle_WP_GPX_Maps_Shortcodes');
 register_activation_hook(__FILE__,'WP_GPX_Maps_install'); 
 register_deactivation_hook( __FILE__, 'WP_GPX_Maps_remove');	
 add_filter('plugin_action_links', 'WP_GPX_Maps_action_links', 10, 2);
-
 add_action('wp_enqueue_scripts', 'enqueue_WP_GPX_Maps_scripts');
-
 
 function WP_GPX_Maps_action_links($links, $file) {
     static $this_plugin;
@@ -60,7 +58,8 @@ function print_WP_GPX_Maps_scripts()
 	</script>
 	<style type="text/css">
 		.wpgpxmaps { clear:both; }
-		.wpgpxmaps img{ width: auto; max-width: auto; }
+		.entry-content .wpgpxmaps img,
+		.wpgpxmaps img { max-width: none; width: none; }
 		.wpgpxmaps .ngimages { display:none; }
 	</style>
 <?php
@@ -92,6 +91,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$mh =                 findValue($attr, "mheight",            "wpgpxmaps_height",          		 "450px");
 	$mt =                 findValue($attr, "mtype",              "wpgpxmaps_map_type",        		 "HYBRID");
 	$gh =                 findValue($attr, "gheight",            "wpgpxmaps_graph_height",    		 "200px");
+	$showCad =            findValue($attr, "showcad",            "wpgpxmaps_show_cadence",   		 false);
 	$showHr =             findValue($attr, "showhr",             "wpgpxmaps_show_hr",   		 	 false);
 	$showW =              findValue($attr, "waypoints",          "wpgpxmaps_show_waypoint",   		 false);
 	$showSpeed =          findValue($attr, "showspeed",          "wpgpxmaps_show_speed",      		 false);
@@ -103,6 +103,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$color_graph =        findValue($attr, "glinecolor",         "wpgpxmaps_graph_line_color",       "#3366cc");
 	$color_graph_speed =  findValue($attr, "glinecolorspeed",    "wpgpxmaps_graph_line_color_speed", "#ff0000");
 	$color_graph_hr =  	  findValue($attr, "glinecolorhr",       "wpgpxmaps_graph_line_color_hr",    "#ff77bd");
+	$color_graph_cad =    findValue($attr, "glinecolorcad",      "wpgpxmaps_graph_line_color_cad",   "#beecff");
 	$chartFrom1 =         findValue($attr, "chartfrom1",         "wpgpxmaps_graph_offset_from1",     "");
 	$chartTo1 =           findValue($attr, "chartfo1",           "wpgpxmaps_graph_offset_to1",       "");
 	$chartFrom2 =         findValue($attr, "chartfrom2",         "wpgpxmaps_graph_offset_from2", 	 "");
@@ -115,16 +116,14 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 
 	$r = rand(1,5000000);
 	
-	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,showHr,$donotreducegpx,$pointsoffset,$showSpeed,$uom,v1.1.15";
+	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uom,v1.1.16";
 
 	$cacheFileName = md5($cacheFileName);
 	
 	$gpxcache = gpxCacheFolderPath();
 	
 	if(!(file_exists($gpxcache) && is_dir($gpxcache)))
-	{
 		@mkdir($gpxcache,0755,true);
-	}
 	
 	$gpxcache.= DIRECTORY_SEPARATOR.$cacheFileName.".tmp";
 	
@@ -138,7 +137,8 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			$points_graph_dist = $cache_obj["points_graph_dist"];
 			$points_graph_ele = $cache_obj["points_graph_ele"];
 			$points_graph_speed = $cache_obj["points_graph_speed"];
-			$points_graph_hr = $cache_obj["points_graph_hr"];		
+			$points_graph_hr = $cache_obj["points_graph_hr"];
+			$points_graph_cad = $cache_obj["points_graph_cad"];
 			$waypoints = $cache_obj["waypoints"];
 		} catch (Exception $e) {
 			$points_maps= '';
@@ -146,6 +146,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			$points_graph_ele = '';
 			$points_graph_speed = '';
 			$points_graph_hr = '';
+			$points_graph_cad = '';
 			$waypoints= '';
 		}
 	}
@@ -179,6 +180,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		$points_graph_ele = '';
 		$points_graph_speed = '';
 		$points_graph_hr = '';
+		$points_graph_cad = '';
 		$waypoints = '';
 			
 		foreach(array_keys($points->lat) as $i) 
@@ -224,6 +226,11 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 				$points_graph_hr .= $points->hr[$i].',';
 			}
 			
+			if ($showCad == true)
+			{
+				$points_graph_cad .= $points->cad[$i].',';
+			}
+			
 		}
 			
 		if ($showW == true)
@@ -241,6 +248,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		$points_graph_ele = preg_replace($p, "", $points_graph_ele);
 		$points_graph_speed = preg_replace($p, "", $points_graph_speed);
 		$points_graph_hr = preg_replace($p, "", $points_graph_hr);
+		$points_graph_cad = preg_replace($p, "", $points_graph_cad);
 			
 		$waypoints = preg_replace($p, "", $waypoints);
 		
@@ -255,6 +263,9 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			
 		if (preg_match("/^(0,?)+$/", $points_graph_hr)) 
 			$points_graph_hr = "";
+			
+		if (preg_match("/^(0,?)+$/", $points_graph_cad)) 
+			$points_graph_cad = "";
 		
 	}
 	
@@ -279,6 +290,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 									"points_graph_ele" => $points_graph_ele, 
 									"points_graph_speed" => $points_graph_speed, 
 									"points_graph_hr" => $points_graph_hr, 
+									"points_graph_cad" => $points_graph_cad,
 									"waypoints" => $waypoints)
 							), 
 				   LOCK_EX);
@@ -292,7 +304,6 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			<div id="ngimages_'.$r.'" class="ngimages" style="display:none">'.$ngimgs_data.'</div>
 		</div>
 		<script type="text/javascript">
-		
 		    jQuery(document).ready(function() {
 				wpgpxmaps({ targetId    : "'.$r.'",
 							mapType     : "'.$mt.'",
@@ -301,6 +312,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 							graphEle    : ['.$points_graph_ele.'],
 							graphSpeed  : ['.$points_graph_speed.'],
 							graphHr     : ['.$points_graph_hr.'],
+							graphCad    : ['.$points_graph_cad.'],
 							waypoints   : ['.$waypoints.'],
 							unit        : "'.$uom.'",
 							unitspeed   : "'.$uomspeed.'",
@@ -308,6 +320,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 							color2      : "'.$color_graph.'",
 							color3      : "'.$color_graph_speed.'",
 							color4      : "'.$color_graph_hr.'",
+							color5      : "'.$color_graph_cad.'",
 							chartFrom1  : "'.$chartFrom1.'",
 							chartTo1    : "'.$chartTo1.'",
 							chartFrom2  : "'.$chartFrom2.'",
@@ -317,7 +330,6 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 							currentIcon : "'.$currentIcon.'"
 						   });
 			});
-		
 		</script>';	
 
 	return $output;
@@ -367,6 +379,7 @@ function WP_GPX_Maps_install() {
 	add_option("wpgpxmaps_graph_line_color", '#3366cc', '', 'yes');
 	add_option("wpgpxmaps_graph_line_color_speed", '#ff0000', '', 'yes');
 	add_option("wpgpxmaps_map_line_color", '#3366cc', '', 'yes');
+	add_option("wpgpxmaps_graph_line_color_cad", '#beecff', '', 'yes');
 	add_option("wpgpxmaps_graph_offset_from1", '', '', 'yes');
 	add_option("wpgpxmaps_graph_offset_to1", '', '', 'yes');
 	add_option("wpgpxmaps_graph_offset_from2", '', '', 'yes');
@@ -377,6 +390,7 @@ function WP_GPX_Maps_install() {
 	add_option("wpgpxmaps_map_nggallery", '', '', 'yes');
 	add_option("wpgpxmaps_show_hr", '', '', 'yes');
 	add_option("wpgpxmaps_graph_line_color_hr", '#ff77bd', '', 'yes');
+	add_option('wpgpxmaps_show_cadence','','','yes');
 
 }
 
@@ -404,6 +418,8 @@ function WP_GPX_Maps_remove() {
 	delete_option('wpgpxmaps_map_nggallery');
 	delete_option('wpgpxmaps_show_hr');
 	delete_option('wpgpxmaps_graph_line_color_hr');
+	delete_option('wpgpxmaps_show_cadence');
+	delete_option('wpgpxmaps_graph_line_color_cad');
 }
 
 ?>
