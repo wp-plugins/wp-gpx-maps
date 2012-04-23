@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.16
+Version: 1.1.17
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -85,6 +85,8 @@ function findValue($attr, $attributeName, $optionName, $defaultValue)
 
 function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 {
+
+	$error = '';
 
 	$gpx =                findValue($attr, "gpx",                "",                          		 "");
 	$w =                  findValue($attr, "width",              "wpgpxmaps_width",           		 "100%");
@@ -272,16 +274,13 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$ngimgs_data = '';
 	if ( $ngGalleries != '' || $ngImages != '' )
 	{
-		$ngimgs = getNGGalleryImages($ngGalleries,$ngImages);
-		
-		$ngimgs_data ='';
-		
+		$ngimgs = getNGGalleryImages($ngGalleries, $ngImages, &$error);
+		$ngimgs_data ='';	
 		foreach ($ngimgs as $img) {		
 			$data = $img['data'];
 			$data = str_replace("\n","",$data);
 			$ngimgs_data .= '<span lat="'.$img['lat'].'" lon="'.$img['lon'].'">'.$data.'</span>';
 		}
-		
 	}
 	
 	@file_put_contents($gpxcache, 
@@ -303,6 +302,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			<div id="hchart_'.$r.'" class="plot" style="width:'.$w.'; height:'.$gh.'"></div>
 			<div id="ngimages_'.$r.'" class="ngimages" style="display:none">'.$ngimgs_data.'</div>
 		</div>
+		'. $error .'
 		<script type="text/javascript">
 		    jQuery(document).ready(function() {
 				wpgpxmaps({ targetId    : "'.$r.'",

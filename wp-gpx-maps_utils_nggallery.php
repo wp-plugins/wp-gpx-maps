@@ -7,8 +7,9 @@
 		return is_plugin_active("nextgen-gallery/nggallery.php");
 	}
 	
-	function getNGGalleryImages($ngGalleries, $ngImages)
+	function getNGGalleryImages($ngGalleries, $ngImages, &$error)
 	{
+
 		$result = array();
 		$galids = explode(',', $ngGalleries);
 		$imgids = explode(',', $ngImages);
@@ -20,7 +21,7 @@
 
 			$pictures = array();
 			foreach ($galids as $g) {						
-				$pictures = array_merge($pictures, nggdb::get_gallery($g, false, false, true, $capture_date));
+				$pictures = array_merge($pictures, nggdb::get_gallery($g));
 			}
 			foreach ($imgids as $i) {
 				array_push($pictures, nggdb::find_image($i));
@@ -41,11 +42,16 @@
 						}					
 					}
 				}
+				else
+				{
+					$error .= "Sorry, <a href='http://php.net/manual/en/function.exif-read-data.php' target='_blank' >exif_read_data</a> function not found! check your hosting..<br />";
+				}
 			}			
-
+			
 		} catch (Exception $e) {
-			return '';
+			$error .= 'Error When Retrieving NextGen Gallery galleries/images: $e <br />';
 		}
+
 		return $result;
 	}
 	

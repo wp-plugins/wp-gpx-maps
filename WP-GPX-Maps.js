@@ -448,6 +448,7 @@ function _wpgpxmaps(params)
 			plotOptions: {
 				area: {
 					fillOpacity: 0.1,
+					connectNulls : true,
 					marker: {
 						enabled: false,
 						symbol: 'circle',
@@ -467,10 +468,12 @@ function _wpgpxmaps(params)
 							}
 						} 
 					},
+			credits: {
+				enabled: false
+			},
 			yAxis: [],			
 			series: []
 		};
-		
 	
 		if (graphEle != '')
 		{
@@ -495,11 +498,13 @@ function _wpgpxmaps(params)
 			if ( chartFrom1 != '' )
 			{
 				yaxe.min = chartFrom1;
+				yaxe.startOnTick = false;
 			}
 			
 			if ( chartTo1 != '' )
 			{
 				yaxe.max = chartTo1;
+				yaxe.endOnTick = false;
 			}
 								
 			hoptions.yAxis.push(yaxe);
@@ -554,11 +559,13 @@ function _wpgpxmaps(params)
 			if ( chartFrom2 != '' )
 			{
 				yaxe.min = chartFrom2;
+				yaxe.startOnTick = false;				
 			}
 			
 			if ( chartTo2 != '' )
 			{
 				yaxe.max = chartTo2;
+				yaxe.endOnTick = false;				
 			}
 								
 			hoptions.yAxis.push(yaxe);
@@ -583,7 +590,10 @@ function _wpgpxmaps(params)
 		
 			for (i=0; i<valLen; i++) 
 			{
-				hrData.push([graphDist[i],graphHr[i]]);
+				var c = graphHr[i];
+				if (c==0)
+					c = null;
+				hrData.push([graphDist[i],c]);
 			}
 
 			var yaxe = { 
@@ -619,7 +629,10 @@ function _wpgpxmaps(params)
 		
 			for (i=0; i<valLen; i++) 
 			{
-				cadData.push([graphDist[i],graphCad[i]]);
+				var c = graphCad[i];
+				if (c==0)
+					c = null;
+				cadData.push([graphDist[i],c]);
 			}
 
 			var yaxe = { 
