@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.1.19
+Stable tag: 1.1.20
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
@@ -117,12 +117,14 @@ Yes!
 == Screenshots ==
 1. Simple Gpx
 1. Gpx with waypoints
-2. Admin area - List of tracks
-2. Admin area - Settings
-2. Altitude & Speed
-2. Altitude & Speed & Hearth rate
+1. Admin area - List of tracks
+1. Admin area - Settings
+1. Altitude & Speed
+1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.20 =
+* google maps images fixed in <a href="http://wordpress.org/extend/themes/yoko">Yoko theme</a>
 = 1.1.19 = 
 * include jQuery if needed
 = 1.1.17 = 
@@ -141,94 +143,5 @@ Yes!
 * fixed nextgen gallery caching problem 
 = 1.1.12 =
 * nextgen gallery display bug fixes
-= 1.1.11 =
-* nextgen gallery integration
-* minor bug fixes
-= 1.1.10 =
-* Configurable Map Icons 
-* Chart scale configuration (max and min values)
-= 1.1.9 =
-= 1.1.8 =
-* cache issues fixed
-* added speed when not present in the gpx (derived from datetime)
-= 1.1.7 =
-* new unit of measure (meters/kilometers)
-* mouse wheel scrolling issue fixed
-* minor bug fixes
-= 1.1.6 =
-* improved charts
-* improved admin area
-* added speed support (where available)
-* fixed mootools incompability
-= 1.1.5 =
-* implemented cache (the plugin is faster, especially on slow servers or external gpx)
-* minor bug fixes
-= 1.1.4 =
-* improved admin area
-* added miles/feet unit of measure 
-* added map line color and graph line color
-* minor bug fixes
-= 1.1.3 =
-* Allowed gpx files from http url
-= 1.1.2 =
-* Improved page load time
-* Added compatibility to Wordpress Multisite (WPMU)
-= 1.1.1 =
-* Minor bug fixes
-= 1.1.0 =
-* Added Advanced Setting in the Admin Area
-* Added the shortcode for every entry in the admin area (easy to copy and paste in your posts)
-= 1.0.9 =
-* Minor bug fixes
-* Windows/IIS compatibility
-= 1.0.8 =
-* New icons (from google maps)
-* Added interactivity over the map
-= 1.0.7 =
-* Added waypoints support
-* New icons
-= 1.0.6 =
-* Minor bug fixes
-= 1.0.5 =
-* Fixed javscript errors with slow javascript loading
-= 1.0.4 =
-* Fixed Upload file error
-* Added support for Garmin gpx (http://www.garmin.com/xmlschemas/GpxExtensions/v3 namespace)
-= 1.0.3 =
-* Added Settings link on plugins list
-* Added attributes width, mheight, gheight, mtype on shortcode
-= 1.0.2 =
-* You can manage your gpx files in the admin area
-= 1.0.1 =
-* Initial release
 
 == Upgrade Notice ==
-= 1.1.16 = 
-= 1.1.15 =
-= 1.1.14 =
-= 1.1.13 =
-= 1.1.12 =
-= 1.1.11 =
-= 1.1.10 =
-= 1.1.9 =
-= 1.1.8 =
-= 1.1.7 =
-= 1.1.6 =
-* Added speed support. To enable this feature please check the plugin settings
-= 1.1.5 =
-= 1.1.4 =
-= 1.1.3 =
-= 1.1.2 =
-= 1.1.1 =
-= 1.1.0 =
-= 1.0.9 =
-= 1.0.8 =
-= 1.0.7 =
-* Added waypoints support. To enable this feature please check the plugin settings
-= 1.0.6 =
-= 1.0.5 =
-= 1.0.4 =
-= 1.0.3 =
-= 1.0.2 =
-= 1.0.1 =
-Initial release.
