@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.20
+Version: 1.1.21
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -44,8 +44,12 @@ function enqueue_WP_GPX_Maps_scripts()
 
 	//wp_enqueue_script( 'jquery' );
 	
+	wp_deregister_script( 'googleapis' );
+    wp_register_script( 'googleapis', 'https://maps.googleapis.com/maps/api/js?sensor=false&v=3.9', null, null);
+    wp_enqueue_script( 'googleapis' );
+	
     wp_deregister_script( 'WP-GPX-Maps' );
-    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery'), "1.1.15");
+    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery'), "1.1.21");
     wp_enqueue_script( 'WP-GPX-Maps' );
 	
     wp_deregister_script( 'highcharts' );
@@ -57,17 +61,14 @@ function enqueue_WP_GPX_Maps_scripts()
 function print_WP_GPX_Maps_scripts()
 {
 ?>
-	<script type='text/javascript' src='https://www.google.com/jsapi?ver=3.2.1'></script>
-	<script type='text/javascript'>
-		google.load("maps", "3", {other_params: 'sensor=false'});
-	</script>
-	<style type="text/css">
-		.wpgpxmaps { clear:both; }
-		#content .wpgpxmaps img,
-		.entry-content .wpgpxmaps img,
-		.wpgpxmaps img { max-width: none; width: none; }
-		.wpgpxmaps .ngimages { display:none; }
-	</style>
+<style type="text/css">
+	.wpgpxmaps { clear:both; }
+	#content .wpgpxmaps img,
+	.entry-content .wpgpxmaps img,
+	.wpgpxmaps img { max-width: none; width: none; padding:0; background:none; }
+	.wpgpxmaps .ngimages { display:none; }
+	.wpgpxmaps .myngimages { border:1px solid #fff;position:absolute;cursor:pointer;margin:0;z-index:1; }
+</style>
 <?php
 }
 

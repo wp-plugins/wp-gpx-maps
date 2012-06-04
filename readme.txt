@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.3
-Stable tag: 1.1.20
+Stable tag: 1.1.21
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
@@ -123,6 +123,9 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.21 =
+* google maps images fixed (templates with bad css)
+* upgrade to google maps 3.9
 = 1.1.20 =
 * google maps images fixed in <a href="http://wordpress.org/extend/themes/yoko">Yoko theme</a>
 = 1.1.19 = 

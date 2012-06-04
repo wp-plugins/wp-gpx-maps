@@ -43,8 +43,6 @@ function setup()
 	CustomMarker = function( map, latlng, src, img_w, img_h) {
 		this.latlng_ = latlng;
 
-		// Once the LatLng and text are set, add the overlay to the map.  This will
-		// trigger a call to panes_changed which should in turn call draw.
 		this.setMap(map);
 		this.src_ = src;
 		this.img_w_ = img_w;
@@ -54,70 +52,71 @@ function setup()
 	CustomMarker.prototype = new google.maps.OverlayView();
 
 	CustomMarker.prototype.draw = function() {
-	var me = this;
+	
+		var me = this;
 
-	// Check if the el has been created.
-	var el = this.img_;
-	if (!el) {
+		// Check if the el has been created.
+		var el = this.img_;
+		if (!el) {
 
-	  el = this.img_ = document.createElement('img');
-	  el.style.cssText = "border:1px solid #fff;position:absolute;cursor:pointer;margin:0;width:"+(this.img_w_/3)+"px;height:"+(this.img_h_/3)+"px;z-index:1;";
-	  el.setAttribute("lat",this.latlng_.lat());
-	  el.setAttribute("lon",this.latlng_.lng());
-	  el.src=this.src_;
-	  
-	  google.maps.event.addDomListener(el, "click", function(event) {
-		google.maps.event.trigger(me, "click",el);
-	  });
+			this.img_ = document.createElement('img');
+			el = this.img_;
+			el.style.cssText = "width:"+(this.img_w_/3)+"px;height:"+(this.img_h_/3)+"px;";
+			el.setAttribute("class", "myngimages");
+			el.setAttribute("lat",this.latlng_.lat());
+			el.setAttribute("lon",this.latlng_.lng());
+			el.src=this.src_;
 
-		google.maps.event.addDomListener(el, "mouseover", function(event) {
-			var _t = el.style.top.replace('px','');
-			var _l = el.style.left.replace('px','');
-			jQuery(el).animate({
-				height: me.img_h_,
-				width : me.img_w_,
-				top   : _t - (me.img_h_ / 3),
-				left  : _l - (me.img_w_ / 3),
-				'z-index' : 9999
-			  }, 100);
-		});
+			google.maps.event.addDomListener(el, "click", function(event) {
+				google.maps.event.trigger(me, "click", el);
+			});	
+			
+			google.maps.event.addDomListener(el, "mouseover", function(event) {
+				var _t = el.style.top.replace('px','');
+				var _l = el.style.left.replace('px','');
+				jQuery(el).animate({
+					height: me.img_h_,
+					width : me.img_w_,
+					top   : _t - (me.img_h_ / 3),
+					left  : _l - (me.img_w_ / 3),
+					'z-index' : 9999
+				  }, 100);
+			});
 
-		google.maps.event.addDomListener(el, "mouseout", function(event) {
-			jQuery(el).animate({
-				height: me.img_h_ / 3,
-				width: me.img_w_ / 3,
-				top   : me.orig_top,
-				left  : me.orig_left,
-				'z-index' : 1
-			  }, 100);
-		});
+			google.maps.event.addDomListener(el, "mouseout", function(event) {
+				jQuery(el).animate({
+					height: me.img_h_ / 3,
+					width: me.img_w_ / 3,
+					top   : me.orig_top,
+					left  : me.orig_left,
+					'z-index' : 1
+				  }, 100);
+			});	
 
-	  // Then add the overlay to the DOM
-	  var panes = this.getPanes();
-	  panes.overlayImage.appendChild(el);
-	}
+			// Then add the overlay to the DOM
+			var panes = this.getPanes();
+			panes.overlayImage.appendChild(el);
+		}
 
-	// Position the overlay 
-	var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
-	if (point) {
-	  el.style.left = point.x + 'px';
-	  el.style.top = point.y + 'px';
-	  this.orig_left = point.x;
-	  this.orig_top = point.y;
-	}
+		// Position the overlay 
+		var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+			if (point) {
+			  el.style.left = point.x + 'px';
+			  el.style.top = point.y + 'px';
+			  this.orig_left = point.x;
+			  this.orig_top = point.y;
+			}
 	};
 
 	CustomMarker.prototype.remove = function() {
-	// Check if the overlay was on the map and needs to be removed.
-	if (this.img_) {
-	  this.img_.parentNode.removeChild(this.img_);
-	  this.img_ = null;
-	}
+		// Check if the overlay was on the map and needs to be removed.
+		if (this.img_) {
+		  this.img_.parentNode.removeChild(this.img_);
+		  this.img_ = null;
+		}
 	};
 
 }
-
-
 
 function _wpgpxmaps(params)
 {
