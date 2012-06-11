@@ -12,6 +12,7 @@
 	$showSpeed = get_option('wpgpxmaps_show_speed');
 	$showHr = get_option('wpgpxmaps_show_hr');
 	$showCad = get_option('wpgpxmaps_show_cadence');
+	$zoomonscrollwheel = get_option("wpgpxmaps_zoomonscrollwheel");	
 	
 	if (!($t))
 		$t = 'HYBRID';
@@ -63,6 +64,12 @@
 	
 	<table class="form-table">
 		<tr>
+			<th scope="row">On mouse scroll wheel:</th>
+			<td>
+				<input name="wpgpxmaps_zoomonscrollwheel" type="checkbox" value="true" <?php if($zoomonscrollwheel == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Enable zoom</i>
+			</td>
+		</tr>
+		<tr>
 			<th scope="row">Waypoints Support:</th>
 			<td>
 				<input name="wpgpxmaps_show_waypoint" type="checkbox" value="true" <?php if($showW == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Waypoints</i>
@@ -112,7 +119,7 @@
 
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
-    	<input name="page_options" type="hidden" value="wpgpxmaps_show_waypoint,wpgpxmaps_map_line_color,wpgpxmaps_map_type,wpgpxmaps_map_start_icon,wpgpxmaps_map_end_icon,wpgpxmaps_map_current_icon" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_show_waypoint,wpgpxmaps_map_line_color,wpgpxmaps_map_type,wpgpxmaps_map_start_icon,wpgpxmaps_map_end_icon,wpgpxmaps_map_current_icon,wpgpxmaps_zoomonscrollwheel" />
 		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 	</p>
 

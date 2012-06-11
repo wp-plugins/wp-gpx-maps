@@ -144,6 +144,7 @@ function _wpgpxmaps(params)
 	var startIcon = params.startIcon;
 	var endIcon = params.endIcon;
 	var currentIcon = params.currentIcon;
+	var zoomOnScrollWheel = params.zoomOnScrollWheel;
 	
 	var el = document.getElementById("wpgpxmaps_" + targetId);
 	var el_map = document.getElementById("map_" + targetId);
@@ -172,7 +173,7 @@ function _wpgpxmaps(params)
 
 	var map = new google.maps.Map(el_map, {
 		mapTypeId: mapType,
-		scrollwheel: false,
+		scrollwheel: (zoomOnScrollWheel == 'true'),
 		mapTypeControlOptions: {
 			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
 			mapTypeIds: mapTypeIds

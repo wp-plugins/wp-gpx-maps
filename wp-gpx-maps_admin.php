@@ -116,6 +116,7 @@ function WP_GPX_Maps_html_page() {
 				<li><b>currentIcon</b>: Current position icon (when mouse hover)</li>					
 				<li><b>nggalleries</b>: NextGen Gallery id or a list of Galleries id separated by a comma</li>	
 				<li><b>ngimages</b>: NextGen Image id or a list of Images id separated by a comma</li>	
+				<li><b>zoomonscrollwheel</b>: zoom on map when mouse scroll wheel</li>
 			</ul>
 		
 			<p>

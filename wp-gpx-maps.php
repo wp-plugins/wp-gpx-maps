@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.21
+Version: 1.1.22
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -83,6 +83,10 @@ function findValue($attr, $attributeName, $optionName, $defaultValue)
 	{
 		$val = get_option($optionName);
 	}
+	if ($val == '' && isset($_GET[$attributeName]))
+	{
+		$val = $_GET[$attributeName];
+	}
 	if ($val == '')
 	{
 		$val = $defaultValue;
@@ -104,6 +108,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$showHr =             findValue($attr, "showhr",             "wpgpxmaps_show_hr",   		 	 false);
 	$showW =              findValue($attr, "waypoints",          "wpgpxmaps_show_waypoint",   		 false);
 	$showSpeed =          findValue($attr, "showspeed",          "wpgpxmaps_show_speed",      		 false);
+	$zoomOnScrollWheel =  findValue($attr, "zoomonscrollwheel",  "wpgpxmaps_zoomonscrollwheel",      false);
 	$donotreducegpx =     findValue($attr, "donotreducegpx",     "wpgpxmaps_donotreducegpx", 		 false);
 	$pointsoffset =       findValue($attr, "pointsoffset",       "wpgpxmaps_pointsoffset",     		 10);
 	$uom =                findValue($attr, "uom",                "wpgpxmaps_unit_of_measure",        "0");
@@ -334,7 +339,8 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 							chartTo2    : "'.$chartTo2.'",
 							startIcon   : "'.$startIcon.'",
 							endIcon     : "'.$endIcon.'",
-							currentIcon : "'.$currentIcon.'"
+							currentIcon : "'.$currentIcon.'",
+							zoomOnScrollWheel : "'.$zoomOnScrollWheel.'"
 						   });
 			});
 		</script>';	
@@ -398,7 +404,7 @@ function WP_GPX_Maps_install() {
 	add_option("wpgpxmaps_show_hr", '', '', 'yes');
 	add_option("wpgpxmaps_graph_line_color_hr", '#ff77bd', '', 'yes');
 	add_option('wpgpxmaps_show_cadence','','','yes');
-
+	add_option('wpgpxmaps_zoomonscrollwheel','','','yes');
 }
 
 function WP_GPX_Maps_remove() {
@@ -427,6 +433,7 @@ function WP_GPX_Maps_remove() {
 	delete_option('wpgpxmaps_graph_line_color_hr');
 	delete_option('wpgpxmaps_show_cadence');
 	delete_option('wpgpxmaps_graph_line_color_cad');
+	delete_option('wpgpxmaps_zoomonscrollwheel');
 }
 
 ?>
