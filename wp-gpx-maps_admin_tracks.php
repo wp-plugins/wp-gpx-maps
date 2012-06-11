@@ -1,5 +1,10 @@
 <?php
 
+	if ( !is_admin() )
+		return;
+	
+	$gpxRegEx = '/.gpx$/';
+
 	if ( isset($_POST['delete']) )
 	{
 		$del = $_POST['delete'];

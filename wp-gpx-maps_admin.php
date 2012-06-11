@@ -24,7 +24,6 @@ function WP_GPX_Maps_html_page() {
 	$cacheGpxPath = gpxCacheFolderPath();
 	$relativeGpxPath = relativeGpxFolderPath();
 	$relativeGpxPath = str_replace("\\","/", $relativeGpxPath);
-	$gpxRegEx = '/.gpx$/';
 	
 	$tab = $_GET['tab'];
 	
