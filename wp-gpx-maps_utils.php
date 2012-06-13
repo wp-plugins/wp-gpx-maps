@@ -136,7 +136,7 @@
 		$gpx->registerXPathNamespace('gpxx', 'http://www.garmin.com/xmlschemas/GpxExtensions/v3'); 		
 		$gpx->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'); 
 		
-		$nodes = $gpx->xpath('//trkpt | //10:trkpt | //11:trkpt');
+		$nodes = $gpx->xpath('//trkpt | //10:trkpt | //11:trkpt | //11:rtept');
 		
 		if ( count($nodes) > 0 )	
 		{

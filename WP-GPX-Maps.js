@@ -365,9 +365,9 @@ function _wpgpxmaps(params)
 	map.setCenter(bounds.getCenter()); 
 	map.fitBounds(bounds);
 	
-	if (graphDist != '')
+	if (graphDist != '' && (graphEle != '' || graphSpeed != '' || graphHr != '' || graphCad != ''))
 	{
-	
+
 		var valLen = graphDist.length;
 	
 		var l_x;

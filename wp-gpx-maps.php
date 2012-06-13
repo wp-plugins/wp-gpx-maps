@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.23
+Version: 1.1.24
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -127,6 +127,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$currentIcon =        findValue($attr, "currenticon",        "wpgpxmaps_map_current_icon", 		 "");
 	$ngGalleries =        findValue($attr, "nggalleries",        "wpgpxmaps_map_ngGalleries", 		 "");
 	$ngImages =           findValue($attr, "ngimages",           "wpgpxmaps_map_ngImages", 		     "");
+	$download =           findValue($attr, "download",           "wpgpxmaps_download", 		     "");
 
 	$r = rand(1,5000000);
 	
@@ -344,6 +345,11 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 						   });
 			});
 		</script>';	
+		
+		if ($download=='true' && $gpx != '')
+		{
+			$output.="<a href='$gpx' target='_new'>Download</a>";
+		}
 
 	return $output;
 }
@@ -405,6 +411,7 @@ function WP_GPX_Maps_install() {
 	add_option("wpgpxmaps_graph_line_color_hr", '#ff77bd', '', 'yes');
 	add_option('wpgpxmaps_show_cadence','','','yes');
 	add_option('wpgpxmaps_zoomonscrollwheel','','','yes');
+	add_option('wpgpxmaps_download','','','yes');
 }
 
 function WP_GPX_Maps_remove() {
@@ -434,6 +441,7 @@ function WP_GPX_Maps_remove() {
 	delete_option('wpgpxmaps_show_cadence');
 	delete_option('wpgpxmaps_graph_line_color_cad');
 	delete_option('wpgpxmaps_zoomonscrollwheel');
+	delete_option('wpgpxmaps_download');
 }
 
 ?>

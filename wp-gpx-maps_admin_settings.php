@@ -1,3 +1,9 @@
+<?php
+
+	if ( !is_admin() )
+		return;
+
+?>
 
 <script type="text/javascript" src="http://meta100.github.com/mColorPicker/javascripts/mColorPicker_min.js" charset="UTF-8"></script>
 
@@ -13,6 +19,7 @@
 	$showHr = get_option('wpgpxmaps_show_hr');
 	$showCad = get_option('wpgpxmaps_show_cadence');
 	$zoomonscrollwheel = get_option("wpgpxmaps_zoomonscrollwheel");	
+	$download = get_option("wpgpxmaps_download");	
 	
 	if (!($t))
 		$t = 'HYBRID';
@@ -25,7 +32,7 @@
 
 	<?php wp_nonce_field('update-options') ?>
 	
-	<h3 class="title">Map and Chart size</h3>
+	<h3 class="title">General</h3>
 	
 	<table class="form-table">
 		<tr>
@@ -46,11 +53,17 @@
 				<input name="wpgpxmaps_graph_height" type="text" id="wpgpxmaps_graph_height" value="<?php echo get_option('wpgpxmaps_graph_height'); ?>" style="width:50px;" />
 			</td>
 		</tr>
+		<tr>
+			<th scope="row">GPX Download:</th>
+			<td>
+				<input name="wpgpxmaps_download" type="checkbox" value="true" <?php if($download == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Allow users to download your GPX file</i>
+			</td>
+		</tr>
 	</table>
 	
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
-    	<input name="page_options" type="hidden" value="wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_download" />
 		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 	</p>
 
@@ -60,7 +73,7 @@
 
 	<?php wp_nonce_field('update-options') ?>
 	
-	<h3 class="title">Maps</h3>
+	<h3 class="title">Map</h3>
 	
 	<table class="form-table">
 		<tr>
