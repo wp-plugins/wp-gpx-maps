@@ -107,6 +107,8 @@ The attributes are:
 
 1. zoomonscrollwheel: zoom on map when mouse scroll wheel 
 
+1. download: Allow users to download your GPX file 
+
 
 = What happening if I've a very large gpx? =
 This plugin will print a small amout of points to speedup javascript and pageload.
