@@ -118,6 +118,55 @@ function setup()
 
 }
 
+function FullScreenControl(controlDiv, map) {
+
+	// Set CSS styles for the DIV containing the control
+	// Setting padding to 5 px will offset the control
+	// from the edge of the map
+	controlDiv.style.padding = '5px';
+
+	// Set CSS for the control border
+	var controlUI = document.createElement('div');
+	controlUI.style.backgroundColor = 'white';
+	controlUI.style.borderStyle = 'solid';
+	controlUI.style.borderWidth = '2px';
+	controlUI.style.cursor = 'pointer';
+	controlUI.style.textAlign = 'center';
+	controlUI.title = 'Go full screen';
+	controlDiv.appendChild(controlUI);
+
+	// Set CSS for the control interior
+	var controlText = document.createElement('div');
+	controlText.style.fontFamily = 'Arial,sans-serif';
+	controlText.style.fontSize = '12px';
+	controlText.style.paddingLeft = '4px';
+	controlText.style.paddingRight = '4px';
+	controlText.innerHTML = '<b>Full Screen</b>';
+	controlUI.appendChild(controlText);
+
+	// Setup the click event listeners: simply set the map to
+	// Chicago
+	google.maps.event.addDomListener(controlUI, 'click', function(event) {
+		var isFullScreen = (controlUI.isfullscreen == true);
+		var fullScreenCss = "position: absolute;left:0;top:0;";
+		var mapDiv = map.getDiv();
+		if (isFullScreen)
+		{
+			jQuery(mapDiv).attr('oldStyle', jQuery(mapDiv).attr('style'));
+			jQuery(mapDiv).attr('style', fullScreenCss);
+			jQuery(controlUI).html("<b>Exit Full Screen</b>");
+		}
+		else
+		{
+			jQuery(mapDiv).attr('style', jQuery(mapDiv).attr('oldStyle'));
+			jQuery(controlUI).html("<b>Full Screen</b>");
+		}
+		controlUI.isfullscreen = !isFullScreen;
+	});
+
+}
+
+
 function _wpgpxmaps(params)
 {
 
@@ -206,7 +255,12 @@ function _wpgpxmaps(params)
 		name: "Hike & Bike",
 		maxZoom: 18
 	}));
-
+	
+	//var fullScreenControlDiv = document.createElement('div');
+	//var fullScreenControl = new FullScreenControl(fullScreenControlDiv, map);
+	//fullScreenControlDiv.index = 1;
+	//map.controls[google.maps.ControlPosition.TOP_RIGHT].push(fullScreenControlDiv);
+	
 	var bounds = new google.maps.LatLngBounds();
 	
 	// Print WayPoints
