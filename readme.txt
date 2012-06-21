@@ -17,7 +17,7 @@ Fully configurable:
 
 - Custom colors 
 - Custom icons
-- multiple language Support
+- Multiple language support
 
 Display your NextGen Gallery images inside the map! Check nextgen gallery EXIF support..
 
