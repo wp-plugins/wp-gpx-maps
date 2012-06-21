@@ -3,13 +3,15 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.25
+Version: 1.1.26
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
 */
 
 //error_reporting (E_ALL);
+
+load_plugin_textdomain('wp-gpx-maps', "/wp-content/plugins/wp-gpx-maps/languages/");
 
 include 'wp-gpx-maps_utils.php';
 include 'wp-gpx-maps_admin.php';
@@ -49,7 +51,7 @@ function enqueue_WP_GPX_Maps_scripts()
     wp_enqueue_script( 'googleapis' );
 	
     wp_deregister_script( 'WP-GPX-Maps' );
-    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery'), "1.1.21");
+    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery'), "1.1.26");
     wp_enqueue_script( 'WP-GPX-Maps' );
 	
     wp_deregister_script( 'highcharts' );
@@ -83,7 +85,7 @@ function findValue($attr, $attributeName, $optionName, $defaultValue)
 	{
 		$val = get_option($optionName);
 	}
-	if ($val == '' && isset($_GET[$attributeName]))
+	if ($val == '' && isset($_GET[$attributeName]) && $attributeName != "download")
 	{
 		$val = $_GET[$attributeName];
 	}
@@ -125,11 +127,14 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$startIcon =          findValue($attr, "starticon",          "wpgpxmaps_map_start_icon", 		 "");
 	$endIcon =            findValue($attr, "endicon",            "wpgpxmaps_map_end_icon", 			 "");
 	$currentIcon =        findValue($attr, "currenticon",        "wpgpxmaps_map_current_icon", 		 "");
+	$waypointIcon =        findValue($attr, "waypointicon",      "wpgpxmaps_map_waypoint_icon", 		 "");
 	$ngGalleries =        findValue($attr, "nggalleries",        "wpgpxmaps_map_ngGalleries", 		 "");
 	$ngImages =           findValue($attr, "ngimages",           "wpgpxmaps_map_ngImages", 		     "");
 	$download =           findValue($attr, "download",           "wpgpxmaps_download", 		     "");
 
 	$r = rand(1,5000000);
+	
+	$gpxurl = $gpx;
 	
 	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uom,v1.1.16";
 
@@ -173,7 +178,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		
 		$gpx = trim($gpx);
 		
-		if (strpos($gpx, "http://") !== 0 || strpos($gpx, "https://") !== 0)
+		if (strpos($gpxurl, "http://") === 0 || strpos($gpxurl, "https://") === 0)
 		{
 			$gpx = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $gpx);
 			$gpx = $sitePath . $gpx;
@@ -341,22 +346,32 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 							startIcon   : "'.$startIcon.'",
 							endIcon     : "'.$endIcon.'",
 							currentIcon : "'.$currentIcon.'",
-							zoomOnScrollWheel : "'.$zoomOnScrollWheel.'"
+							waypointIcon : "'.$waypointIcon.'",
+							zoomOnScrollWheel : "'.$zoomOnScrollWheel.'", 
+							pluginUrl : "'.plugins_url().'",
+							langs : { altitude              : "'.__("Altitude", "wp-gpx-maps").'",
+									  currentPosition       : "'.__("Current Position", "wp-gpx-maps").'",
+									  speed                 : "'.__("Speed", "wp-gpx-maps").'", 
+									  heartRate             : "'.__("Heart rate", "wp-gpx-maps").'", 
+									  cadence               : "'.__("Cadence", "wp-gpx-maps").'",
+									  gofullscreen          : "'.__("Go Full Screen", "wp-gpx-maps").'",
+									  exitfullscreen        : "'.__("Exit Full Screen", "wp-gpx-maps").'"
+									}
 						   });
 			});
 		</script>';	
-		
-		if ($download=='true' && $gpx != '')
+
+		if ($download=='true' && $gpxurl != '')
 		{
-			if (strpos($gpx, "http://") !== 0 || strpos($gpx, "https://") !== 0)
+			if (strpos($gpxurl, "http://") === 0 || strpos($gpxurl, "https://") === 0)
 			{
-			
+
 			}
 			else
 			{
-				$gpx = get_bloginfo('url').$gpx;
+				$gpxurl = get_bloginfo('url').$gpxurl;
 			}		
-			$output.="<a href='$gpx' target='_new'>Download</a>";
+			$output.="<a href='$gpxurl' target='_new'>".__("Download", "wp-gpx-maps")."</a>";
 		}
 
 	return $output;
@@ -414,6 +429,7 @@ function WP_GPX_Maps_install() {
 	add_option("wpgpxmaps_map_start_icon", '', '', 'yes');
 	add_option("wpgpxmaps_map_end_icon", '', '', 'yes');
 	add_option("wpgpxmaps_map_current_icon", '', '', 'yes');
+	add_option("wpgpxmaps_map_waypoint_icon", '', '', 'yes');
 	add_option("wpgpxmaps_map_nggallery", '', '', 'yes');
 	add_option("wpgpxmaps_show_hr", '', '', 'yes');
 	add_option("wpgpxmaps_graph_line_color_hr", '#ff77bd', '', 'yes');
@@ -443,6 +459,7 @@ function WP_GPX_Maps_remove() {
 	delete_option('wpgpxmaps_map_start_icon');
 	delete_option('wpgpxmaps_map_end_icon');
 	delete_option('wpgpxmaps_map_current_icon');
+	delete_option('wpgpxmaps_map_waypoint_icon');
 	delete_option('wpgpxmaps_map_nggallery');
 	delete_option('wpgpxmaps_show_hr');
 	delete_option('wpgpxmaps_graph_line_color_hr');

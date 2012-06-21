@@ -42,7 +42,6 @@ function setup()
 
 	CustomMarker = function( map, latlng, src, img_w, img_h) {
 		this.latlng_ = latlng;
-
 		this.setMap(map);
 		this.src_ = src;
 		this.img_w_ = img_w;
@@ -118,55 +117,6 @@ function setup()
 
 }
 
-function FullScreenControl(controlDiv, map) {
-
-	// Set CSS styles for the DIV containing the control
-	// Setting padding to 5 px will offset the control
-	// from the edge of the map
-	controlDiv.style.padding = '5px';
-
-	// Set CSS for the control border
-	var controlUI = document.createElement('div');
-	controlUI.style.backgroundColor = 'white';
-	controlUI.style.borderStyle = 'solid';
-	controlUI.style.borderWidth = '2px';
-	controlUI.style.cursor = 'pointer';
-	controlUI.style.textAlign = 'center';
-	controlUI.title = 'Go full screen';
-	controlDiv.appendChild(controlUI);
-
-	// Set CSS for the control interior
-	var controlText = document.createElement('div');
-	controlText.style.fontFamily = 'Arial,sans-serif';
-	controlText.style.fontSize = '12px';
-	controlText.style.paddingLeft = '4px';
-	controlText.style.paddingRight = '4px';
-	controlText.innerHTML = '<b>Full Screen</b>';
-	controlUI.appendChild(controlText);
-
-	// Setup the click event listeners: simply set the map to
-	// Chicago
-	google.maps.event.addDomListener(controlUI, 'click', function(event) {
-		var isFullScreen = (controlUI.isfullscreen == true);
-		var fullScreenCss = "position: absolute;left:0;top:0;";
-		var mapDiv = map.getDiv();
-		if (isFullScreen)
-		{
-			jQuery(mapDiv).attr('oldStyle', jQuery(mapDiv).attr('style'));
-			jQuery(mapDiv).attr('style', fullScreenCss);
-			jQuery(controlUI).html("<b>Exit Full Screen</b>");
-		}
-		else
-		{
-			jQuery(mapDiv).attr('style', jQuery(mapDiv).attr('oldStyle'));
-			jQuery(controlUI).html("<b>Full Screen</b>");
-		}
-		controlUI.isfullscreen = !isFullScreen;
-	});
-
-}
-
-
 function _wpgpxmaps(params)
 {
 
@@ -191,9 +141,12 @@ function _wpgpxmaps(params)
 	var chartFrom2 = params.chartFrom2;
 	var chartTo2 = params.chartTo2;
 	var startIcon = params.startIcon;
+	var waypointIcon = params.waypointIcon;
 	var endIcon = params.endIcon;
 	var currentIcon = params.currentIcon;
 	var zoomOnScrollWheel = params.zoomOnScrollWheel;
+	var lng = params.langs;
+	var pluginUrl = params.pluginUrl;
 	
 	var el = document.getElementById("wpgpxmaps_" + targetId);
 	var el_map = document.getElementById("map_" + targetId);
@@ -256,16 +209,71 @@ function _wpgpxmaps(params)
 		maxZoom: 18
 	}));
 	
-	//var fullScreenControlDiv = document.createElement('div');
-	//var fullScreenControl = new FullScreenControl(fullScreenControlDiv, map);
-	//fullScreenControlDiv.index = 1;
-	//map.controls[google.maps.ControlPosition.TOP_RIGHT].push(fullScreenControlDiv);
+	// FULL SCREEN BUTTON
+	var controlDiv = document.createElement('div');
+	controlDiv.style.padding = '5px';
+
+
+	// Set CSS for the control border
+	var controlUI = document.createElement('img');
+	controlUI.src = pluginUrl + "/wp-gpx-maps/img/expand.png";
+	controlUI.style.cursor = 'pointer';
+	controlUI.title = lng.gofullscreen;
+	controlDiv.appendChild(controlUI);
+
+	// Setup the click event listeners: simply set the map to
+	// Chicago
+	google.maps.event.addDomListener(controlUI, 'click', function(event) {
+		var isFullScreen = (controlUI.isfullscreen == true);
+		var fullScreenCss = "position: absolute;left:0;top:0;";
+		var mapDiv = map.getDiv();
+		var center = map.getCenter();
+		
+		if (isFullScreen)
+		{
+			map.setOptions( { scrollwheel : (zoomOnScrollWheel == 'true') } );
+			jQuery(mapDiv).css("position", 'relative').
+			  css('top', 0).
+			  css("width", controlUI.googleMapWidth).
+			  css("height", controlUI.googleMapHeight).
+			  css("z-index", '');
+			google.maps.event.trigger(map, 'resize');
+			map.setCenter(center);
+			controlUI.src = pluginUrl + "/wp-gpx-maps/img/expand.png";	
+			controlUI.title = lng.gofullscreen;
+		}
+		else
+		{
+			map.setOptions( { scrollwheel : true } );		
+			controlUI.googleMapWidth = jQuery(mapDiv).css('width');
+			controlUI.googleMapHeight = jQuery(mapDiv).css('height');		
+			jQuery(mapDiv).css("position", 'fixed').
+			  css('top', 0).
+			  css('left', 0).
+			  css("width", '100%').
+			  css("height", '100%').
+			  css("z-index", '99999');
+			jQuery("#wpadminbar").each(function(){
+				jQuery(mapDiv).css('top', jQuery(this).height());
+			});
+			google.maps.event.trigger(map, 'resize');
+			map.setCenter(center);
+			controlUI.src = pluginUrl + "/wp-gpx-maps/img/redo.png";
+			controlUI.title = lng.exitfullscreen;
+		}
+		controlUI.isfullscreen = !isFullScreen;
+		return false;			
+	});
+	
+	controlDiv.index = 1;
+	map.controls[google.maps.ControlPosition.TOP_RIGHT].push(controlDiv);
 	
 	var bounds = new google.maps.LatLngBounds();
 	
 	// Print WayPoints
 	if (waypoints != '')
 	{
+
 		var image = new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/micons/flag.png',
 			new google.maps.Size(32, 32),
 			new google.maps.Point(0,0),
@@ -276,6 +284,13 @@ function _wpgpxmaps(params)
 			new google.maps.Point(0,0),
 			new google.maps.Point(16, 32)
 		);
+		
+		if (waypointIcon!='')
+		{
+			image = new google.maps.MarkerImage(waypointIcon);
+			shadow = '';
+		}		
+		
 		for (i=0; i < waypoints.length; i++) 
 		{
 			addWayPoint(map, image, shadow, waypoints[i][0], waypoints[i][1], waypoints[i][2], waypoints[i][3]);
@@ -396,7 +411,7 @@ function _wpgpxmaps(params)
 			if (marker)
 			{
 				marker.setPosition(event.latLng);	
-				marker.setTitle("Current Position");
+				marker.setTitle(lng.currentPosition);
 				if (hchart)
 				{
 					var tooltip = hchart.tooltip;
@@ -485,7 +500,7 @@ function _wpgpxmaps(params)
 							{
 								var point = getItemFromArray(mapData,i)
 								marker.setPosition(new google.maps.LatLng(point[0],point[1]));	
-								marker.setTitle("Current Position");
+								marker.setTitle(lng.currentPosition);
 								i+=10000000;
 							}
 						}			
@@ -563,7 +578,7 @@ function _wpgpxmaps(params)
 								
 			hoptions.yAxis.push(yaxe);
 			hoptions.series.push({
-									name: 'Altitude',
+									name: lng.altitude,
 									lineWidth: 1,
 									marker: { radius: 0 },
 									data : eleData,
@@ -624,7 +639,7 @@ function _wpgpxmaps(params)
 								
 			hoptions.yAxis.push(yaxe);
 			hoptions.series.push({
-									name: 'Speed',
+									name: lng.speed,
 									lineWidth: 1,
 									marker: { radius: 0 },
 									data : speedData,
@@ -663,7 +678,7 @@ function _wpgpxmaps(params)
 								
 			hoptions.yAxis.push(yaxe);
 			hoptions.series.push({
-									name: 'Heart rate',
+									name: lng.heartRate,
 									lineWidth: 1,
 									marker: { radius: 0 },
 									data : hrData,
@@ -702,7 +717,7 @@ function _wpgpxmaps(params)
 								
 			hoptions.yAxis.push(yaxe);
 			hoptions.series.push({
-									name: 'Cadence',
+									name: lng.cadence,
 									lineWidth: 1,
 									marker: { radius: 0 },
 									data : cadData,

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.4
-Stable tag: 1.1.25
+Stable tag: 1.1.26
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
@@ -13,7 +13,11 @@ Draws a gpx track with altitude graph. You can also display your nextgen gallery
 
 This plugin has, as input, the GPX file with the track you've made and as output it shows the map of the track and an interactive altitude graph (where available).
 
-Fully configurable: custom colors and icons to make the map look like your site.
+Fully configurable: 
+
+- Custom colors 
+- Custom icons
+- multiple language Support
 
 Display your NextGen Gallery images inside the map! Check nextgen gallery EXIF support..
 
@@ -101,6 +105,8 @@ The attributes are:
 
 1. currentIcon: Current position icon (when mouse hover)
 
+1. waypointicon: waypoint custom icon
+
 1. nggalleries: NextGen Gallery id or a list of Galleries id separated by a comma
 
 1. ngimages: NextGen Image id or a list of Images id separated by a comma
@@ -125,6 +131,10 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.26 =
+* Multilanguage implementation (only front-end). I've implemented the italian one, I hope somebody will help me with other languages..
+* Map Full screen mode (I'm sure it's not working in ie6. don't even ask!)
+* Added waypoint custom icon
 = 1.1.25 =
 * Added possibility to download your gpx
 = 1.1.23 =

@@ -64,7 +64,7 @@
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
     	<input name="page_options" type="hidden" value="wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_download" />
-		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
 	</p>
 
 </form>
@@ -128,12 +128,19 @@
 			</td>
 		</tr>
 		
+		<tr>
+			<th scope="row">Custom Waypoint Icon:</th>
+			<td>
+				<input name="wpgpxmaps_map_waypoint_icon" value="<?php echo get_option('wpgpxmaps_map_waypoint_icon'); ?>" style="width:400px" /> <em>(Url to image) Leave empty for default</em>
+			</td>
+		</tr>
+		
 	</table>
 
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
-    	<input name="page_options" type="hidden" value="wpgpxmaps_show_waypoint,wpgpxmaps_map_line_color,wpgpxmaps_map_type,wpgpxmaps_map_start_icon,wpgpxmaps_map_end_icon,wpgpxmaps_map_current_icon,wpgpxmaps_zoomonscrollwheel" />
-		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_show_waypoint,wpgpxmaps_map_line_color,wpgpxmaps_map_type,wpgpxmaps_map_start_icon,wpgpxmaps_map_end_icon,wpgpxmaps_map_current_icon,wpgpxmaps_zoomonscrollwheel,wpgpxmaps_map_waypoint_icon" />
+		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
 	</p>
 
 </form>
@@ -235,7 +242,7 @@
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
     	<input name="page_options" type="hidden" value="wpgpxmaps_unit_of_measure,wpgpxmaps_graph_line_color,wpgpxmaps_show_speed,wpgpxmaps_graph_line_color_speed,wpgpxmaps_show_hr,wpgpxmaps_graph_line_color_hr,wpgpxmaps_unit_of_measure_speed,wpgpxmaps_graph_offset_from1,wpgpxmaps_graph_offset_to1,wpgpxmaps_graph_offset_from2,wpgpxmaps_graph_offset_to2,wpgpxmaps_graph_line_color_cad,wpgpxmaps_show_cadence" />
-		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
 	</p>
 
 </form>
@@ -266,7 +273,7 @@
 	<input name="page_options" type="hidden" value="wpgpxmaps_pointsoffset,wpgpxmaps_donotreducegpx" />
 
 	<p class="submit">
-		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
 	</p>
 
 </form>
