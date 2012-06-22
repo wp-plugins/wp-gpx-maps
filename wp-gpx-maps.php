@@ -136,7 +136,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	
 	$gpxurl = $gpx;
 	
-	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uom,v1.1.16";
+	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uom,v1.1.27";
 
 	$cacheFileName = md5($cacheFileName);
 	
