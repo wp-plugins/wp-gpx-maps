@@ -70,6 +70,8 @@ function print_WP_GPX_Maps_scripts()
 	.wpgpxmaps img { max-width: none; width: none; padding:0; background:none; }
 	.wpgpxmaps .ngimages { display:none; }
 	.wpgpxmaps .myngimages { border:1px solid #fff;position:absolute;cursor:pointer;margin:0;z-index:1; }
+	.wpgpxmaps_summary .summarylabel { }
+	.wpgpxmaps_summary .summaryvalue { font-weight: bold; }
 </style>
 <?php
 }
@@ -127,16 +129,17 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$startIcon =          findValue($attr, "starticon",          "wpgpxmaps_map_start_icon", 		 "");
 	$endIcon =            findValue($attr, "endicon",            "wpgpxmaps_map_end_icon", 			 "");
 	$currentIcon =        findValue($attr, "currenticon",        "wpgpxmaps_map_current_icon", 		 "");
-	$waypointIcon =        findValue($attr, "waypointicon",      "wpgpxmaps_map_waypoint_icon", 		 "");
+	$waypointIcon =        findValue($attr, "waypointicon",      "wpgpxmaps_map_waypoint_icon", 	 "");
 	$ngGalleries =        findValue($attr, "nggalleries",        "wpgpxmaps_map_ngGalleries", 		 "");
 	$ngImages =           findValue($attr, "ngimages",           "wpgpxmaps_map_ngImages", 		     "");
-	$download =           findValue($attr, "download",           "wpgpxmaps_download", 		     "");
+	$download =           findValue($attr, "download",           "wpgpxmaps_download", 		     	"");
+	$summary =            findValue($attr, "summary",            "wpgpxmaps_summary", 		     	"");
 
 	$r = rand(1,5000000);
 	
 	$gpxurl = $gpx;
 	
-	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uom,v1.1.27";
+	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uomspeed,$uom,v1.1.28l";
 
 	$cacheFileName = md5($cacheFileName);
 	
@@ -146,6 +149,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		@mkdir($gpxcache,0755,true);
 	
 	$gpxcache.= DIRECTORY_SEPARATOR.$cacheFileName.".tmp";
+
 	
 	// Try to load cache
 	if (file_exists($gpxcache))
@@ -160,6 +164,13 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			$points_graph_hr = $cache_obj["points_graph_hr"];
 			$points_graph_cad = $cache_obj["points_graph_cad"];
 			$waypoints = $cache_obj["waypoints"];
+			$max_ele = $cache_obj["max_ele"];
+			$min_ele = $cache_obj["min_ele"];
+			$total_ele_up = $cache_obj["total_ele_up"];
+			$total_ele_down = $cache_obj["total_ele_down"];
+			$avg_speed = $cache_obj["avg_speed"];
+			$tot_len = $cache_obj["tot_len"];
+			
 		} catch (Exception $e) {
 			$points_maps= '';
 			$points_graph_dist = '';
@@ -168,6 +179,12 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			$points_graph_hr = '';
 			$points_graph_cad = '';
 			$waypoints= '';
+			$max_ele = 0;
+			$min_ele = 0;
+			$total_ele_up = 0;
+			$total_ele_down = 0;
+			$avg_speed = 0;
+			$tot_len = 0;
 		}
 	}
 
@@ -204,6 +221,13 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		$points_graph_hr = '';
 		$points_graph_cad = '';
 		$waypoints = '';
+		
+		$max_ele = $points->maxEle;
+		$min_ele = $points->minEle;
+		$total_ele_up = $points->totalEleUp;
+		$total_ele_down = $points->totalEleDown;
+		$avg_speed = $points->avgSpeed;
+		$tot_len = $points->totalLength;
 			
 		foreach(array_keys($points->lat) as $i) 
 		{
@@ -229,18 +253,9 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 				
 			if ($showSpeed == true) {
 			
-				$_speed = (float)$points->speed[$i]; // dafault m/s
+				$_speed = (float)$points->speed[$i];
 				
-				if ($uomspeed == '2') // miles/h
-				{
-					$_speed *= 2.2369362920544025;
-				} 
-				else if ($uomspeed == '1') // km/h
-				{
-					$_speed *= 3.6;
-				}
-
-				$points_graph_speed .= $_speed.',';
+				$points_graph_speed .= convertSpeed($_speed,$uomspeed).',';
 			}
 			
 			if ($showHr == true)
@@ -253,7 +268,36 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 				$points_graph_cad .= $points->cad[$i].',';
 			}
 			
+		}	
+		
+		if ($uom == '1')
+		{
+			// Miles and feet			
+			$tot_len = round($tot_len * 0.000621371192,2)." mi";
+			$max_ele = ($max_ele * 3.2808399)." ft";
+			$min_ele = ($min_ele * 3.2808399)." ft";
+			$total_ele_up = ($total_ele_up * 3.2808399)." ft";
+			$total_ele_down = ($total_ele_down * 3.2808399)." ft";			
+		} else if ($uom == '2')
+		{
+			// meters / kilometers
+			$tot_len = round($tot_len / 1000,2)." km";
+			$max_ele = $max_ele ." m";
+			$min_ele = $min_ele ." m";
+			$total_ele_up = $total_ele_up ." m";
+			$total_ele_down = $total_ele_down ." m";
 		}
+		else
+		{
+			// meters / kilometers
+			$tot_len = $tot_len ." m";
+			$max_ele = $max_ele ." m";
+			$min_ele = $min_ele ." m";
+			$total_ele_up = $total_ele_up ." m";
+			$total_ele_down = $total_ele_down ." m";
+		}
+		
+		$avg_speed = convertSpeed($avg_speed,$uomspeed,true);
 			
 		if ($showW == true)
 		{
@@ -310,10 +354,17 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 									"points_graph_speed" => $points_graph_speed, 
 									"points_graph_hr" => $points_graph_hr, 
 									"points_graph_cad" => $points_graph_cad,
-									"waypoints" => $waypoints)
+									"waypoints" => $waypoints,
+									"max_ele" => $max_ele,
+									"min_ele" => $min_ele,
+									"total_ele_up" => $total_ele_up,
+									"total_ele_down" => $total_ele_down,
+									"avg_speed" => $avg_speed,
+									"tot_len" => $tot_len
+									)
 							), 
 				   LOCK_EX);
-				   
+
 	@chmod($gpxcache,0755);	
 	
 	$output = '
@@ -363,6 +414,30 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			});
 		</script>';	
 
+		// print summary
+		if ($summary=='true' && ( $points_graph_speed != '' || $points_graph_ele != '' || $points_graph_dist != '') )
+		{
+		
+			$output .= "<div id='wpgpxmaps_summary_".$r."' class='wpgpxmaps_summary'>";
+			if ($points_graph_dist != '')
+			{
+				$output .= "<span class='summarylabel'>".__("Total distance", "wp-gpx-maps").":</span><span class='summaryvalue'> $tot_len</span><br />";
+			}
+			if ($points_graph_ele != '')
+			{
+				$output .= "<span class='summarylabel'>".__("Max elevation", "wp-gpx-maps").":</span><span class='summaryvalue'> $max_ele</span><br />";
+				$output .= "<span class='summarylabel'>".__("Min elevation", "wp-gpx-maps").":</span><span class='summaryvalue'> $min_ele</span><br />";
+				$output .= "<span class='summarylabel'>".__("Total climbing", "wp-gpx-maps").":</span><span class='summaryvalue'> $total_ele_up</span><br />";
+				$output .= "<span class='summarylabel'>".__("Total descent", "wp-gpx-maps").":</span><span class='summaryvalue'> $total_ele_down</span><br />";
+			}
+			if ($points_graph_speed != '')
+			{
+				$output .= "<span class='summarylabel'>".__("Average speed", "wp-gpx-maps").":</span><span class='summaryvalue'> $avg_speed</span><br />";
+			}
+			$output .= "</div>";
+		}
+		
+		// print download link
 		if ($download=='true' && $gpxurl != '')
 		{
 			if ($isGpxUrl == true)
@@ -377,6 +452,35 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		}
 
 	return $output;
+}
+
+function convertSpeed($speed,$uomspeed, $addUom = false)
+{
+	if ($uomspeed == '4') // min/mi
+	{
+		$speed *= 0.037282272;
+		if ($addUom == true) $speed = round($speed,2) . " min/mi";
+	} 
+	else if ($uomspeed == '3') // min/km
+	{
+		$speed *= 0.06;
+		if ($addUom == true) $speed = round($speed,2) . " min/km";
+	} 
+	else if ($uomspeed == '2') // miles/h
+	{
+		$speed *= 2.2369362920544025;
+		if ($addUom == true) $speed = round($speed,2) . " mi/h";
+	} 
+	else if ($uomspeed == '1') // km/h
+	{
+		$speed *= 3.6;
+		if ($addUom == true) $speed = round($speed,2) . " km/h";
+	}
+	else	// dafault m/s
+	{
+		if ($addUom == true) $speed = round($speed,2) . " m/s";
+	}
+	return $speed;
 }
 
 function downloadRemoteFile($remoteFile)
@@ -438,6 +542,7 @@ function WP_GPX_Maps_install() {
 	add_option('wpgpxmaps_show_cadence','','','yes');
 	add_option('wpgpxmaps_zoomonscrollwheel','','','yes');
 	add_option('wpgpxmaps_download','','','yes');
+	add_option('wpgpxmaps_summary','','','yes');	
 }
 
 function WP_GPX_Maps_remove() {
@@ -469,6 +574,7 @@ function WP_GPX_Maps_remove() {
 	delete_option('wpgpxmaps_graph_line_color_cad');
 	delete_option('wpgpxmaps_zoomonscrollwheel');
 	delete_option('wpgpxmaps_download');
+	delete_option('wpgpxmaps_summary');
 }
 
 ?>

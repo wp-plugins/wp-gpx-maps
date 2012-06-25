@@ -19,7 +19,8 @@
 	$showHr = get_option('wpgpxmaps_show_hr');
 	$showCad = get_option('wpgpxmaps_show_cadence');
 	$zoomonscrollwheel = get_option("wpgpxmaps_zoomonscrollwheel");	
-	$download = get_option("wpgpxmaps_download");	
+	$download = get_option("wpgpxmaps_download");
+	$summary = get_option("wpgpxmaps_summary");
 	
 	if (!($t))
 		$t = 'HYBRID';
@@ -56,14 +57,21 @@
 		<tr>
 			<th scope="row">GPX Download:</th>
 			<td>
-				<input name="wpgpxmaps_download" type="checkbox" value="true" <?php if($download == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Allow users to download your GPX file</i>
+				<input name="wpgpxmaps_download" type="checkbox" value="true" <?php if($download == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Allow users to download your GPX file</i>
 			</td>
 		</tr>
+		<tr>
+			<th scope="row">Summary table:</th>
+			<td>
+				<input name="wpgpxmaps_summary" type="checkbox" value="true" <?php if($summary == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Print summary table</i>
+			</td>
+		</tr>
+		
 	</table>
 	
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
-    	<input name="page_options" type="hidden" value="wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_download" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_download,wpgpxmaps_summary" />
 		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
 	</p>
 
@@ -79,13 +87,13 @@
 		<tr>
 			<th scope="row">On mouse scroll wheel:</th>
 			<td>
-				<input name="wpgpxmaps_zoomonscrollwheel" type="checkbox" value="true" <?php if($zoomonscrollwheel == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Enable zoom</i>
+				<input name="wpgpxmaps_zoomonscrollwheel" type="checkbox" value="true" <?php if($zoomonscrollwheel == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Enable zoom</i>
 			</td>
 		</tr>
 		<tr>
 			<th scope="row">Waypoints Support:</th>
 			<td>
-				<input name="wpgpxmaps_show_waypoint" type="checkbox" value="true" <?php if($showW == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Waypoints</i>
+				<input name="wpgpxmaps_show_waypoint" type="checkbox" value="true" <?php if($showW == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Show Waypoints</i>
 			</td>
 		</tr>
 		<tr>
@@ -197,6 +205,8 @@
 					<option value="0" <?php if ($uomSpeed == '0') echo 'selected'; ?>>m/s</option>
 					<option value="1" <?php if ($uomSpeed == '1') echo 'selected'; ?>>km/h</option>
 					<option value="2" <?php if ($uomSpeed == '2') echo 'selected'; ?>>miles/h</option>
+					<option value="3" <?php if ($uomSpeed == '3') echo 'selected'; ?>>min/km</option>
+					<option value="4" <?php if ($uomSpeed == '4') echo 'selected'; ?>>min/miles</option>
 				</select>
 			</td>
 		</tr>		
@@ -213,7 +223,7 @@
 		<tr>
 			<th scope="row">Show Heart Rate (where aviable):</th>
 			<td>
-				<input name="wpgpxmaps_show_hr" type="checkbox" value="true" <?php if($showHr == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show heart rate</i>
+				<input name="wpgpxmaps_show_hr" type="checkbox" value="true" <?php if($showHr == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Show heart rate</i>
 			</td>
 		</tr>		
 		<tr>
@@ -227,7 +237,7 @@
 		<tr>
 			<th scope="row">Show Cadence (where aviable):</th>
 			<td>
-				<input name="wpgpxmaps_show_cadence" type="checkbox" value="true" <?php if($showCad == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Cadence</i>
+				<input name="wpgpxmaps_show_cadence" type="checkbox" value="true" <?php if($showCad == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Show Cadence</i>
 			</td>
 		</tr>		
 		<tr>
@@ -258,13 +268,13 @@
 		<tr>
 			<th scope="row"></th>
 			<td>
-				<i>Skip points closer than </i> <input name="wpgpxmaps_pointsoffset" type="text" id="wpgpxmaps_pointsoffset" value="<?php echo $po ?>" style="width:50px;" /><i>meters</i>.
+				<i>Skip points closer than </i> <input name="wpgpxmaps_pointsoffset" type="text" id="wpgpxmaps_pointsoffset" value="<?php echo $po ?>" style="width:50px;" /> <i>meters</i>.
 			</td>
 		</tr>		
 		<tr>
 			<th scope="row"></th>
 			<td>
-				<input name="wpgpxmaps_donotreducegpx" type="checkbox" value="true" <?php if($donotreducegpx == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Do not reduce gpx</i>.
+				<input name="wpgpxmaps_donotreducegpx" type="checkbox" value="true" <?php if($donotreducegpx == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Do not reduce gpx</i>.
 			</td>
 		</tr>	
 	</table>

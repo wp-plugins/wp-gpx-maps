@@ -459,6 +459,9 @@ function _wpgpxmaps(params)
 			l_y = { suf : "m", dec : 0 };
 		}
 		
+		var nn = 1111.1;
+		var decPoint = nn.toLocaleString().substring(5, 6);
+		var thousandsSep = nn.toLocaleString().substring(1, 2);
 
 		// define the options
 		var hoptions = {
@@ -490,7 +493,6 @@ function _wpgpxmaps(params)
 				shared: true,
 				crosshairs: true,
 				formatter: function() {
-				
 					if (marker)
 					{
 						var hchart_xserie = hchart.xAxis[0].series[0].data;				
@@ -505,11 +507,10 @@ function _wpgpxmaps(params)
 							}
 						}			
 					}
-				
-					var tooltip = "<b>" + Highcharts.numberFormat(this.x, l_x.dec) + l_x.suf + "</b><br />"; 
+					var tooltip = "<b>" + Highcharts.numberFormat(this.x, l_x.dec,decPoint,thousandsSep) + l_x.suf + "</b><br />"; 
 					for (i=0; i < this.points.length; i++)
 					{
-						tooltip += this.points[i].series.name + ": " + Highcharts.numberFormat(this.points[i].y, l_y_arr[i].dec) + l_y_arr[i].suf + "<br />"; 					
+						tooltip += this.points[i].series.name + ": " + Highcharts.numberFormat(this.points[i].y, l_y_arr[i].dec,decPoint,thousandsSep) + l_y_arr[i].suf + "<br />"; 					
 					}
 					return tooltip;
 				}
@@ -533,7 +534,7 @@ function _wpgpxmaps(params)
 			xAxis: { 	
 					labels: {
 							formatter: function() {
-								return Highcharts.numberFormat(this.value, l_x.dec) + l_x.suf;
+								return Highcharts.numberFormat(this.value, l_x.dec,decPoint,thousandsSep) + l_x.suf;
 							}
 						} 
 					},
@@ -559,7 +560,7 @@ function _wpgpxmaps(params)
 				labels: {
 					align: 'left',
 					formatter: function() {
-						return Highcharts.numberFormat(this.value, l_y.dec) + l_y.suf;
+						return Highcharts.numberFormat(this.value, l_y.dec,decPoint,thousandsSep) + l_y.suf;
 					}
 				}
 			}
@@ -594,7 +595,15 @@ function _wpgpxmaps(params)
 			
 			var l_s;
 			
-			if (unitspeed == '2') // miles/h
+			if (unitspeed == '4') // min/miles
+			{
+				l_s = { suf : "min/mi", dec : 3 };
+			} 
+			else if (unitspeed == '3') // min/km
+			{
+				l_s = { suf : "min/km", dec : 3 };
+			} 
+			else if (unitspeed == '2') // miles/h
 			{
 				l_s = { suf : "mi/h", dec : 0 };
 			} 
@@ -619,7 +628,7 @@ function _wpgpxmaps(params)
 				labels: {
 					//align: 'right',
 					formatter: function() {
-						return Highcharts.numberFormat(this.value, l_s.dec) + l_s.suf;
+						return Highcharts.numberFormat(this.value, l_s.dec,decPoint,thousandsSep) + l_s.suf;
 					}
 				},
 				opposite: true
@@ -670,7 +679,7 @@ function _wpgpxmaps(params)
 				labels: {
 					//align: 'right',
 					formatter: function() {
-						return Highcharts.numberFormat(this.value, l_hr.dec) + l_hr.suf;
+						return Highcharts.numberFormat(this.value, l_hr.dec,decPoint,thousandsSep) + l_hr.suf;
 					}
 				},
 				opposite: true
@@ -709,7 +718,7 @@ function _wpgpxmaps(params)
 				labels: {
 					//align: 'right',
 					formatter: function() {
-						return Highcharts.numberFormat(this.value, l_cad.dec) + l_cad.suf;
+						return Highcharts.numberFormat(this.value, l_cad.dec,decPoint,thousandsSep) + l_cad.suf;
 					}
 				},
 				opposite: true

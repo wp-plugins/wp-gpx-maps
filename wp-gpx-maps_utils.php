@@ -125,6 +125,12 @@
 		$points->speed = array();
 		$points->hr = array();
 		$points->cad = array();
+		$points->maxEle = 0;
+		$points->minEle = 0;
+		$points->totalEleUp = 0;
+		$points->totalEleDown = 0;
+		$points->avgSpeed = 0;
+		$points->totalLength = 0;
 		
 		$gpx = simplexml_load_file($filePath);	
 		
@@ -202,12 +208,26 @@
 					$offset = calculateDistance((float)$lat, (float)$lon, (float)$ele, (float)$lastLat, (float)$lastLon, (float)$lastEle);
 					$dist = $dist + $offset;
 					
+					$points->totalLength = $dist;
+					
 					if ($speed == 0)
 					{
 						$datediff = (float)my_date_diff($lastTime,$time);
 						if ($datediff>0)
 						{
 							$speed = $offset / $datediff;
+						}
+					}
+					
+					if ($ele != 0 && $lastEle != 0)
+					{
+						if ((float)$ele > (float)$lastEle)
+						{
+							$points->totalEleUp += (float)($ele - $lastEle);
+						}
+						else
+						{
+							$points->totalEleDown += (float)($lastEle - $ele);
 						}
 					}
 					
@@ -249,6 +269,13 @@
 				$lastTime=$time;	
 			}
 			unset($nodes);
+			
+			try {
+				$points->maxEle = max($points->ele);
+				$points->minEle = min($points->ele);
+				$points->totalLength = max($points->dist);
+				$points->avgSpeed = array_sum($points->speed) / count($points->speed);
+			} catch (Exception $e) { }
 		
 		}
 		else
@@ -311,6 +338,7 @@
 					$lastLon=$lon;
 				}
 				unset($nodes);
+				
 			}
 			else
 			{	

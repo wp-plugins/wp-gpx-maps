@@ -89,7 +89,7 @@ The attributes are:
 
 1. glinecolorcad: cadence line color (default is #beecff)
 
-1. uomspeed: the unit of measure of speed are: 0, 1, 2 (0 = m/s, 1 = km/h, 2 = miles/h)
+1. uomspeed: the unit of measure of speed are: 0, 1, 2, 3, 4 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles)
 
 1. chartFrom1: minimun value for altitude chart
 
@@ -114,6 +114,8 @@ The attributes are:
 1. zoomonscrollwheel: zoom on map when mouse scroll wheel 
 
 1. download: Allow users to download your GPX file 
+
+1. summary: Print symmary details of your GPX (default is FALSE) 
 
 
 = What happening if I've a very large gpx? =
