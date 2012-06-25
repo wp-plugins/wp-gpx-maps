@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.27
+Version: 1.1.28
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -51,7 +51,7 @@ function enqueue_WP_GPX_Maps_scripts()
     wp_enqueue_script( 'googleapis' );
 	
     wp_deregister_script( 'WP-GPX-Maps' );
-    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery'), "1.1.26");
+    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery'), "1.1.28");
     wp_enqueue_script( 'WP-GPX-Maps' );
 	
     wp_deregister_script( 'highcharts' );
@@ -139,7 +139,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	
 	$gpxurl = $gpx;
 	
-	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uomspeed,$uom,v1.1.28l";
+	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uomspeed,$uom,v1.1.28";
 
 	$cacheFileName = md5($cacheFileName);
 	
@@ -289,7 +289,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		}
 		else
 		{
-			// meters / kilometers
+			// meters / meters
 			$tot_len = $tot_len ." m";
 			$max_ele = $max_ele ." m";
 			$min_ele = $min_ele ." m";
