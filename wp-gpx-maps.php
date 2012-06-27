@@ -273,28 +273,28 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		if ($uom == '1')
 		{
 			// Miles and feet			
-			$tot_len = round($tot_len * 0.000621371192,2)." mi";
-			$max_ele = ($max_ele * 3.2808399)." ft";
-			$min_ele = ($min_ele * 3.2808399)." ft";
-			$total_ele_up = ($total_ele_up * 3.2808399)." ft";
-			$total_ele_down = ($total_ele_down * 3.2808399)." ft";			
+			$tot_len = round($tot_len * 0.000621371192, 2)." mi";
+			$max_ele = round($max_ele * 3.2808399, 0)." ft";
+			$min_ele = round($min_ele * 3.2808399, 0)." ft";
+			$total_ele_up = round($total_ele_up * 3.2808399, 0)." ft";
+			$total_ele_down = round($total_ele_down * 3.2808399, 0)." ft";			
 		} else if ($uom == '2')
 		{
 			// meters / kilometers
-			$tot_len = round($tot_len / 1000,2)." km";
-			$max_ele = $max_ele ." m";
-			$min_ele = $min_ele ." m";
-			$total_ele_up = $total_ele_up ." m";
-			$total_ele_down = $total_ele_down ." m";
+			$tot_len = round($tot_len / 1000, 2)." km";
+			$max_ele = round($max_ele, 0) ." m";
+			$min_ele = round($min_ele, 0) ." m";
+			$total_ele_up = round($total_ele_up, 0) ." m";
+			$total_ele_down = round($total_ele_down, 0) ." m";
 		}
 		else
 		{
 			// meters / meters
-			$tot_len = $tot_len ." m";
-			$max_ele = $max_ele ." m";
-			$min_ele = $min_ele ." m";
-			$total_ele_up = $total_ele_up ." m";
-			$total_ele_down = $total_ele_down ." m";
+			$tot_len = round($tot_len, 0) ." m";
+			$max_ele = round($max_ele, 0) ." m";
+			$min_ele = round($min_ele, 0) ." m";
+			$total_ele_up = round($total_ele_up, 0) ." m";
+			$total_ele_down = round($total_ele_down, 0) ." m";
 		}
 		
 		$avg_speed = convertSpeed($avg_speed,$uomspeed,true);
