@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.4
-Stable tag: 1.1.28
+Stable tag: 1.1.29
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
@@ -133,6 +133,9 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.29 =
+* Decimal separator is working with all the browsers
+* minutes per mile and minutes per kilometer was wrong
 = 1.1.28 =
 * Decimal and thousand separator derived from browser language
 * Added summary table (see settings): Total distance, Max elevation, Min elevation, Total climbing, Total descent, Average speed

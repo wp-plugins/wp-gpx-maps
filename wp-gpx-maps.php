@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.28
+Version: 1.1.29
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -51,7 +51,7 @@ function enqueue_WP_GPX_Maps_scripts()
     wp_enqueue_script( 'googleapis' );
 	
     wp_deregister_script( 'WP-GPX-Maps' );
-    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery'), "1.1.28");
+    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery'), "1.1.29");
     wp_enqueue_script( 'WP-GPX-Maps' );
 	
     wp_deregister_script( 'highcharts' );
@@ -67,7 +67,7 @@ function print_WP_GPX_Maps_scripts()
 	.wpgpxmaps { clear:both; }
 	#content .wpgpxmaps img,
 	.entry-content .wpgpxmaps img,
-	.wpgpxmaps img { max-width: none; width: none; padding:0; background:none; }
+	.wpgpxmaps img { max-width: none; width: none; padding:0; background:none; margin:0; border:none; }
 	.wpgpxmaps .ngimages { display:none; }
 	.wpgpxmaps .myngimages { border:1px solid #fff;position:absolute;cursor:pointer;margin:0;z-index:1; }
 	.wpgpxmaps_summary .summarylabel { }
@@ -139,7 +139,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	
 	$gpxurl = $gpx;
 	
-	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uomspeed,$uom,v1.1.28";
+	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uomspeed,$uom,v1.1.29";
 
 	$cacheFileName = md5($cacheFileName);
 	
@@ -273,28 +273,28 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		if ($uom == '1')
 		{
 			// Miles and feet			
-			$tot_len = round($tot_len * 0.000621371192,2)." mi";
-			$max_ele = ($max_ele * 3.2808399)." ft";
-			$min_ele = ($min_ele * 3.2808399)." ft";
-			$total_ele_up = ($total_ele_up * 3.2808399)." ft";
-			$total_ele_down = ($total_ele_down * 3.2808399)." ft";			
+			$tot_len = round($tot_len * 0.000621371192, 2)." mi";
+			$max_ele = round($max_ele * 3.2808399, 0)." ft";
+			$min_ele = round($min_ele * 3.2808399, 0)." ft";
+			$total_ele_up = round($total_ele_up * 3.2808399, 0)." ft";
+			$total_ele_down = round($total_ele_down * 3.2808399, 0)." ft";			
 		} else if ($uom == '2')
 		{
 			// meters / kilometers
-			$tot_len = round($tot_len / 1000,2)." km";
-			$max_ele = $max_ele ." m";
-			$min_ele = $min_ele ." m";
-			$total_ele_up = $total_ele_up ." m";
-			$total_ele_down = $total_ele_down ." m";
+			$tot_len = round($tot_len / 1000, 2)." km";
+			$max_ele = round($max_ele, 0) ." m";
+			$min_ele = round($min_ele, 0) ." m";
+			$total_ele_up = round($total_ele_up, 0) ." m";
+			$total_ele_down = round($total_ele_down, 0) ." m";
 		}
 		else
 		{
 			// meters / meters
-			$tot_len = $tot_len ." m";
-			$max_ele = $max_ele ." m";
-			$min_ele = $min_ele ." m";
-			$total_ele_up = $total_ele_up ." m";
-			$total_ele_down = $total_ele_down ." m";
+			$tot_len = round($tot_len, 0) ." m";
+			$max_ele = round($max_ele, 0) ." m";
+			$min_ele = round($min_ele, 0) ." m";
+			$total_ele_up = round($total_ele_up, 0) ." m";
+			$total_ele_down = round($total_ele_down, 0) ." m";
 		}
 		
 		$avg_speed = convertSpeed($avg_speed,$uomspeed,true);
@@ -454,16 +454,27 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	return $output;
 }
 
+function convertSeconds($s)
+{
+	if ($s ==0)
+		return 0;
+	$s =  1.0 / $s;
+	$_sSecT = $s * 60; //sec/km
+	$_sMin = floor ( $_sSecT / 60 );
+	$_sSec = $_sSecT - $_sMin * 60;
+	return $_sMin + $_sSec / 100;
+}
+
 function convertSpeed($speed,$uomspeed, $addUom = false)
 {
 	if ($uomspeed == '4') // min/mi
 	{
-		$speed *= 0.037282272;
+		$speed = convertSeconds($speed * 0.037282272);	
 		if ($addUom == true) $speed = round($speed,2) . " min/mi";
 	} 
 	else if ($uomspeed == '3') // min/km
 	{
-		$speed *= 0.06;
+		$speed = convertSeconds($speed * 0.06);
 		if ($addUom == true) $speed = round($speed,2) . " min/km";
 	} 
 	else if ($uomspeed == '2') // miles/h

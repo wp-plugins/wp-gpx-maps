@@ -460,9 +460,17 @@ function _wpgpxmaps(params)
 		}
 		
 		var nn = 1111.1;
-		var decPoint = nn.toLocaleString().substring(5, 6);
-		var thousandsSep = nn.toLocaleString().substring(1, 2);
-
+		var _nn = nn.toLocaleString();
+		var _nnLen = _nn.length;
+		var decPoint = _nn.substring(_nnLen - 2, _nnLen - 1);
+		var thousandsSep = _nn.substring(1, 2);
+		
+		if (decPoint == "1")
+			decPoint = ".";
+			
+		if (thousandsSep == "1")
+			thousandsSep = "";		
+			
 		// define the options
 		var hoptions = {
 			chart: {
@@ -597,11 +605,11 @@ function _wpgpxmaps(params)
 			
 			if (unitspeed == '4') // min/miles
 			{
-				l_s = { suf : "min/mi", dec : 3 };
+				l_s = { suf : "min/mi", dec : 2 };
 			} 
 			else if (unitspeed == '3') // min/km
 			{
-				l_s = { suf : "min/km", dec : 3 };
+				l_s = { suf : "min/km", dec : 2 };
 			} 
 			else if (unitspeed == '2') // miles/h
 			{
