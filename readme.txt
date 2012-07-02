@@ -139,9 +139,10 @@ Yes!
 
 == Changelog ==
 = 1.1.30 =
+* Multi track gpx support
+* Next Gen Gallery images positions derived from date. You can adjust the date with the shortcode attribute dtoffset
 * If you set Chart Height (shortcode gheight) = 0 means hide the graph
 * Fix: All images should work, independent from browser cache
-* Next Gen Gallery images positions derived from date. You can adjust the date with the shortcode attribute dtoffset
 = 1.1.29 =
 * Decimal separator is working with all the browsers
 * minutes per mile and minutes per kilometer was wrong
