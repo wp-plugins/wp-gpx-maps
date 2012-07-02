@@ -117,6 +117,16 @@ function setup()
 
 }
 
+function get_random_color() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.round(Math.random() * 15)];
+    }
+    return color;
+}
+
+
 function _wpgpxmaps(params)
 {
 
@@ -299,56 +309,86 @@ function _wpgpxmaps(params)
 	
 	// Print Images
 	
-	var divImages = document.getElementById("ngimages_"+targetId);
+	jQuery("#ngimages_" + targetId).attr("style","display:block;position:absolute;left:-50000px");
+	jQuery("#ngimages_" + targetId + " span").each(function(){
 	
-	divImages.style.display='block';	
-	divImages.style.position='absolute';
-	divImages.style.left='-50000px';	
-	
-	var img_spans = divImages.getElementsByTagName("span");   
-
-	if (img_spans.length > 0)
-	{
-		var bb = new google.maps.LatLngBounds();
-		for (var i = 0; i < img_spans.length; i++) {   
+		var imageLat  = jQuery(this).attr("lat");
+		var imageLon  = jQuery(this).attr("lon");	
 		
-			var imageLat  = img_spans[i].getAttribute("lat");
-			var imageLon  = img_spans[i].getAttribute("lon");	
-			var imageImg  = img_spans[i].getElementsByTagName('img')[0];
-			var imageUrl  = imageImg.getAttribute("src");
-			
-			var img_w = imageImg.clientWidth;
-			var img_h = imageImg.clientHeight;
-			
-			var p = new google.maps.LatLng(imageLat, imageLon);
-			bounds.extend(p);
+		jQuery("img",this).each(function() {
+		
+			jQuery(this).load(function(){
 
-			var mc = new CustomMarker(map, p, imageUrl, img_w, img_h );
-			
-			google.maps.event.addListener(mc, "click", function(div) {
-				var lat = div.getAttribute("lat");
-				var lon = div.getAttribute("lon");
-				var a = getClosestImage(lat,lon,targetId).childNodes[0];			
-				if (a)
-				{
-					a.click();
-				}
+				var imageUrl  = jQuery(this).attr("src");
+				var img_w = jQuery(this).width();
+				var img_h = jQuery(this).height();
+				
+				var p = new google.maps.LatLng(imageLat, imageLon);
+				bounds.extend(p);
+
+				var mc = new CustomMarker(map, p, imageUrl, img_w, img_h );
+				
+				google.maps.event.addListener(mc, "click", function(div) {
+					var lat = div.getAttribute("lat");
+					var lon = div.getAttribute("lon");
+					var a = getClosestImage(lat,lon,targetId).childNodes[0];			
+					if (a)
+					{
+						a.click();
+					}
+				});
+
 			});
-			
-		}  
+		
+			if (jQuery(this).width() + jQuery(this).height() > 0)
+			{
+				jQuery(this).trigger("load");
+			}
 
-	}
+		});
+	
+	});
 	
 	// Print Track
 	if (mapData != '')		
 	{
 		var points = [];
+		var lastCut=0;
+		var polylinenes = [];
 
 		for (i=0; i < mapData.length; i++) 
+		{	
+			if (mapData[i] == null)
+			{
+				var poly = new google.maps.Polyline({
+					path: points.slice(lastCut,i),
+					strokeColor: color1,
+					strokeOpacity: .7,
+					strokeWeight: 4,
+					map: map
+				});
+				polylinenes.push(poly);
+				lastCut=i;
+			}
+			else
+			{
+				var p = new google.maps.LatLng(mapData[i][0], mapData[i][1]);
+				points.push(p);
+				bounds.extend(p);			
+			}
+		}
+		
+		if (points.length != lastCut)
 		{
-			var p = new google.maps.LatLng(mapData[i][0], mapData[i][1]);
-			points.push(p);
-			bounds.extend(p);
+			var poly = new google.maps.Polyline({
+				path: points.slice(lastCut),
+				strokeColor: color1,
+				strokeOpacity: .7,
+				strokeWeight: 4,
+				map: map
+			});
+			polylinenes.push(poly);			
+			currentPoints = [];
 		}
 		
 		if (startIcon != '')
@@ -362,6 +402,7 @@ function _wpgpxmaps(params)
 					  icon: startIconImage,
 					  zIndex: 10
 				  });
+
 		}
 
 		if (endIcon != '')
@@ -377,14 +418,6 @@ function _wpgpxmaps(params)
 				  });
 		
 		}
-		
-		var poly = new google.maps.Polyline({
-			path: points,
-			strokeColor: color1,
-			strokeOpacity: .7,
-			strokeWeight: 4
-		});
-		poly.setMap(map);
 
 		var first = getItemFromArray(mapData,0)
 		
@@ -407,34 +440,40 @@ function _wpgpxmaps(params)
 			zIndex: 10
 		});
 		
-		google.maps.event.addListener(poly,'mouseover',function(event){
-			if (marker)
-			{
-				marker.setPosition(event.latLng);	
-				marker.setTitle(lng.currentPosition);
-				if (hchart)
+		for (i=0; i < polylinenes.length; i++) 
+		{	
+
+			google.maps.event.addListener(polylinenes[i],'mouseover',function(event){
+				if (marker)
 				{
-					var tooltip = hchart.tooltip;
-					var l1 = event.latLng.lat();
-					var l2 = event.latLng.lng();
-					var ci = getClosestIndex(mapData,l1,l2);
-					var items = [];
-					var seriesLen = hchart.series.length;
-					for(var i=0; i<seriesLen;i++)
+					marker.setPosition(event.latLng);	
+					marker.setTitle(lng.currentPosition);
+					if (hchart)
 					{
-						items.push(hchart.series[i].data[ci]);
+						var tooltip = hchart.tooltip;
+						var l1 = event.latLng.lat();
+						var l2 = event.latLng.lng();
+						var ci = getClosestIndex(mapData,l1,l2);
+						var items = [];
+						var seriesLen = hchart.series.length;
+						for(var i=0; i<seriesLen;i++)
+						{
+							items.push(hchart.series[i].data[ci]);
+						}
+						if (items.length > 0)
+							tooltip.refresh(items);
 					}
-					if (items.length > 0)
-						tooltip.refresh(items);
 				}
-			}
-		});
+			});		
+		}
 	}
 	
 	map.setCenter(bounds.getCenter()); 
 	map.fitBounds(bounds);
 	
-	if (graphDist != '' && (graphEle != '' || graphSpeed != '' || graphHr != '' || graphCad != ''))
+	var graphh = jQuery('#hchart_' + params.targetId).css("height");
+	
+	if (graphDist != '' && (graphEle != '' || graphSpeed != '' || graphHr != '' || graphCad != '') && graphh != "0px")
 	{
 
 		var valLen = graphDist.length;
@@ -509,7 +548,10 @@ function _wpgpxmaps(params)
 							if(item.x == this.x)
 							{
 								var point = getItemFromArray(mapData,i)
-								marker.setPosition(new google.maps.LatLng(point[0],point[1]));	
+								if (point)
+								{
+									marker.setPosition(new google.maps.LatLng(point[0],point[1]));									
+								}
 								marker.setTitle(lng.currentPosition);
 								i+=10000000;
 							}
@@ -560,7 +602,8 @@ function _wpgpxmaps(params)
 		
 			for (i=0; i<valLen; i++) 
 			{
-				eleData.push([graphDist[i],graphEle[i]]);
+				if (graphDist[i] != null)
+					eleData.push([graphDist[i],graphEle[i]]);
 			}
 
 			var yaxe = { 
@@ -628,7 +671,8 @@ function _wpgpxmaps(params)
 		
 			for (i=0; i<valLen; i++) 
 			{
-				speedData.push([graphDist[i],graphSpeed[i]]);
+				if (graphDist[i] != null)
+					speedData.push([graphDist[i],graphSpeed[i]]);
 			}
 
 			var yaxe = { 
@@ -676,10 +720,13 @@ function _wpgpxmaps(params)
 		
 			for (i=0; i<valLen; i++) 
 			{
-				var c = graphHr[i];
-				if (c==0)
-					c = null;
-				hrData.push([graphDist[i],c]);
+				if (graphDist[i] != null)
+				{
+					var c = graphHr[i];
+					if (c==0)
+						c = null;
+					hrData.push([graphDist[i],c]);				
+				}
 			}
 
 			var yaxe = { 
@@ -715,10 +762,13 @@ function _wpgpxmaps(params)
 		
 			for (i=0; i<valLen; i++) 
 			{
-				var c = graphCad[i];
-				if (c==0)
-					c = null;
-				cadData.push([graphDist[i],c]);
+				if (graphDist[i] != null)
+				{
+					var c = graphCad[i];
+					if (c==0)
+						c = null;
+					cadData.push([graphDist[i],c]);
+				}
 			}
 
 			var yaxe = { 

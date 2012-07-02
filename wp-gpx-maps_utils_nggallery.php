@@ -7,7 +7,7 @@
 		return is_plugin_active("nextgen-gallery/nggallery.php");
 	}
 	
-	function getNGGalleryImages($ngGalleries, $ngImages, &$error)
+	function getNGGalleryImages($ngGalleries, $ngImages, $dt, $lat, $lon, $dtoffset, &$error)
 	{
 
 		$result = array();
@@ -16,7 +16,6 @@
 		
 		if (!isNGGalleryActive())
 			return '';
-			
 		try {
 
 			$pictures = array();
@@ -26,6 +25,7 @@
 			foreach ($imgids as $i) {
 				array_push($pictures, nggdb::find_image($i));
 			}
+
 			foreach ($pictures as $p) {
 				$item = array();
 				$item["data"] = $p->thumbHTML;
@@ -39,7 +39,18 @@
 						if (($item["lat"] != 0) || ($item["lon"] != 0)) 
 						{
 							$result[] = $item;
-						}					
+						}
+						else if (isset($p->imagedate))
+						{
+							$_dt = strtotime($p->imagedate) + $dtoffset;
+							$_item = findItemCoordinate($_dt, $dt, $lat, $lon);
+							if ($_item != null)
+							{
+								$item["lat"] = $_item["lat"];
+								$item["lon"] = $_item["lon"];
+								$result[] = $item;
+							}
+						}
 					}
 				}
 				else
@@ -53,6 +64,19 @@
 		}
 
 		return $result;
+	}
+	
+	function findItemCoordinate($imgdt, $dt, $lat, $lon)
+	{
+		foreach(array_keys($dt) as $i) 
+		{
+			if ($i!=0 && $imgdt >= $dt[$i-1] && $imgdt <= $dt[$i])
+			{
+				if ($lat[$i] != 0 && $lon[$i] != 0)
+					return array( "lat" => $lat[$i], "lon" => $lon[$i] );
+			}
+		}
+		return null;
 	}
 	
 	function getExifGps($exifCoord, $hemi) 

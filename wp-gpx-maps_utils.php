@@ -82,7 +82,7 @@
 				
 		if (file_exists($gpxPath))
 		{
-			$points = parseXml($gpxPath, $gpxOffset);			
+			$points = @parseXml($gpxPath, $gpxOffset);			
 		}
 		else
 		{
@@ -98,8 +98,9 @@
 				$f = round($count/200);
 				if ($f>1)
 					for($i=$count;$i>0;$i--)
-						if ($i % $f != 0)
+						if ($i % $f != 0 && $points->lat[$i] != null)
 						{
+							unset($points->dt[$i]);
 							unset($points->lat[$i]);						
 							unset($points->lon[$i]);						
 							unset($points->ele[$i]);						
@@ -118,6 +119,7 @@
 
 		$points = null;
 		
+		$points->dt = array();
 		$points->lat = array();
 		$points->lon = array();
 		$points->ele = array();
@@ -138,136 +140,165 @@
 			return;
 		
 		$gpx->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
-		$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 
-		$gpx->registerXPathNamespace('gpxx', 'http://www.garmin.com/xmlschemas/GpxExtensions/v3'); 		
+		$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 	
 		$gpx->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'); 
 		
-		$nodes = $gpx->xpath('//trkpt | //10:trkpt | //11:trkpt | //11:rtept');
+		$nodes = $gpx->xpath('//trk | //10:trk | //11:trk');
+		
+		//normal gpx
 		
 		if ( count($nodes) > 0 )	
 		{
 		
-			$lastLat = 0;
-			$lastLon = 0;
-			$lastEle = 0;
-			$lastTime = 0;
-			$dist = 0;
-			$lastOffset = 0;
-			$speedBuffer = array();
-		
-			// normal case
-			foreach($nodes as $trkpt)
-			{ 
-				$lat = $trkpt['lat'];
-				$lon = $trkpt['lon'];
-				$ele = $trkpt->ele;
-				$time = $trkpt->time;
-				$speed = (float)$trkpt->speed;
-				$hr = 0;
-				$cad = 0;
+			foreach($nodes as $_trk)
+			{
+			
+				$trk = simplexml_load_string($_trk->asXML()); 
 				
-				if (isset($trkpt->extensions))
-				{				
-					$_hr = @$trkpt->extensions->xpath('gpxtpx:TrackPointExtension/gpxtpx:hr/text()');
-					if ($_hr)
-					{
-						foreach ($_hr as $node) {
-							$hr = (float)$node;
-						}
-					}
+				$trk->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
+				$trk->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 
+				$trk->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'); 
 					
-					$_cad = @$trkpt->extensions->xpath('gpxtpx:TrackPointExtension/gpxtpx:cad/text()');
-					if ($_cad)
-					{
-						foreach ($_cad as $node) {
-							$cad = (float)$node;
-						}
-					}
-				}
+				$trkpts = $trk->xpath('//trkpt | //10:trkpt | //11:trkpt');		
+				
+				$lastLat = 0;
+				$lastLon = 0;
+				$lastEle = 0;
+				$lastTime = 0;
+				//$dist = 0;
+				$lastOffset = 0;
+				$speedBuffer = array();
+			
+				foreach($trkpts as $trkpt)
+				{
 
-				if ($lastLat == 0 && $lastLon == 0)
-				{
-					//Base Case
+					$lat = $trkpt['lat'];
+					$lon = $trkpt['lon'];
+					$ele = $trkpt->ele;
+					$time = $trkpt->time;
+					$speed = (float)$trkpt->speed;
+					$hr = 0;
+					$cad = 0;
 					
-					array_push($points->lat,  (float)$lat);
-					array_push($points->lon,  (float)$lon);
-					array_push($points->ele,  (float)round($ele,2));
-					array_push($points->dist, (float)round($dist,2));
-					array_push($points->speed, 0);
-					array_push($points->hr, $hr);
-					array_push($points->cad, $cad);
-					
-					$lastLat=$lat;
-					$lastLon=$lon;
-					$lastEle=$ele;				
-					$lastTime=$time;	
-				}
-				else
-				{
-					//Normal Case
-					$offset = calculateDistance((float)$lat, (float)$lon, (float)$ele, (float)$lastLat, (float)$lastLon, (float)$lastEle);
-					$dist = $dist + $offset;
-					
-					$points->totalLength = $dist;
-					
-					if ($speed == 0)
-					{
-						$datediff = (float)my_date_diff($lastTime,$time);
-						if ($datediff>0)
+					if (isset($trkpt->extensions))
+					{				
+						$_hr = @$trkpt->extensions->xpath('gpxtpx:TrackPointExtension/gpxtpx:hr/text()');
+						if ($_hr)
 						{
-							$speed = $offset / $datediff;
+							foreach ($_hr as $node) {
+								$hr = (float)$node;
+							}
+						}
+						
+						$_cad = @$trkpt->extensions->xpath('gpxtpx:TrackPointExtension/gpxtpx:cad/text()');
+						if ($_cad)
+						{
+							foreach ($_cad as $node) {
+								$cad = (float)$node;
+							}
 						}
 					}
-					
-					if ($ele != 0 && $lastEle != 0)
+
+					if ($lastLat == 0 && $lastLon == 0)
 					{
-						if ((float)$ele > (float)$lastEle)
-						{
-							$points->totalEleUp += (float)($ele - $lastEle);
-						}
-						else
-						{
-							$points->totalEleDown += (float)($lastEle - $ele);
-						}
-					}
-					
-					array_push($speedBuffer, $speed);
-					
-					if (((float) $offset + (float) $lastOffset) > $gpxOffset)
-					{
-						//Bigger Offset -> write coordinate
-						$avgSpeed = 0;
+						//Base Case
+
+						array_push($points->dt,   strtotime($time));
+						array_push($points->lat,  (float)$lat);
+						array_push($points->lon,  (float)$lon);
+						array_push($points->ele,  (float)round($ele,2));
+						array_push($points->dist, (float)round($dist,2));
+						array_push($points->speed, 0);
+						array_push($points->hr,    $hr);
+						array_push($points->cad,   $cad);
 						
-						foreach($speedBuffer as $s)
-						{ 
-							$avgSpeed += $s;
-						}
-						
-						$avgSpeed = $avgSpeed / count($speedBuffer);
-						$speedBuffer = array();
-						
-						$lastOffset=0;
-						
-						array_push($points->lat,   (float)$lat );
-						array_push($points->lon,   (float)$lon );
-						array_push($points->ele,   (float)round($ele, 2) );
-						array_push($points->dist,  (float)round($dist, 2) );
-						array_push($points->speed, (float)round($avgSpeed, 1) );
-						array_push($points->hr, $hr);
-						array_push($points->cad, $cad);
-						
+						$lastLat=$lat;
+						$lastLon=$lon;
+						$lastEle=$ele;				
+						$lastTime=$time;	
 					}
 					else
 					{
-						//Smoller Offset -> continue..
-						$lastOffset = (float) $lastOffset + (float) $offset ;
+						//Normal Case
+						$offset = calculateDistance((float)$lat, (float)$lon, (float)$ele, (float)$lastLat, (float)$lastLon, (float)$lastEle);
+						$dist = $dist + $offset;
+						
+						$points->totalLength = $dist;
+						
+						if ($speed == 0)
+						{
+							$datediff = (float)my_date_diff($lastTime,$time);
+							if ($datediff>0)
+							{
+								$speed = $offset / $datediff;
+							}
+						}
+						
+						if ($ele != 0 && $lastEle != 0)
+						{
+							if ((float)$ele > (float)$lastEle)
+							{
+								$points->totalEleUp += (float)($ele - $lastEle);
+							}
+							else
+							{
+								$points->totalEleDown += (float)($lastEle - $ele);
+							}
+						}
+						
+						array_push($speedBuffer, $speed);
+						
+						if (((float) $offset + (float) $lastOffset) > $gpxOffset)
+						{
+							//Bigger Offset -> write coordinate
+							$avgSpeed = 0;
+							
+							foreach($speedBuffer as $s)
+							{ 
+								$avgSpeed += $s;
+							}
+							
+							$avgSpeed = $avgSpeed / count($speedBuffer);
+							$speedBuffer = array();
+							
+							$lastOffset=0;
+							
+							array_push($points->dt,    strtotime($time));
+							array_push($points->lat,   (float)$lat );
+							array_push($points->lon,   (float)$lon );
+							array_push($points->ele,   (float)round($ele, 2) );
+							array_push($points->dist,  (float)round($dist, 2) );
+							array_push($points->speed, (float)round($avgSpeed, 1) );
+							array_push($points->hr, $hr);
+							array_push($points->cad, $cad);
+							
+						}
+						else
+						{
+							//Smoller Offset -> continue..
+							$lastOffset = (float) $lastOffset + (float) $offset ;
+						}
 					}
+					$lastLat=$lat;
+					$lastLon=$lon;
+					$lastEle=$ele;
+					$lastTime=$time;
+
 				}
-				$lastLat=$lat;
-				$lastLon=$lon;
-				$lastEle=$ele;
-				$lastTime=$time;	
+				
+				array_push($points->dt,  null);
+				array_push($points->lat,  null);
+				array_push($points->lon,  null);
+				array_push($points->ele,  null);
+				array_push($points->dist, null);
+				array_push($points->speed, null);
+				array_push($points->hr, null);
+				array_push($points->cad, null);				
+				
+				unset($trkpts);				
+			
 			}
+
 			unset($nodes);
 			
 			try {
@@ -281,6 +312,9 @@
 		else
 		{
 		
+			// gpx garmin case
+			$gpx->registerXPathNamespace('gpxx', 'http://www.garmin.com/xmlschemas/GpxExtensions/v3');
+			
 			$nodes = $gpx->xpath('//gpxx:rpt');
 		
 			if ( count($nodes) > 0 )	
@@ -338,13 +372,80 @@
 					$lastLon=$lon;
 				}
 				unset($nodes);
-				
+			
 			}
 			else
-			{	
-				echo "Empty Gpx or not supported File!";
+			{
+			
+				//gpx strange case
+
+				$nodes = $gpx->xpath('//rtept | //10:rtept | //11:rtept');
+				if ( count($nodes) > 0 )
+				{
+				
+					$lastLat = 0;
+					$lastLon = 0;
+					$lastEle = 0;
+					$dist = 0;
+					$lastOffset = 0;
+				
+					// Garmin case
+					foreach($nodes as $rtept)
+					{ 
+					
+						$lat = $rtept['lat'];
+						$lon = $rtept['lon'];
+						if ($lastLat == 0 && $lastLon == 0)
+						{
+							//Base Case
+							array_push($points->lat,   (float)$lat );
+							array_push($points->lon,   (float)$lon );
+							array_push($points->ele,   0 );
+							array_push($points->dist,  0 );
+							array_push($points->speed, 0 );
+							array_push($points->hr,    0 );
+							array_push($points->cad,   0 );
+							$lastLat=$lat;
+							$lastLon=$lon;
+						}
+						else
+						{
+							//Normal Case
+							$offset = calculateDistance($lat, $lon, 0,$lastLat, $lastLon, 0);
+							$dist = $dist + $offset;
+							if (((float) $offset + (float) $lastOffset) > $gpxOffset)
+							{
+								//Bigger Offset -> write coordinate
+								$lastOffset=0;
+								array_push($points->lat,   (float)$lat );
+								array_push($points->lon,   (float)$lon );
+								array_push($points->ele,   0 );
+								array_push($points->dist,  0 );
+								array_push($points->speed, 0 );	
+								array_push($points->hr,    0 );
+								array_push($points->cad,   0 );
+							}
+							else
+							{
+								//Smoller Offset -> continue..
+								$lastOffset= (float) $lastOffset + (float) $offset;
+							}
+						}
+						$lastLat=$lat;
+						$lastLon=$lon;
+					}
+					unset($nodes);
+					
+				}
+				else
+				{	
+					echo "Empty Gpx or not supported File!";
+				}
 			}
+		
+		
 		}
+		
 		unset($gpx);
 		return $points;
 	}	

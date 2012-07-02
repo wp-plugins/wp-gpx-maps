@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.4
-Stable tag: 1.1.29
+Stable tag: 1.1.30
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
@@ -19,7 +19,10 @@ Fully configurable:
 - Custom icons
 - Multiple language support
 
-Display your NextGen Gallery images inside the map! Check nextgen gallery EXIF support..
+NextGen Gallery Integration:
+
+Display your NextGen Gallery images inside the map! 
+Even if you don't have a gps camera, this plugin can retrive the image position starting from the image date and you gpx file. 
 
 - iphone/ipad/ipod Compatible
 
@@ -117,6 +120,8 @@ The attributes are:
 
 1. summary: Print symmary details of your GPX (default is FALSE) 
 
+1. dtoffset: the difference (in seconds) between your gpx tool date and your camera date
+
 
 = What happening if I've a very large gpx? =
 This plugin will print a small amout of points to speedup javascript and pageload.
@@ -133,6 +138,10 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.30 =
+* If you set Chart Height (shortcode gheight) = 0 means hide the graph
+* Fix: All images should work, independent from browser cache
+* Next Gen Gallery images positions derived from date. You can adjust the date with the shortcode attribute dtoffset
 = 1.1.29 =
 * Decimal separator is working with all the browsers
 * minutes per mile and minutes per kilometer was wrong
