@@ -302,10 +302,13 @@
 			unset($nodes);
 			
 			try {
-				$points->maxEle = max($points->ele);
-				$points->minEle = min($points->ele);
-				$points->totalLength = max($points->dist);
-				$points->avgSpeed = array_sum($points->speed) / count($points->speed);
+				$_ele = array_filter($points->ele);
+				$_dist = array_filter($points->dist);
+				$_speed = array_filter($points->speed);
+				$points->maxEle = max($_ele);
+				$points->minEle = min($_ele);
+				$points->totalLength = max($_dist);
+				$points->avgSpeed = array_sum($_speed) / count($_speed);
 			} catch (Exception $e) { }
 		
 		}

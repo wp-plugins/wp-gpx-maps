@@ -135,7 +135,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$download =           findValue($attr, "download",           "wpgpxmaps_download", 		     	 "");
 	$summary =            findValue($attr, "summary",            "wpgpxmaps_summary", 		     	 "");
 	$dtoffset =           findValue($attr, "dtoffset",           "wpgpxmaps_dtoffset", 		     	 0);
-
+	
 	$r = rand(1,5000000);
 	
 	$gpxurl = $gpx;
