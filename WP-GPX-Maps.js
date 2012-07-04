@@ -521,14 +521,15 @@ function _wpgpxmaps(params)
 			},
 			xAxis: {
 				type: 'integer',
-				gridLineWidth: 1,
-				tickInterval: 100,
+				//gridLineWidth: 1,
+				//tickInterval: 1000,
 				labels: {
-					align: 'left',
-					x: 3,
-					y: -3
+					formatter: function() {
+						return Highcharts.numberFormat(this.value, l_x.dec,decPoint,thousandsSep) + l_x.suf;
+					}
 				}
 			},
+			yAxis: [],
 			legend: {
 				align: 'center',
 				verticalAlign: 'top',
@@ -581,17 +582,9 @@ function _wpgpxmaps(params)
 					}					
 				}
 			},
-			xAxis: { 	
-					labels: {
-							formatter: function() {
-								return Highcharts.numberFormat(this.value, l_x.dec,decPoint,thousandsSep) + l_x.suf;
-							}
-						} 
-					},
 			credits: {
 				enabled: false
-			},
-			yAxis: [],			
+			},	
 			series: []
 		};
 	
@@ -615,7 +608,7 @@ function _wpgpxmaps(params)
 					}
 				}
 			}
-						
+	
 			if ( chartFrom1 != '' )
 			{
 				yaxe.min = chartFrom1;
