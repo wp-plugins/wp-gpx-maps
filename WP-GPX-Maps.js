@@ -262,7 +262,7 @@ function _wpgpxmaps(params)
 			  css('left', 0).
 			  css("width", '100%').
 			  css("height", '100%').
-			  css("z-index", '99999');
+			  css("z-index", '100');
 			jQuery("#wpadminbar").each(function(){
 				jQuery(mapDiv).css('top', jQuery(this).height());
 			});
