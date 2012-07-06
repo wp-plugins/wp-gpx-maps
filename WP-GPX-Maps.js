@@ -78,7 +78,7 @@ function setup()
 					width : me.img_w_,
 					top   : _t - (me.img_h_ / 3),
 					left  : _l - (me.img_w_ / 3),
-					'z-index' : 9999
+					'z-index' : 100
 				  }, 100);
 			});
 
