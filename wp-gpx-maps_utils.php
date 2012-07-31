@@ -127,6 +127,8 @@
 		$points->speed = array();
 		$points->hr = array();
 		$points->cad = array();
+		$points->maxTime = 0;
+		$points->minTime = 0;
 		$points->maxEle = 0;
 		$points->minEle = 0;
 		$points->totalEleUp = 0;
@@ -302,12 +304,26 @@
 			unset($nodes);
 			
 			try {
+			
+				array_pop($points->dt,  null);
+				array_pop($points->lat,  null);
+				array_pop($points->lon,  null);
+				array_pop($points->ele,  null);
+				array_pop($points->dist, null);
+				array_pop($points->speed, null);
+				array_pop($points->hr, null);
+				array_pop($points->cad, null);		
+			
+				$_time = array_filter($points->dt);
 				$_ele = array_filter($points->ele);
 				$_dist = array_filter($points->dist);
 				$_speed = array_filter($points->speed);
 				$points->maxEle = max($_ele);
 				$points->minEle = min($_ele);
 				$points->totalLength = max($_dist);
+				$points->maxTime = max($_time);
+				$points->minTime = min($_time);
+				
 				$points->avgSpeed = array_sum($_speed) / count($_speed);
 			} catch (Exception $e) { }
 		

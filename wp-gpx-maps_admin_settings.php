@@ -20,7 +20,16 @@
 	$showCad = get_option('wpgpxmaps_show_cadence');
 	$zoomonscrollwheel = get_option("wpgpxmaps_zoomonscrollwheel");	
 	$download = get_option("wpgpxmaps_download");
-	$summary = get_option("wpgpxmaps_summary");
+	$skipcache = get_option("wpgpxmaps_skipcache");
+
+	$summary = get_option("wpgpxmaps_summary");	
+	$tot_len = get_option("wpgpxmaps_summary_tot_len");
+	$min_ele = get_option("wpgpxmaps_summary_min_ele");	
+	$max_ele = get_option("wpgpxmaps_summary_max_ele");	
+	$total_ele_up = get_option("wpgpxmaps_summary_total_ele_up");
+	$total_ele_down = get_option("wpgpxmaps_summary_total_ele_down");
+	$avg_speed = get_option("wpgpxmaps_summary_avg_speed");
+	$total_time = get_option("wpgpxmaps_summary_total_time");
 	
 	if (!($t))
 		$t = 'HYBRID';
@@ -55,15 +64,82 @@
 			</td>
 		</tr>
 		<tr>
+			<th scope="row">Cache:</th>
+			<td>
+				<input name="wpgpxmaps_skipcache" type="checkbox" value="true" <?php if($skipcache == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Do not use cache</i>
+			</td>
+		</tr>
+		<tr>
 			<th scope="row">GPX Download:</th>
 			<td>
 				<input name="wpgpxmaps_download" type="checkbox" value="true" <?php if($download == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Allow users to download your GPX file</i>
 			</td>
-		</tr>
+		</tr>		
+	</table>
+	
+	<p class="submit">
+		<input type="hidden" name="action" value="update" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_download,wpgpxmaps_skipcache" />
+		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
+	</p>
+
+</form>
+
+	<hr />
+
+<form method="post" action="options.php">
+
+	<?php wp_nonce_field('update-options') ?>
+		
+	<h3 class="title">Summary table</h3>
+	
+	<table class="form-table">
 		<tr>
 			<th scope="row">Summary table:</th>
 			<td>
 				<input name="wpgpxmaps_summary" type="checkbox" value="true" <?php if($summary == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Print summary table</i>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Total distance:</th>
+			<td>
+				<input name="wpgpxmaps_summary_tot_len" type="checkbox" value="true" <?php if($tot_len == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Print Total distance</i>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Max Elevation:</th>
+			<td>
+				<input name="wpgpxmaps_summary_max_ele" type="checkbox" value="true" <?php if($max_ele == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Print Max Elevation</i>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Min Elevation:</th>
+			<td>
+				<input name="wpgpxmaps_summary_min_ele" type="checkbox" value="true" <?php if($min_ele == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Print Min Elevation</i>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Min Elevation:</th>
+			<td>
+				<input name="wpgpxmaps_summary_total_ele_up" type="checkbox" value="true" <?php if($total_ele_up == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Print Total climbing</i>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Min Elevation:</th>
+			<td>
+				<input name="wpgpxmaps_summary_total_ele_down" type="checkbox" value="true" <?php if($total_ele_down == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Print Total descent</i>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Min Elevation:</th>
+			<td>
+				<input name="wpgpxmaps_summary_avg_speed" type="checkbox" value="true" <?php if($avg_speed == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Print Average Speed</i>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Total time:</th>
+			<td>
+				<input name="wpgpxmaps_summary_total_time" type="checkbox" value="true" <?php if($total_time == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Print Total time</i>
 			</td>
 		</tr>
 		
@@ -71,12 +147,14 @@
 	
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
-    	<input name="page_options" type="hidden" value="wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_download,wpgpxmaps_summary" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_summary,wpgpxmaps_summary_tot_len,wpgpxmaps_summary_max_ele,wpgpxmaps_summary_min_ele,wpgpxmaps_summary_total_ele_up,wpgpxmaps_summary_total_ele_down,wpgpxmaps_summary_avg_speed,wpgpxmaps_summary_total_time" />
 		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
 	</p>
 
 </form>
+
 	<hr />
+	
 <form method="post" action="options.php">
 
 	<?php wp_nonce_field('update-options') ?>

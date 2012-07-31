@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.4
-Stable tag: 1.1.31
+Stable tag: 1.1.32
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
@@ -24,13 +24,21 @@ NextGen Gallery Integration:
 Display your NextGen Gallery images inside the map! 
 Even if you don't have a gps camera, this plugin can retrive the image position starting from the image date and you gpx file. 
 
+Old NGGallery Images (without gps data) and gpx: <a href="http://www.pedemontanadelgrappa.it/mappe/itinerario-3-alta-via-degli-eroi/">http://www.pedemontanadelgrappa.it/mappe/itinerario-3-alta-via-degli-eroi/</a>
+
+Translated into 7 languages:
+- English (default)
+- Italian it_IT
+- German de_DE
+- Spanish es_ES
+- Dutch nl_NL
+- Swedish sv_SE
+- Turkish tr_TR
+(many thanks to all the guys who helped me with the translations)
+
 - iphone/ipad/ipod Compatible
 
 Try this plugin: <a href="http://www.pedemontanadelgrappa.it/category/mappe/">http://www.pedemontanadelgrappa.it/category/mappe/</a>
-
-Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="http://www.darwinner.it/">www.darwinner.it</a>, <a href="http://www.pedemontanadelgrappa.it/">www.pedemontanadelgrappa.it</a>, 
-
-<a href="http://www.darwinner.it/featured/wp-gpx-maps/">Plugin page</a>
 
 <a href="http://www.darwinner.it/forums/forum/wp-gpx-maps/">Support Forum</a>
 
@@ -43,6 +51,8 @@ Supported gpx namespaces are:
 1. http://www.garmin.com/xmlschemas/GpxExtensions/v3
 
 1. http://www.garmin.com/xmlschemas/TrackPointExtension/v1
+
+Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="http://www.darwinner.it/">www.darwinner.it</a>, <a href="http://www.pedemontanadelgrappa.it/">www.pedemontanadelgrappa.it</a>, 
 
 == Installation ==
 
@@ -118,10 +128,25 @@ The attributes are:
 
 1. download: Allow users to download your GPX file 
 
-1. summary: Print symmary details of your GPX (default is FALSE) 
-
 1. dtoffset: the difference (in seconds) between your gpx tool date and your camera date
 
+1. skipcache: Do not use cache. If TRUE might be very slow (default is FALSE) 
+
+1. summary: Print summary details of your GPX (default is FALSE) 
+
+1. summarytotlen: Print Total distance in summary table (default is FALSE) 
+
+1. summarymaxele: Print Max Elevation in summary table (default is FALSE) 
+
+1. summaryminele: Print Min Elevation in summary table (default is FALSE) 
+
+1. summaryeleup: Print Total climbing in summary table (default is FALSE) 
+
+1. summaryeledown: Print Total descent in summary table (default is FALSE) 
+
+1. summaryavgspeed: Print Average Speed in summary table (default is FALSE) 
+
+1. summarytotaltime: Print Total time in summary table (default is FALSE) 
 
 = What happening if I've a very large gpx? =
 This plugin will print a small amout of points to speedup javascript and pageload.
@@ -138,6 +163,10 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.32 =
+* You can exclude cache (slower and not recommended)
+* You can decide what show in the summary table
+* German translation (thanks to Ali)
 = 1.1.31 =
 * Fixed fullscreen map image slideshow
 = 1.1.30 =
