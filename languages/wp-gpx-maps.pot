@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-gpx-maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-25 11:54+0100\n"
-"PO-Revision-Date: 2012-06-25 11:55+0100\n"
+"POT-Creation-Date: 2012-08-01 13:41+0100\n"
+"PO-Revision-Date: 2012-08-01 13:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -13,66 +13,71 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../wp-gpx-maps.php:420
+#: ../wp-gpx-maps.php:473
 msgid "Altitude"
 msgstr ""
 
-#: ../wp-gpx-maps.php:421
+#: ../wp-gpx-maps.php:474
 msgid "Current Position"
 msgstr ""
 
-#: ../wp-gpx-maps.php:422
+#: ../wp-gpx-maps.php:475
 msgid "Speed"
 msgstr ""
 
-#: ../wp-gpx-maps.php:423
+#: ../wp-gpx-maps.php:476
 msgid "Heart rate"
 msgstr ""
 
-#: ../wp-gpx-maps.php:424
+#: ../wp-gpx-maps.php:477
 msgid "Cadence"
 msgstr ""
 
-#: ../wp-gpx-maps.php:425
+#: ../wp-gpx-maps.php:478
 msgid "Go Full Screen"
 msgstr ""
 
-#: ../wp-gpx-maps.php:426
+#: ../wp-gpx-maps.php:479
 msgid "Exit Full Screen"
 msgstr ""
 
-#: ../wp-gpx-maps.php:439
+#: ../wp-gpx-maps.php:492
 msgid "Total distance"
 msgstr ""
 
-#: ../wp-gpx-maps.php:443
+#: ../wp-gpx-maps.php:497
 msgid "Max elevation"
 msgstr ""
 
-#: ../wp-gpx-maps.php:444
+#: ../wp-gpx-maps.php:499
 msgid "Min elevation"
 msgstr ""
 
-#: ../wp-gpx-maps.php:445
+#: ../wp-gpx-maps.php:501
 msgid "Total climbing"
 msgstr ""
 
-#: ../wp-gpx-maps.php:446
+#: ../wp-gpx-maps.php:503
 msgid "Total descent"
 msgstr ""
 
-#: ../wp-gpx-maps.php:450
+#: ../wp-gpx-maps.php:507
 msgid "Average speed"
 msgstr ""
 
-#: ../wp-gpx-maps.php:466
+#: ../wp-gpx-maps.php:512
+msgid "Total Time"
+msgstr ""
+
+#: ../wp-gpx-maps.php:528
 msgid "Download"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:75
+#: ../wp-gpx-maps_admin_settings.php:83
 #: ../wp-gpx-maps_admin_settings.php:151
-#: ../wp-gpx-maps_admin_settings.php:255
-#: ../wp-gpx-maps_admin_settings.php:286
+#: ../wp-gpx-maps_admin_settings.php:229
+#: ../wp-gpx-maps_admin_settings.php:333
+#: ../wp-gpx-maps_admin_settings.php:364
 msgid "Save Changes"
 msgstr ""
 
