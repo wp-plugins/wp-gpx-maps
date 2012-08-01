@@ -27,6 +27,7 @@ Even if you don't have a gps camera, this plugin can retrive the image position 
 Old NGGallery Images (without gps data) and gpx: <a href="http://www.pedemontanadelgrappa.it/mappe/itinerario-3-alta-via-degli-eroi/">http://www.pedemontanadelgrappa.it/mappe/itinerario-3-alta-via-degli-eroi/</a>
 
 Translated into 7 languages:
+
 - English (default)
 - Italian it_IT
 - German de_DE
@@ -34,6 +35,7 @@ Translated into 7 languages:
 - Dutch nl_NL
 - Swedish sv_SE
 - Turkish tr_TR
+
 (many thanks to all the guys who helped me with the translations)
 
 - iphone/ipad/ipod Compatible

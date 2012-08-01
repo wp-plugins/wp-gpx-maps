@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-gpx-maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-25 11:55+0100\n"
-"PO-Revision-Date: 2012-06-25 11:56+0100\n"
+"POT-Creation-Date: 2012-08-01 13:41+0100\n"
+"PO-Revision-Date: 2012-08-01 13:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,66 +15,72 @@ msgstr ""
 "X-Poedit-Country: ITALY\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../wp-gpx-maps.php:420
+#: ../wp-gpx-maps.php:473
 msgid "Altitude"
 msgstr "Altitudine"
 
-#: ../wp-gpx-maps.php:421
+#: ../wp-gpx-maps.php:474
 msgid "Current Position"
 msgstr "Posizione Corrente"
 
-#: ../wp-gpx-maps.php:422
+#: ../wp-gpx-maps.php:475
 msgid "Speed"
 msgstr "Velocità"
 
-#: ../wp-gpx-maps.php:423
+#: ../wp-gpx-maps.php:476
 msgid "Heart rate"
 msgstr "Battito Cardiaco"
 
-#: ../wp-gpx-maps.php:424
+#: ../wp-gpx-maps.php:477
 msgid "Cadence"
 msgstr "Cadenza"
 
-#: ../wp-gpx-maps.php:425
+#: ../wp-gpx-maps.php:478
 msgid "Go Full Screen"
 msgstr "Schermo intero"
 
-#: ../wp-gpx-maps.php:426
+#: ../wp-gpx-maps.php:479
 msgid "Exit Full Screen"
 msgstr "Torna a dimensioni originali"
 
-#: ../wp-gpx-maps.php:439
+#: ../wp-gpx-maps.php:492
 msgid "Total distance"
 msgstr "Distanza totale"
 
-#: ../wp-gpx-maps.php:443
+#: ../wp-gpx-maps.php:497
 msgid "Max elevation"
 msgstr "Altitudine massima"
 
-#: ../wp-gpx-maps.php:444
+#: ../wp-gpx-maps.php:499
 msgid "Min elevation"
 msgstr "Altitudine minima"
 
-#: ../wp-gpx-maps.php:445
+#: ../wp-gpx-maps.php:501
 msgid "Total climbing"
 msgstr "Totale salita"
 
-#: ../wp-gpx-maps.php:446
+#: ../wp-gpx-maps.php:503
 msgid "Total descent"
 msgstr "Totale discesa"
 
-#: ../wp-gpx-maps.php:450
+#: ../wp-gpx-maps.php:507
 msgid "Average speed"
 msgstr "Velocità media"
 
-#: ../wp-gpx-maps.php:466
+#: ../wp-gpx-maps.php:512
+#, fuzzy
+msgid "Total Time"
+msgstr "Distanza totale"
+
+#: ../wp-gpx-maps.php:528
 msgid "Download"
 msgstr "Scarica"
 
-#: ../wp-gpx-maps_admin_settings.php:75
+#: ../wp-gpx-maps_admin_settings.php:83
 #: ../wp-gpx-maps_admin_settings.php:151
-#: ../wp-gpx-maps_admin_settings.php:255
-#: ../wp-gpx-maps_admin_settings.php:286
+#: ../wp-gpx-maps_admin_settings.php:229
+#: ../wp-gpx-maps_admin_settings.php:333
+#: ../wp-gpx-maps_admin_settings.php:364
 msgid "Save Changes"
 msgstr "Salva"
 
