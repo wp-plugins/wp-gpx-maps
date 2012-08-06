@@ -231,8 +231,7 @@ function _wpgpxmaps(params)
 	controlUI.title = lng.gofullscreen;
 	controlDiv.appendChild(controlUI);
 
-	// Setup the click event listeners: simply set the map to
-	// Chicago
+	// Setup the click event listeners
 	google.maps.event.addDomListener(controlUI, 'click', function(event) {
 		var isFullScreen = (controlUI.isfullscreen == true);
 		var fullScreenCss = "position: absolute;left:0;top:0;";
@@ -303,7 +302,10 @@ function _wpgpxmaps(params)
 		
 		for (i=0; i < waypoints.length; i++) 
 		{
-			addWayPoint(map, image, shadow, waypoints[i][0], waypoints[i][1], waypoints[i][2], waypoints[i][3]);
+			var lat= waypoints[i][0];
+			var lon= waypoints[i][1];
+			addWayPoint(map, image, shadow, lat, lon, waypoints[i][2], waypoints[i][3]);
+			bounds.extend(new google.maps.LatLng(lat, lon));
 		}
 	}
 	
@@ -592,11 +594,20 @@ function _wpgpxmaps(params)
 		{
 			
 			var eleData = [];
-		
+			var myelemin = 99999;
+			var myelemax = -99999;
+	
 			for (i=0; i<valLen; i++) 
 			{
 				if (graphDist[i] != null)
-					eleData.push([graphDist[i],graphEle[i]]);
+				{
+					var _graphEle = graphEle[i];
+					eleData.push([graphDist[i],_graphEle]);
+					if (_graphEle > myelemax) 
+						myelemax = _graphEle; 
+					if (_graphEle < myelemin) 
+						myelemin = _graphEle;
+				}
 			}
 
 			var yaxe = { 
@@ -614,11 +625,17 @@ function _wpgpxmaps(params)
 				yaxe.min = chartFrom1;
 				yaxe.startOnTick = false;
 			}
+			else { 
+				yaxe.min = myelemin; 
+			}
 			
 			if ( chartTo1 != '' )
 			{
 				yaxe.max = chartTo1;
 				yaxe.endOnTick = false;
+			}
+			else { 
+				yaxe.max = myelemax; 
 			}
 								
 			hoptions.yAxis.push(yaxe);
@@ -641,11 +658,11 @@ function _wpgpxmaps(params)
 			
 			if (unitspeed == '4') // min/miles
 			{
-				l_s = { suf : "min/mi", dec : 2 };
+				l_s = { suf : "min/mi", dec : 1 };
 			} 
 			else if (unitspeed == '3') // min/km
 			{
-				l_s = { suf : "min/km", dec : 2 };
+				l_s = { suf : "min/km", dec : 1 };
 			} 
 			else if (unitspeed == '2') // miles/h
 			{

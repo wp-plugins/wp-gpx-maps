@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.4
-Stable tag: 1.1.32
+Stable tag: 1.1.33
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
@@ -42,7 +42,7 @@ Translated into 7 languages:
 
 Try this plugin: <a href="http://www.pedemontanadelgrappa.it/category/mappe/">http://www.pedemontanadelgrappa.it/category/mappe/</a>
 
-<a href="http://www.darwinner.it/forums/forum/wp-gpx-maps/">Support Forum</a>
+<a href="http://www.devfarm.it/forums/forum/wp-gpx-maps/">Support Forum</a>
 
 Supported gpx namespaces are:
 
@@ -54,7 +54,7 @@ Supported gpx namespaces are:
 
 1. http://www.garmin.com/xmlschemas/TrackPointExtension/v1
 
-Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="http://www.darwinner.it/">www.darwinner.it</a>, <a href="http://www.pedemontanadelgrappa.it/">www.pedemontanadelgrappa.it</a>, 
+Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="http://www.devfarm.it/">www.devfarm.it</a>, <a href="http://www.pedemontanadelgrappa.it/">www.pedemontanadelgrappa.it</a>, 
 
 == Installation ==
 
@@ -126,11 +126,11 @@ The attributes are:
 
 1. ngimages: NextGen Image id or a list of Images id separated by a comma
 
+1. dtoffset: the difference (in seconds) between your gpx tool date and your camera date
+
 1. zoomonscrollwheel: zoom on map when mouse scroll wheel 
 
 1. download: Allow users to download your GPX file 
-
-1. dtoffset: the difference (in seconds) between your gpx tool date and your camera date
 
 1. skipcache: Do not use cache. If TRUE might be very slow (default is FALSE) 
 
@@ -165,6 +165,10 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.33 =
+* Decimals reducted to 1 for unit of measure min/km and min/mi
+* map zoom and center position is working with waypoints only files 
+* automatic scale works again (thanks to MArkus)
 = 1.1.32 =
 * You can exclude cache (slower and not recommended)
 * You can decide what show in the summary table

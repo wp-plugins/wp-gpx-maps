@@ -116,6 +116,7 @@ function WP_GPX_Maps_html_page() {
 				<li><b>currentIcon</b>: Current position icon (when mouse hover)</li>					
 				<li><b>nggalleries</b>: NextGen Gallery id or a list of Galleries id separated by a comma</li>	
 				<li><b>ngimages</b>: NextGen Image id or a list of Images id separated by a comma</li>	
+				<li><b>dtoffset</b>: the difference (in seconds) between your gpx tool date and your camera date</li>	
 				<li><b>zoomonscrollwheel</b>: zoom on map when mouse scroll wheel (default is FALSE)</li>
 				<li><b>download</b>: Allow users to download your GPX file (default is FALSE)</li>
 				<li><b>summary</b>: Print symmary details of your GPX (default is FALSE)</li>
