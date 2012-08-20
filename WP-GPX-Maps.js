@@ -658,11 +658,11 @@ function _wpgpxmaps(params)
 			
 			if (unitspeed == '4') // min/miles
 			{
-				l_s = { suf : "min/mi", dec : 1 };
+				l_s = { suf : "min/mi", dec : 2 };
 			} 
 			else if (unitspeed == '3') // min/km
 			{
-				l_s = { suf : "min/km", dec : 1 };
+				l_s = { suf : "min/km", dec : 2 };
 			} 
 			else if (unitspeed == '2') // miles/h
 			{
@@ -834,11 +834,11 @@ function addWayPoint(map, image, shadow, lat, lon, title, descr)
 		var cnt = '';	
 		if (title=='')
 		{
-			cnt = "<center>" + descr + "</center>";
+			cnt = "<div style='text-align:center;'>" + unescape(descr) + "</div>";
 		}
 		else
 		{
-			cnt = "<b>" + title + "</b></br />" + descr;
+			cnt = "<div style='font-size:0.8em; text-align:center;'><b>" + title + "</b><br />" + unescape(descr) + "</div>";
 		}
 		infowindow = new google.maps.InfoWindow({ content: cnt});
 		infowindow.open(map,m);

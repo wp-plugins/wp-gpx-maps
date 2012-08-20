@@ -94,8 +94,12 @@
 		if (count($parts) <= 0)
 			return 0;
 		if (count($parts) == 1)
-			return $parts[0];
-		return floatval($parts[0]) / floatval($parts[1]);
+			return $parts[0];		
+		$lat = floatval($parts[0]);
+		$lon = floatval($parts[1]);
+		if ($lon == 0)
+			return $lat;
+		return $lat / $lon;
 	}
 
 ?>

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.4
-Stable tag: 1.1.33
+Stable tag: 1.1.34
 License: GPLv2 or later
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
@@ -165,6 +165,11 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.34 =
+* 2 decimals for unit of measure min/km and min/mi
+* translation file updated (a couple of phrases added)
+* File list reverse order (from the newer to the older)
+* nggallery integration: division by zero fixed
 = 1.1.33 =
 * Decimals reducted to 1 for unit of measure min/km and min/mi
 * map zoom and center position is working with waypoints only files 

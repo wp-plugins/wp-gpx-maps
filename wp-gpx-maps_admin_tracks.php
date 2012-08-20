@@ -56,66 +56,77 @@
 	<?php
 	
 	}
-	
-	if ( is_readable ( $realGpxPath ) && $handle = opendir($realGpxPath)) { 		
-		
-		?>
 
-		<table cellspacing="0" class="wp-list-table widefat plugins">
-			<thead>
-				<tr>
-					<th style="" class="manage-column" id="name" scope="col">File</th>
-					<th style="" class="manage-column" id="name" scope="col">Last modified</th>
-					<th style="" class="manage-column" id="name" scope="col">File size (Byte)</th>
-				</tr>
-			</thead>
-
-			<tfoot>
-				<tr>
-					<th style="" class="manage-column" id="name" scope="col">File</th>
-					<th style="" class="manage-column" id="name" scope="col">Last modified</th>
-					<th style="" class="manage-column" id="name" scope="col">File size (Byte)</th>
-				</tr>
-			</tfoot>
-
-			<tbody id="the-list">
-			
-			<?php
+	if ( is_readable ( $realGpxPath ) && $handle = opendir($realGpxPath)) {		
 			while (false !== ($entry = readdir($handle))) {
 				if (preg_match($gpxRegEx,$entry ))
 				{
-				$file = $realGpxPath . "/" . $entry;
-				?>
-				<tr>
-					<td style="border:none; padding-bottom:0;">
-						<strong><?php echo $entry; ?></strong>
-					</td>
-					<td style="border:none; padding-bottom:0;">
-						<?php echo date ("F d Y H:i:s.", filemtime( $file ) ) ?>
-					</td>
-					<td style="border:none; padding-bottom:0;">
-						<?php echo number_format ( filesize( $file ) , 0, '.', ',' ) ?>
-					</td>
-				</tr>	
-				<tr>
-					<td colspan=3 style="padding: 0px 7px 7px 7px;">
-						<a href="#" onclick="delgpx('<?php echo $entry ?>'); return false;">Delete</a>
-						|	
-						<a href="../wp-content/uploads/gpx/<?php echo $entry?>">Download</a>
-						|
-						Shortcode: [sgpx gpx="<?php echo  $relativeGpxPath . $entry; ?>"]
-					</td>
-				</tr>
-				<?php
+					$filenames[] = $realGpxPath . "/" . $entry;
 				}
 			}
-			?>
-			</tbody>
-		</table>
 
-<?php 
-	closedir($handle);
-	} ?>
+		closedir($handle);
+	} 
+	?>
+	
+	<table cellspacing="0" class="wp-list-table widefat plugins">
+		<thead>
+			<tr>
+				<th style="" class="manage-column" id="name" scope="col">File</th>
+				<th style="" class="manage-column" id="name" scope="col">Last modified</th>
+				<th style="" class="manage-column" id="name" scope="col">File size (Byte)</th>
+			</tr>
+		</thead>
+
+		<tfoot>
+			<tr>
+				<th style="" class="manage-column" id="name" scope="col">File</th>
+				<th style="" class="manage-column" id="name" scope="col">Last modified</th>
+				<th style="" class="manage-column" id="name" scope="col">File size (Byte)</th>
+			</tr>
+		</tfoot>
+
+		<tbody id="the-list">
+		
+		<?php
+		
+			if ($filenames)
+			{
+				$filenames = array_reverse($filenames);
+				foreach ($filenames as $file) {
+				$entry = basename($file);         
+			?>
+			
+			<tr>
+				<td style="border:none; padding-bottom:0;">
+					<strong><?php echo $entry; ?></strong>
+				</td>
+				<td style="border:none; padding-bottom:0;">
+					<?php echo date ("F d Y H:i:s.", filemtime( $file ) ) ?>
+				</td>
+				<td style="border:none; padding-bottom:0;">
+					<?php echo number_format ( filesize( $file ) , 0, '.', ',' ) ?>
+				</td>
+			</tr>	
+			<tr>
+				<td colspan=3 style="padding: 0px 7px 7px 7px;">
+					<a href="#" onclick="delgpx('<?php echo $entry ?>'); return false;">Delete</a>
+					|	
+					<a href="../wp-content/uploads/gpx/<?php echo $entry?>">Download</a>
+					|
+					Shortcode: [sgpx gpx="<?php echo  $relativeGpxPath . $entry; ?>"]
+				</td>
+			</tr>			
+			
+			<?php
+
+				}
+			}		
+		?>
+
+		</tbody>
+	</table>
+
 
 <script type="text/javascript">
 
