@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.34
+Version: 1.1.35
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 License: GPL
@@ -145,8 +145,8 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$p_avg_speed =        findValue($attr, "summaryavgspeed",    "wpgpxmaps_summary_avg_speed",      false);
 	$p_total_time =       findValue($attr, "summarytotaltime",   "wpgpxmaps_summary_total_time",     false);
 	
-	$r = rand(1,5000000);
-	
+	$colors_map = "\"".implode("\",\"",(explode(" ",$color_map)))."\"";
+
 	$gpxurl = $gpx;
 	
 	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uomspeed,$uom,v1.1.32";
@@ -255,11 +255,12 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		$avg_speed = $points->avgSpeed;
 		$tot_len = $points->totalLength;
 			
-		foreach(array_keys($points->lat) as $i) 
+		if (is_array ($points_x_lat))
+		foreach(array_keys($points_x_lat) as $i) 
 		{
 			
-			$_lat = (float)$points->lat[$i];
-			$_lon = (float)$points->lon[$i];
+			$_lat = (float)$points_x_lat[$i];
+			$_lon = (float)$points_x_lon[$i];
 			
 			if ( $_lat == 0 && $_lon == 0 )
 			{
@@ -278,7 +279,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			}
 			else
 			{
-				$points_maps .= '['.(float)$points->lat[$i].','.(float)$points->lon[$i].'],';	
+				$points_maps .= '['.(float)$points_x_lat[$i].','.(float)$points_x_lon[$i].'],';	
 
 				$_ele = (float)$points->ele[$i];	
 				$_dist = (float)$points->dist[$i];	
@@ -425,14 +426,10 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		@chmod($gpxcache,0755);		
 	}
 	
-	if ($gh == "0" || $gh == "0px")
-	{
-		$points_graph_dist = '';
-		$points_graph_ele = '';
-		$points_graph_speed = '';
-		$points_graph_hr = '';
-		$points_graph_cad = '';
-	}
+	$hideGraph = ($gh == "0" || $gh == "0px");
+	
+	global $post;
+	$r = $post->ID."_".rand(1,5000000);	
 	
 	$output = '
 		<div id="wpgpxmaps_'.$r.'" class="wpgpxmaps">
@@ -446,15 +443,15 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 				wpgpxmaps({ targetId    : "'.$r.'",
 							mapType     : "'.$mt.'",
 							mapData     : ['.$points_maps.'],
-							graphDist   : ['.$points_graph_dist.'],
-							graphEle    : ['.$points_graph_ele.'],
-							graphSpeed  : ['.$points_graph_speed.'],
-							graphHr     : ['.$points_graph_hr.'],
-							graphCad    : ['.$points_graph_cad.'],
+							graphDist   : ['.($hideGraph ? '' : $points_graph_dist).'],
+							graphEle    : ['.($hideGraph ? '' : $points_graph_ele).'],
+							graphSpeed  : ['.($hideGraph ? '' : $points_graph_speed).'],
+							graphHr     : ['.($hideGraph ? '' : $points_graph_hr).'],
+							graphCad    : ['.($hideGraph ? '' : $points_graph_cad).'],
 							waypoints   : ['.$waypoints.'],
 							unit        : "'.$uom.'",
 							unitspeed   : "'.$uomspeed.'",
-							color1      : "'.$color_map.'",
+							color1      : ['.$colors_map.'],
 							color2      : "'.$color_graph.'",
 							color3      : "'.$color_graph_speed.'",
 							color4      : "'.$color_graph_hr.'",

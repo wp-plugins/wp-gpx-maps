@@ -357,20 +357,35 @@ function _wpgpxmaps(params)
 		var points = [];
 		var lastCut=0;
 		var polylinenes = [];
-
+		var polyline_number=0;
+		var color=0;
 		for (i=0; i < mapData.length; i++) 
 		{	
 			if (mapData[i] == null)
 			{
+			
+				if ( polyline_number < color1.length )
+				{
+					color=color1[polyline_number];
+				}
+				else
+				{
+					color=color1[color1.length-1];
+				}
+
 				var poly = new google.maps.Polyline({
 					path: points.slice(lastCut,i),
-					strokeColor: color1,
+					strokeColor: color,
 					strokeOpacity: .7,
 					strokeWeight: 4,
 					map: map
 				});
 				polylinenes.push(poly);
 				lastCut=i;
+				polyline_number= polyline_number +1;
+				//var p = new google.maps.LatLng(mapData[i-1][0], mapData[i-1][1]);
+				//points.push(p);
+				//bounds.extend(p);
 			}
 			else
 			{
@@ -382,15 +397,24 @@ function _wpgpxmaps(params)
 		
 		if (points.length != lastCut)
 		{
+				if ( polyline_number < color1.length)
+				{
+					color=color1[polyline_number];
+				}
+				else
+				{
+					color=color1[color1.length-1];
+				}
 			var poly = new google.maps.Polyline({
 				path: points.slice(lastCut),
-				strokeColor: color1,
+				strokeColor: color,
 				strokeOpacity: .7,
 				strokeWeight: 4,
 				map: map
 			});
 			polylinenes.push(poly);			
 			currentPoints = [];
+            polyline_number= polyline_number +1;
 		}
 		
 		if (startIcon != '')
@@ -857,12 +881,18 @@ function getItemFromArray(arr,index)
 	}
 }
 
+
+
+
 function getClosestIndex(points,lat,lon)
 {
 	var dd=10000;
 	var ii=0;
 	for (i=0; i < points.length; i++) 
 	{
+		if (points[i]==null)
+			continue;
+	
 		var d = dist(points[i][0], points[i][1], lat, lon);
 		if ( d < dd )
 		{

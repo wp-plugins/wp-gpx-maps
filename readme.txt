@@ -1,11 +1,11 @@
 === WP GPX Maps ===
+
 Contributors: bastianonm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8VHWLRW6JBTML
 Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.4
-Stable tag: 1.1.34
-License: GPLv2 or later
+Stable tag: 1.1.35
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -54,7 +54,9 @@ Supported gpx namespaces are:
 
 1. http://www.garmin.com/xmlschemas/TrackPointExtension/v1
 
-Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="http://www.devfarm.it/">www.devfarm.it</a>, <a href="http://www.pedemontanadelgrappa.it/">www.pedemontanadelgrappa.it</a>, 
+Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="http://www.devfarm.it/">www.devfarm.it</a>, <a href="http://www.pedemontanadelgrappa.it/">www.pedemontanadelgrappa.it</a>
+
+Up to version 1.1.15 [Highcharts-API](http://www.highcharts.com/) is the only available rendering engine. Please respect their license and pricing (only Free for Non-Commercial usage).
 
 == Installation ==
 
@@ -165,6 +167,10 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.35 =
+* Fix: In the post list, sometime, the maps was not displaying correctly ( the php rand() function was not working?? )
+* Various improvements for multi track gpx. Thanks to GPSracks.tv
+* Summary table is now avaiable even without chart. Thanks to David 
 = 1.1.34 =
 * 2 decimals for unit of measure min/km and min/mi
 * translation file updated (a couple of phrases added)
