@@ -1,16 +1,28 @@
 <?php
 
 if ( is_admin() ){
-
 	add_action('admin_menu', 'wpgpxmaps_admin_menu');
+}
 
-	function wpgpxmaps_admin_menu() {
-		add_options_page('WP GPX Maps', 'WP GPX Maps', 'administrator', 'WP-GPX-Maps', 'WP_GPX_Maps_html_page');
+function wpgpxmaps_admin_menu() {
+	if ( current_user_can('manage_options') ){
+		add_options_page('WP GPX Maps', 'WP GPX Maps', 'manage_options', 'WP-GPX-Maps', 'WP_GPX_Maps_html_page');
+	} 
+	else if ( current_user_can('publish_posts') ) {
+		add_menu_page('WP GPX Maps', 'WP GPX Maps', 'publish_posts', 'WP-GPX-Maps', 'WP_GPX_Maps_html_page');
 	}
 }
 
 function ilc_admin_tabs( $current  ) {
-    $tabs = array( 'tracks' => 'Tracks', 'settings' => 'Settings', 'help' => "help" );
+
+	if (current_user_can('manage_options'))
+	{
+		$tabs = array( 'tracks' => 'Tracks', 'settings' => 'Settings', 'help' => "help" );	
+	}
+	else if ( current_user_can('publish_posts') ) {
+		$tabs = array( 'tracks' => 'Tracks', 'help' => "help" );	
+	}
+
     echo '<h2 class="nav-tab-wrapper">';
     foreach( $tabs as $tab => $name ){
         $class = ( $tab == $current ) ? ' nav-tab-active' : '';

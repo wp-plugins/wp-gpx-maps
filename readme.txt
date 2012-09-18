@@ -5,11 +5,17 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.4
-Stable tag: 1.1.35
+Stable tag: 1.1.36
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
 == Description ==
+
+IMPORTANT NOTICE
+
+wp-gpx-maps will no longer be available on wordpress.org, because highcharts is not GPL licensed.
+If you want to keep wp-gpx-maps updated, follow this link: http://www.devfarm.it/forums/forum/wp-gpx-maps/
+
 
 This plugin has, as input, the GPX file with the track you've made and as output it shows the map of the track and an interactive altitude graph (where available).
 
@@ -167,6 +173,8 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.36 =
+* Even Editor and Author users can upload their own gpx. Administrators can see all the administrators gpx. The other users can see only their uploads
 = 1.1.35 =
 * Fix: In the post list, sometime, the maps was not displaying correctly ( the php rand() function was not working?? )
 * Various improvements for multi track gpx. Thanks to GPSracks.tv

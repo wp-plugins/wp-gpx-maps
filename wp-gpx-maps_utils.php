@@ -12,7 +12,17 @@
 	{
 		$upload_dir = wp_upload_dir();
 		$uploadsPath = $upload_dir['basedir'];	
-		$ret = $uploadsPath.DIRECTORY_SEPARATOR."gpx";
+		
+		
+		if ( current_user_can('manage_options') ){
+			$ret = $uploadsPath.DIRECTORY_SEPARATOR."gpx";
+		} 
+		else if ( current_user_can('publish_posts') ) {	
+			global $current_user;
+			get_currentuserinfo();
+			$ret = $uploadsPath.DIRECTORY_SEPARATOR."gpx".DIRECTORY_SEPARATOR.$current_user->user_login;
+		}		
+		
 		return str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $ret);
 	}
 	
@@ -20,7 +30,7 @@
 	{
 		$upload_dir = wp_upload_dir();
 		$uploadsPath = $upload_dir['basedir'];	
-		$ret = $uploadsPath.DIRECTORY_SEPARATOR."gpx".DIRECTORY_SEPARATOR."cache";
+		$ret = $uploadsPath.DIRECTORY_SEPARATOR."gpx".DIRECTORY_SEPARATOR."~cache";
 		return str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $ret);
 	}
 	

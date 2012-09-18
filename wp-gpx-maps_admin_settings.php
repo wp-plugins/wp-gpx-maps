@@ -1,6 +1,6 @@
 <?php
 
-	if ( !is_admin() )
+	if ( !current_user_can('manage_options') )
 		return;
 
 ?>
