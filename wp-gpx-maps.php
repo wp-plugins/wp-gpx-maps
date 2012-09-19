@@ -54,7 +54,7 @@ function enqueue_WP_GPX_Maps_scripts()
     wp_enqueue_script( 'WP-GPX-Maps' );
 	
     wp_deregister_script( 'highcharts' );
-    wp_register_script( 'highcharts', plugins_url('/highcharts.js', __FILE__), array('jquery'), "2.2.1", true);
+    wp_register_script( 'highcharts', "http://code.highcharts.com/highcharts.js", array('jquery'), "2.3.2", true);
     wp_enqueue_script( 'highcharts' );
 		
 }
