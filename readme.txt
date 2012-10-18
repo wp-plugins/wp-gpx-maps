@@ -2,10 +2,10 @@
 
 Contributors: bastianonm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8VHWLRW6JBTML
-Tags: maps, gpx, gps, graph, chart, google maps, highcharts, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
+Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.4
-Stable tag: 1.1.37
+Stable tag: 1.1.38
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -41,6 +41,7 @@ Translated into 7 languages:
 - Dutch nl_NL
 - Swedish sv_SE
 - Turkish tr_TR
+- Hungarian hu_HU
 
 (many thanks to all the guys who helped me with the translations)
 
@@ -173,6 +174,10 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.38 =
+* Fix: garmin gpx cadence and heart rate
+* Updated Turkish translation, thanks to Edip
+* Added Hungarian translation, thanks to Tami
 = 1.1.36 =
 * Even Editor and Author users can upload their own gpx. Administrators can see all the administrators gpx. The other users can see only their uploads
 = 1.1.35 =

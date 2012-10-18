@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.37
+Version: 1.1.38
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -43,19 +43,19 @@ function WP_GPX_Maps_action_links($links, $file) {
 function enqueue_WP_GPX_Maps_scripts()
 {
 
-	//wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'jquery' );
 	
-	wp_deregister_script( 'googleapis' );
-    wp_register_script( 'googleapis', 'https://maps.googleapis.com/maps/api/js?sensor=false&v=3.9', null, null);
-    wp_enqueue_script( 'googleapis' );
-	
-    wp_deregister_script( 'WP-GPX-Maps' );
-    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery'), "1.1.34");
-    wp_enqueue_script( 'WP-GPX-Maps' );
-	
+	wp_deregister_script( 'googlemaps' );
+    wp_register_script( 'googlemaps', 'https://maps.googleapis.com/maps/api/js?sensor=false&v=3.9', null, null);
+    wp_enqueue_script( 'googlemaps' );
+
     wp_deregister_script( 'highcharts' );
     wp_register_script( 'highcharts', "http://code.highcharts.com/highcharts.js", array('jquery'), "2.3.2", true);
-    wp_enqueue_script( 'highcharts' );
+    wp_enqueue_script( 'highcharts' );	
+	
+    wp_deregister_script( 'WP-GPX-Maps' );
+    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.1.34");
+    wp_enqueue_script( 'WP-GPX-Maps' );
 		
 }
 
@@ -148,7 +148,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 
 	$gpxurl = $gpx;
 	
-	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uomspeed,$uom,v1.1.32";
+	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$uomspeed,$uom,v1.1.38";
 
 	$cacheFileName = md5($cacheFileName);
 	
@@ -206,15 +206,15 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			$tot_len = 0;
 		}
 	}
+	
+	$isGpxUrl = (preg_match('/^(http(s)?\:\/\/)/', trim($gpx)) == 1);
 
-	if ($points_maps == '' && $gpx != '')
+	if ((!isset($points_maps) || $points_maps == '') && $gpx != '')
 	{
 	
 		$sitePath = sitePath();
 		
 		$gpx = trim($gpx);
-		
-		$isGpxUrl = (preg_match('/^(http(s)?\:\/\/)/', $gpx) == 1);
 		
 		if ($isGpxUrl == true)
 		{
@@ -314,9 +314,8 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 					$points_graph_cad .= $points->cad[$i].',';
 				}
 			}
-			
 		}	
-		
+
 		if ($uom == '1')
 		{
 			// Miles and feet			
@@ -571,7 +570,7 @@ function downloadRemoteFile($remoteFile)
 	try
 	{
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, urlencode($remoteFile)); 
+		curl_setopt($ch, CURLOPT_URL, str_replace(' ', '%20', $remoteFile)); 
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 		curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
 		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);

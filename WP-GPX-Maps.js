@@ -24,7 +24,7 @@ function wpgpxmaps(params)
 
 function unqueue()
 {
-	if ((google == undefined || google.maps == undefined || Highcharts == undefined))
+	if (google == undefined || google.maps == undefined || Highcharts == undefined)
 	{
 		t = setTimeout("unqueue()",200);
 	}
@@ -191,7 +191,7 @@ function _wpgpxmaps(params)
 			mapTypeIds: mapTypeIds
 		}
 	}); 
-										
+	
 	map.mapTypes.set("OSM1", new google.maps.ImageMapType({
 		getTileUrl: function(coord, zoom) {
 			return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
@@ -222,7 +222,6 @@ function _wpgpxmaps(params)
 	// FULL SCREEN BUTTON
 	var controlDiv = document.createElement('div');
 	controlDiv.style.padding = '5px';
-
 
 	// Set CSS for the control border
 	var controlUI = document.createElement('img');
