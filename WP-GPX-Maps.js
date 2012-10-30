@@ -172,6 +172,8 @@ function _wpgpxmaps(params)
 	mapTypeIds.push("OSM2");
 	mapTypeIds.push("OSM3");
 	
+	var ngImageMarkers = [];
+	
 	switch (mapType)
 	{
 		case 'TERRAIN': { mapType = google.maps.MapTypeId.TERRAIN; break;}
@@ -225,9 +227,9 @@ function _wpgpxmaps(params)
 
 	// Set CSS for the control border
 	var controlUI = document.createElement('img');
-	controlUI.src = pluginUrl + "/wp-gpx-maps/img/expand.png";
+	controlUI.src = pluginUrl + "/wp-gpx-maps/img/goFullScreen.png";
 	controlUI.style.cursor = 'pointer';
-	controlUI.title = lng.gofullscreen;
+	controlUI.title = lng.goFullScreen;
 	controlDiv.appendChild(controlUI);
 
 	// Setup the click event listeners
@@ -247,7 +249,7 @@ function _wpgpxmaps(params)
 			  css("z-index", '');
 			google.maps.event.trigger(map, 'resize');
 			map.setCenter(center);
-			controlUI.src = pluginUrl + "/wp-gpx-maps/img/expand.png";	
+			controlUI.src = pluginUrl + "/wp-gpx-maps/img/goFullScreen.png";	
 			controlUI.title = lng.gofullscreen;
 		}
 		else
@@ -266,8 +268,8 @@ function _wpgpxmaps(params)
 			});
 			google.maps.event.trigger(map, 'resize');
 			map.setCenter(center);
-			controlUI.src = pluginUrl + "/wp-gpx-maps/img/redo.png";
-			controlUI.title = lng.exitfullscreen;
+			controlUI.src = pluginUrl + "/wp-gpx-maps/img/exitFullFcreen.png";
+			controlUI.title = lng.exitFullFcreen;
 		}
 		controlUI.isfullscreen = !isFullScreen;
 		return false;			
@@ -329,6 +331,8 @@ function _wpgpxmaps(params)
 
 				var mc = new CustomMarker(map, p, imageUrl, img_w, img_h );
 				
+				ngImageMarkers.push(mc);
+				
 				google.maps.event.addListener(mc, "click", function(div) {
 					var lat = div.getAttribute("lat");
 					var lon = div.getAttribute("lon");
@@ -349,6 +353,47 @@ function _wpgpxmaps(params)
 		});
 	
 	});
+	
+	
+	if ( jQuery("#ngimages_" + targetId + " span").length > 0 )
+	{
+	
+		// Set CSS for the control border
+		var controlUIhi = document.createElement('img');
+		controlUIhi.src = pluginUrl + "/wp-gpx-maps/img/hideImages.png";
+		controlUIhi.style.cursor = 'pointer';
+		controlUIhi.title = lng.hideImages;
+		controlDiv.appendChild(controlUIhi);
+
+		// Setup the click event listeners
+		google.maps.event.addDomListener(controlUIhi, 'click', function(event) {
+			var isImagesHidden = (controlUIhi.isImagesHidden == true);
+			var fullScreenCss = "position: absolute;left:0;top:0;";
+			var mapDiv = map.getDiv();
+			var center = map.getCenter();
+			
+			if (isImagesHidden)
+			{
+				for (var i=0; i<ngImageMarkers.length; i++) {
+					ngImageMarkers[i].setMap(map);
+				}			
+				controlUIhi.src = pluginUrl + "/wp-gpx-maps/img/hideImages.png";	
+				controlUIhi.title = lng.hideImages;
+			}
+			else
+			{
+				for (var i=0; i<ngImageMarkers.length; i++) {
+					ngImageMarkers[i].setMap(null);
+				}			
+				controlUIhi.src = pluginUrl + "/wp-gpx-maps/img/showImages.png";
+				controlUIhi.title = lng.showImages;
+			}
+			controlUIhi.isImagesHidden = !isImagesHidden;
+			return false;			
+		});
+
+	}
+	
 	
 	// Print Track
 	if (mapData != '')		
@@ -495,6 +540,38 @@ function _wpgpxmaps(params)
 	
 	map.setCenter(bounds.getCenter()); 
 	map.fitBounds(bounds);
+	
+	var controlUIcenter = null;
+	var idFirstCenterChanged = true;
+	
+	google.maps.event.addListener(map, 'center_changed', function() {
+
+		if (idFirstCenterChanged == true)
+		{
+			idFirstCenterChanged = false;
+			return;
+		}
+	
+		if (controlUIcenter == null)
+		{
+			// Set CSS for the control border
+			controlUIcenter = document.createElement('img');
+			controlUIcenter.src = pluginUrl + "/wp-gpx-maps/img/backToCenter.png";
+			controlUIcenter.style.cursor = 'pointer';
+			controlUIcenter.title = lng.backToCenter;
+			controlDiv.appendChild(controlUIcenter);
+
+			// Setup the click event listeners
+			google.maps.event.addDomListener(controlUIcenter, 'click', function(event) {
+				map.setCenter(bounds.getCenter()); 
+				map.fitBounds(bounds);
+				controlDiv.removeChild(controlUIcenter);
+				controlUIcenter = null;
+				return false;			
+			});		
+		}
+
+	});
 	
 	var graphh = jQuery('#hchart_' + params.targetId).css("height");
 	

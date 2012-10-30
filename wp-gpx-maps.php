@@ -50,7 +50,7 @@ function enqueue_WP_GPX_Maps_scripts()
     wp_enqueue_script( 'googlemaps' );
 
     wp_deregister_script( 'highcharts' );
-    wp_register_script( 'highcharts', "http://code.highcharts.com/highcharts.js", array('jquery'), "2.3.2", true);
+    wp_register_script( 'highcharts', "http://code.highcharts.com/highcharts.js", array('jquery'), "2.3.3", true);
     wp_enqueue_script( 'highcharts' );	
 	
     wp_deregister_script( 'WP-GPX-Maps' );
@@ -469,8 +469,11 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 									  speed                 : "'.__("Speed", "wp-gpx-maps").'", 
 									  heartRate             : "'.__("Heart rate", "wp-gpx-maps").'", 
 									  cadence               : "'.__("Cadence", "wp-gpx-maps").'",
-									  gofullscreen          : "'.__("Go Full Screen", "wp-gpx-maps").'",
-									  exitfullscreen        : "'.__("Exit Full Screen", "wp-gpx-maps").'"
+									  goFullScreen          : "'.__("Go Full Screen", "wp-gpx-maps").'",
+									  exitFullFcreen        : "'.__("Exit Full Screen", "wp-gpx-maps").'",
+									  hideImages            : "'.__("Hide Images", "wp-gpx-maps").'",
+									  showImages            : "'.__("Show Images", "wp-gpx-maps").'",
+									  backToCenter		    : "'.__("Back to center", "wp-gpx-maps").'"
 									}
 						   });
 			});
