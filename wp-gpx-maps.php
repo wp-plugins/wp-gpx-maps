@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.38
+Version: 1.1.39
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -54,7 +54,7 @@ function enqueue_WP_GPX_Maps_scripts()
     wp_enqueue_script( 'highcharts' );	
 	
     wp_deregister_script( 'WP-GPX-Maps' );
-    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.1.34");
+    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.1.39");
     wp_enqueue_script( 'WP-GPX-Maps' );
 		
 }
@@ -278,7 +278,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			}
 			else
 			{
-				$points_maps .= '['.(float)$points_x_lat[$i].','.(float)$points_x_lon[$i].'],';	
+				$points_maps .= '['.number_format((float)$points_x_lat[$i], 7 , '.' , '' ).','.number_format((float)$points_x_lon[$i], 7 , '.' , '' ).'],';	
 
 				$_ele = (float)$points->ele[$i];	
 				$_dist = (float)$points->dist[$i];	
@@ -294,8 +294,8 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 					$_dist = (float)($_dist / 1000);
 				}
 				
-				$points_graph_dist .= $_dist.',';
-				$points_graph_ele .= $_ele.',';
+				$points_graph_dist .= number_format ( $_dist , 2 , '.' , '' ).',';
+				$points_graph_ele .= number_format ( $_ele , 2 , '.' , '' ).',';
 					
 				if ($showSpeed == true) {
 				
@@ -306,12 +306,12 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 				
 				if ($showHr == true)
 				{
-					$points_graph_hr .= $points->hr[$i].',';
+					$points_graph_hr .= number_format ( $points->hr[$i] , 2 , '.' , '' ).',';
 				}
 				
 				if ($showCad == true)
 				{
-					$points_graph_cad .= $points->cad[$i].',';
+					$points_graph_cad .= number_format ( $points->cad[$i] , 2 , '.' , '' ).',';
 				}
 			}
 		}	
@@ -347,9 +347,13 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			
 		if ($showW == true)
 		{
+		
+		
+		
+		
 			$wpoints = getWayPoints($gpx);
 			foreach ($wpoints as $p) {
-				$waypoints .= '['.(float)$p[0].','.(float)$p[1].',\''.unescape($p[4]).'\',\''.unescape($p[5]).'\',\''.unescape($p[7]).'\'],';
+				$waypoints .= '['.number_format ( (float)$p[0] , 7 , '.' , '' ).','.number_format ( (float)$p[1] , 7 , '.' , '' ).',\''.unescape($p[4]).'\',\''.unescape($p[5]).'\',\''.unescape($p[7]).'\'],';
 			}
 		}
 
@@ -541,6 +545,11 @@ function convertSeconds($s)
 
 function convertSpeed($speed,$uomspeed, $addUom = false)
 {
+	if ($uomspeed == '5') // knos
+	{
+		$speed *= 1.94384449;
+		if ($addUom == true) $speed = round($speed,2) . " knos";
+	} 
 	if ($uomspeed == '4') // min/mi
 	{
 		$speed = convertSeconds($speed * 0.037282272);	
@@ -565,7 +574,7 @@ function convertSpeed($speed,$uomspeed, $addUom = false)
 	{
 		if ($addUom == true) $speed = round($speed,2) . " m/s";
 	}
-	return $speed;
+	return number_format ( $speed , 2 , '.' , '' );
 }
 
 function downloadRemoteFile($remoteFile)

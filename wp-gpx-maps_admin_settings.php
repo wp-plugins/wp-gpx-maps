@@ -285,6 +285,7 @@
 					<option value="2" <?php if ($uomSpeed == '2') echo 'selected'; ?>>miles/h</option>
 					<option value="3" <?php if ($uomSpeed == '3') echo 'selected'; ?>>min/km</option>
 					<option value="4" <?php if ($uomSpeed == '4') echo 'selected'; ?>>min/miles</option>
+					<option value="5" <?php if ($uomSpeed == '5') echo 'selected'; ?>>Nautical Miles/Hour (Knots)</option>
 				</select>
 			</td>
 		</tr>		

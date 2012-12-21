@@ -756,7 +756,11 @@ function _wpgpxmaps(params)
 			
 			var l_s;
 			
-			if (unitspeed == '4') // min/miles
+			if (unitspeed == '5') // knos
+			{
+				l_s = { suf : "knos", dec : 2 };
+			} 
+			else if (unitspeed == '4') // min/miles
 			{
 				l_s = { suf : "min/mi", dec : 2 };
 			} 
