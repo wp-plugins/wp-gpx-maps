@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.5
-Stable tag: 1.1.39
+Stable tag: 1.1.40
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -108,11 +108,15 @@ The attributes are:
 
 1. showcad: show cadence inside the chart (default is FALSE)
 
+1. showgrade: show grade inside the chart (default is FALSE)
+
 1. glinecolorspeed: speed line color (default is #ff0000)
 
 1. glinecolorhr: heart rate line color (default is #ff77bd)
 
 1. glinecolorcad: cadence line color (default is #beecff)
+
+1. glinecolorgrade: grade line color (default is #beecff)
 
 1. uomspeed: the unit of measure of speed are: 0, 1, 2, 3, 4 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles)
 
@@ -175,6 +179,9 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.40 =
+* Improved italian translation
+* Added grade chart (beta) 
 = 1.1.39 =
 * Added French translation, thanks to Hervé
 * Added Nautical Miles per Hour (Knots) unit of measure

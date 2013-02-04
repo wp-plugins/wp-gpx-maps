@@ -114,9 +114,11 @@ function WP_GPX_Maps_html_page() {
 				<li><b>glinecolorspeed</b>: speed line color (default is #ff0000)</li>
 				<li><b>glinecolorhr</b>: heart rate line color (default is #ff77bd)</li>
 				<li><b>glinecolorcad</b>: cadence line color (default is #beecff)</li>
+				<li><b>glinecolorgrade</b>: grade line color (default is #beecff)</li>
 				<li><b>showspeed</b>: show speed inside the chart (default is FALSE)</li>
 				<li><b>showhr</b>: show heart rate inside the chart (default is FALSE)</li>
 				<li><b>showcad</b>: show cadence inside the chart (default is FALSE)</li>
+				<li><b>showgrade</b>: show grade inside the chart (default is FALSE)</li>
 				<li><b>uomspeed</b>: the unit of measure of speed are: 0, 1, 2 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles)</li>
 				<li><b>chartFrom1</b>: minimun value for altitude chart</li>
 				<li><b>chartTo1</b>: maxumin value for altitude chart</li>

@@ -18,10 +18,11 @@
 	$showSpeed = get_option('wpgpxmaps_show_speed');
 	$showHr = get_option('wpgpxmaps_show_hr');
 	$showCad = get_option('wpgpxmaps_show_cadence');
+	$showGrade = get_option('wpgpxmaps_show_grade');
 	$zoomonscrollwheel = get_option("wpgpxmaps_zoomonscrollwheel");	
 	$download = get_option("wpgpxmaps_download");
 	$skipcache = get_option("wpgpxmaps_skipcache");
-
+	
 	$summary = get_option("wpgpxmaps_summary");	
 	$tot_len = get_option("wpgpxmaps_summary_tot_len");
 	$min_ele = get_option("wpgpxmaps_summary_min_ele");	
@@ -311,8 +312,6 @@
 				<input name="wpgpxmaps_graph_line_color_hr" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_graph_line_color_hr'); ?>" />
 			</td>
 		</tr>
-		
-		
 		<tr>
 			<th scope="row">Show Cadence (where aviable):</th>
 			<td>
@@ -325,12 +324,28 @@
 				<input name="wpgpxmaps_graph_line_color_cad" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_graph_line_color_cad'); ?>" />
 			</td>
 		</tr>
+		
+		
+		<tr>
+			<th scope="row">Show Grade:</th>
+			<td>
+				<input name="wpgpxmaps_show_grade" type="checkbox" value="true" <?php if($showGrade == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Show Grade - BETA</i>
+				<br />
+				<i>(Grade values depends on your gps accuracy. If you have a poor gps accuracy they might be totally wrong!)</i>
+			</td>
+		</tr>		
+		<tr>
+			<th scope="row">Grade line color:</th>
+			<td>
+				<input name="wpgpxmaps_graph_line_color_grade" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_graph_line_color_grade'); ?>" />
+			</td>
+		</tr>
 
 	</table>
 
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
-    	<input name="page_options" type="hidden" value="wpgpxmaps_unit_of_measure,wpgpxmaps_graph_line_color,wpgpxmaps_show_speed,wpgpxmaps_graph_line_color_speed,wpgpxmaps_show_hr,wpgpxmaps_graph_line_color_hr,wpgpxmaps_unit_of_measure_speed,wpgpxmaps_graph_offset_from1,wpgpxmaps_graph_offset_to1,wpgpxmaps_graph_offset_from2,wpgpxmaps_graph_offset_to2,wpgpxmaps_graph_line_color_cad,wpgpxmaps_show_cadence" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_unit_of_measure,wpgpxmaps_graph_line_color,wpgpxmaps_show_speed,wpgpxmaps_graph_line_color_speed,wpgpxmaps_show_hr,wpgpxmaps_graph_line_color_hr,wpgpxmaps_unit_of_measure_speed,wpgpxmaps_graph_offset_from1,wpgpxmaps_graph_offset_to1,wpgpxmaps_graph_offset_from2,wpgpxmaps_graph_offset_to2,wpgpxmaps_graph_line_color_cad,wpgpxmaps_show_cadence,wpgpxmaps_show_grade,wpgpxmaps_graph_line_color_grade" />
 		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
 	</p>
 

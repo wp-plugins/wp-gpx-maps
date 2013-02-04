@@ -118,6 +118,7 @@
 							unset($points->speed[$i]);						
 							unset($points->hr[$i]);
 							unset($points->cad[$i]);
+							unset($points->grade[$i]);
 						}
 			}		
 		}
@@ -137,6 +138,8 @@
 		$points->speed = array();
 		$points->hr = array();
 		$points->cad = array();
+		$points->grade = array();
+		
 		$points->maxTime = 0;
 		$points->minTime = 0;
 		$points->maxEle = 0;
@@ -191,6 +194,7 @@
 					$speed = (float)$trkpt->speed;
 					$hr = 0;
 					$cad = 0;
+					$grade = 0;
 
 					if (isset($trkpt->extensions))
 					{				
@@ -226,11 +230,12 @@
 						array_push($points->speed, 0);
 						array_push($points->hr,    $hr);
 						array_push($points->cad,   $cad);
+						array_push($points->grade,   $grade);
 						
 						$lastLat=$lat;
 						$lastLon=$lon;
 						$lastEle=$ele;				
-						$lastTime=$time;	
+						$lastTime=$time;
 					}
 					else
 					{
@@ -251,14 +256,20 @@
 						
 						if ($ele != 0 && $lastEle != 0)
 						{
+						
+							$deltaEle = (float)($ele - $lastEle);
+						
 							if ((float)$ele > (float)$lastEle)
 							{
-								$points->totalEleUp += (float)($ele - $lastEle);
+								$points->totalEleUp += $deltaEle;
 							}
 							else
 							{
-								$points->totalEleDown += (float)($lastEle - $ele);
+								$points->totalEleDown += $deltaEle;
 							}
+							
+							$grade = $deltaEle / $offset * 100;
+							
 						}
 						
 						array_push($speedBuffer, $speed);
@@ -286,6 +297,7 @@
 							array_push($points->speed, (float)round($avgSpeed, 1) );
 							array_push($points->hr, $hr);
 							array_push($points->cad, $cad);
+							array_push($points->grade, (float)round($grade, 2) );
 							
 						}
 						else
@@ -308,7 +320,8 @@
 				array_push($points->dist, null);
 				array_push($points->speed, null);
 				array_push($points->hr, null);
-				array_push($points->cad, null);				
+				array_push($points->cad, null);
+				array_push($points->grade, null);
 				
 				unset($trkpts);				
 			
@@ -325,7 +338,8 @@
 				array_pop($points->dist, null);
 				array_pop($points->speed, null);
 				array_pop($points->hr, null);
-				array_pop($points->cad, null);		
+				array_pop($points->cad, null);
+				array_pop($points->grade, null);
 			
 				$_time = array_filter($points->dt);
 				$_ele = array_filter($points->ele);
@@ -374,6 +388,7 @@
 						array_push($points->speed, 0 );
 						array_push($points->hr,    0 );
 						array_push($points->cad,   0 );
+						array_push($points->grade, 0 );
 						$lastLat=$lat;
 						$lastLon=$lon;
 					}
@@ -393,6 +408,7 @@
 							array_push($points->speed, 0 );	
 							array_push($points->hr,    0 );
 							array_push($points->cad,   0 );
+							array_push($points->grade, 0 );
 						}
 						else
 						{
@@ -437,6 +453,7 @@
 							array_push($points->speed, 0 );
 							array_push($points->hr,    0 );
 							array_push($points->cad,   0 );
+							array_push($points->grade, 0 );
 							$lastLat=$lat;
 							$lastLon=$lon;
 						}
@@ -456,6 +473,7 @@
 								array_push($points->speed, 0 );	
 								array_push($points->hr,    0 );
 								array_push($points->cad,   0 );
+								array_push($points->grade, 0 );
 							}
 							else
 							{

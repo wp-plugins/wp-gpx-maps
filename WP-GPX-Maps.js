@@ -138,6 +138,7 @@ function _wpgpxmaps(params)
 	var graphSpeed = params.graphSpeed;
 	var graphHr = params.graphHr;
 	var graphCad = params.graphCad;
+	var graphGrade = params.graphGrade;
 	var waypoints = params.waypoints;
 	var unit = params.unit;
 	var unitspeed = params.unitspeed;
@@ -146,6 +147,7 @@ function _wpgpxmaps(params)
 	var color3 = params.color3;
 	var color4 = params.color4;
 	var color5 = params.color5;
+	var color6 = params.color6;
 	var chartFrom1 = params.chartFrom1;
 	var chartTo1 = params.chartTo1;
 	var chartFrom2 = params.chartFrom2;
@@ -908,7 +910,49 @@ function _wpgpxmaps(params)
 			
 			l_y_arr.push(l_cad);
 		}
+
+		if (graphGrade != '')
+		{
+			
+			var l_grade = { suf : "%", dec : 1 };
+			
+			var cadData = [];
 		
+			for (i=0; i<valLen; i++) 
+			{
+				if (graphDist[i] != null)
+				{
+					var c = graphGrade[i];
+					if (c==0)
+						c = null;
+					cadData.push([graphDist[i],c]);
+				}
+			}
+
+			var yaxe = { 
+				title: { text: null },
+				labels: {
+					//align: 'right',
+					formatter: function() {
+						return Highcharts.numberFormat(this.value, l_grade.dec,decPoint,thousandsSep) + l_grade.suf;
+					}
+				},
+				opposite: true
+			}
+								
+			hoptions.yAxis.push(yaxe);
+			hoptions.series.push({
+									name: lng.grade,
+									lineWidth: 1,
+									marker: { radius: 0 },
+									data : cadData,
+									color: color6,
+									yAxis: hoptions.series.length
+								});			
+			
+			l_y_arr.push(l_grade);
+		}
+
 		var hchart = new Highcharts.Chart(hoptions);
 	
 	}
