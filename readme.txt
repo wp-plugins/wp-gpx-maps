@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.5
-Stable tag: 1.1.40
+Stable tag: 1.1.41
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -43,6 +43,7 @@ Translated into 7 languages:
 - Turkish tr_TR
 - Hungarian hu_HU
 - French fr_FR
+- Polish pl_PL
 
 (many thanks to all the guys who helped me with the translations)
 
@@ -179,6 +180,10 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.41 =
+* Added Polish translation, thanks to Sebastian
+* Fix: Spanish translation 
+* Minor javascript improvement
 = 1.1.40 =
 * Improved italian translation
 * Added grade chart (beta) 

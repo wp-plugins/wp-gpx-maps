@@ -410,14 +410,9 @@ function _wpgpxmaps(params)
 			if (mapData[i] == null)
 			{
 			
-				if ( polyline_number < color1.length )
-				{
-					color=color1[polyline_number];
-				}
-				else
-				{
-					color=color1[color1.length-1];
-				}
+
+					color=color1[polyline_number % color1.length];
+
 
 				var poly = new google.maps.Polyline({
 					path: points.slice(lastCut,i),
