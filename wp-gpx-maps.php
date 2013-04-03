@@ -3,24 +3,29 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.darwinner.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.41
+Version: 1.1.42
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
 
 //error_reporting (E_ALL);
 
-load_plugin_textdomain('wp-gpx-maps', "/wp-content/plugins/wp-gpx-maps/languages/");
-
 include 'wp-gpx-maps_utils.php';
 include 'wp-gpx-maps_admin.php';
 
-add_action( 'wp_print_scripts', 'print_WP_GPX_Maps_scripts' );
 add_shortcode('sgpx','handle_WP_GPX_Maps_Shortcodes');
 register_activation_hook(__FILE__,'WP_GPX_Maps_install'); 
-register_deactivation_hook( __FILE__, 'WP_GPX_Maps_remove');	
+register_deactivation_hook( __FILE__, 'WP_GPX_Maps_remove');
 add_filter('plugin_action_links', 'WP_GPX_Maps_action_links', 10, 2);
+add_action( 'wp_print_scripts', 'print_WP_GPX_Maps_scripts' );
 add_action('wp_enqueue_scripts', 'enqueue_WP_GPX_Maps_scripts');
+add_action('plugins_loaded' ,'WP_GPX_Maps_lang_init');
+
+function WP_GPX_Maps_lang_init() {
+   if (function_exists('load_plugin_textdomain')) {
+      load_plugin_textdomain('wp-gpx-maps', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+   }
+}
 
 function WP_GPX_Maps_action_links($links, $file) {
     static $this_plugin;
@@ -44,19 +49,19 @@ function enqueue_WP_GPX_Maps_scripts()
 {
 
 	wp_enqueue_script( 'jquery' );
-	
+
 	wp_deregister_script( 'googlemaps' );
     wp_register_script( 'googlemaps', 'https://maps.googleapis.com/maps/api/js?sensor=false&v=3.9', null, null);
     wp_enqueue_script( 'googlemaps' );
 
     wp_deregister_script( 'highcharts' );
     wp_register_script( 'highcharts', "http://code.highcharts.com/highcharts.js", array('jquery'), "2.3.3", true);
-    wp_enqueue_script( 'highcharts' );	
-	
+    wp_enqueue_script( 'highcharts' );
+
     wp_deregister_script( 'WP-GPX-Maps' );
     wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.1.41");
     wp_enqueue_script( 'WP-GPX-Maps' );
-		
+
 }
 
 function print_WP_GPX_Maps_scripts()
