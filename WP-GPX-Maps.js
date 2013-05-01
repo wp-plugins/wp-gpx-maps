@@ -173,6 +173,8 @@ function _wpgpxmaps(params)
 	mapTypeIds.push("OSM1");
 	mapTypeIds.push("OSM2");
 	mapTypeIds.push("OSM3");
+	mapTypeIds.push("OSM4");
+	mapTypeIds.push("OSM5");
 	
 	var ngImageMarkers = [];
 	
@@ -184,6 +186,8 @@ function _wpgpxmaps(params)
 		case 'OSM1': { mapType = "OSM1"; break;}
 		case 'OSM2': { mapType = "OSM2"; break;}
 		case 'OSM3': { mapType = "OSM3"; break;}
+		case 'OSM4': { mapType = "OSM4"; break;}
+		case 'OSM5': { mapType = "OSM5"; break;}
 		default: { mapType = google.maps.MapTypeId.HYBRID; break;}
 	}
 
@@ -214,6 +218,24 @@ function _wpgpxmaps(params)
 		maxZoom: 18
 	}));
 	
+	map.mapTypes.set("OSM4", new google.maps.ImageMapType({
+		getTileUrl: function(coord, zoom) {
+			return "http://a.tile2.opencyclemap.org/transport/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+		},
+		tileSize: new google.maps.Size(256, 256),
+		name: "Open Cycle Map - Transport",
+		maxZoom: 18
+	}));
+	
+	map.mapTypes.set("OSM5", new google.maps.ImageMapType({
+		getTileUrl: function(coord, zoom) {
+			return "http://a.tile3.opencyclemap.org/landscape/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+		},
+		tileSize: new google.maps.Size(256, 256),
+		name: "Open Cycle Map - Landscape",
+		maxZoom: 18
+	}));
+	
 	map.mapTypes.set("OSM3", new google.maps.ImageMapType({
 		getTileUrl: function(coord, zoom) {
 			return "http://toolserver.org/tiles/hikebike/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
@@ -222,6 +244,7 @@ function _wpgpxmaps(params)
 		name: "Hike & Bike",
 		maxZoom: 18
 	}));
+	
 	
 	// FULL SCREEN BUTTON
 	var controlDiv = document.createElement('div');

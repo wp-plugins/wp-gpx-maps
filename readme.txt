@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.5
-Stable tag: 1.1.42
+Stable tag: 1.1.43
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -32,20 +32,21 @@ Even if you don't have a gps camera, this plugin can retrive the image position 
 
 Old NGGallery Images (without gps data) and gpx: <a href="http://www.pedemontanadelgrappa.it/mappe/itinerario-3-alta-via-degli-eroi/">http://www.pedemontanadelgrappa.it/mappe/itinerario-3-alta-via-degli-eroi/</a>
 
-Translated into 7 languages:
+Translated into 11 languages:
 
-- English (default)
-- Italian it_IT
-- German de_DE
-- Spanish es_ES
 - Dutch nl_NL
+- English (default)
+- French fr_FR
+- German de_DE
+- Hungarian hu_HU
+- Italian it_IT
+- Polish pl_PL
+- Portuguese (Brazilian) pt_BR
+- Spanish es_ES
 - Swedish sv_SE
 - Turkish tr_TR
-- Hungarian hu_HU
-- French fr_FR
-- Polish pl_PL
 
-(many thanks to all the guys who helped me with the translations)
+(many thanks to all guys who helped me with the translations)
 
 - iphone/ipad/ipod Compatible
 
@@ -89,7 +90,7 @@ The attributes are:
 
 1. gheight: graph height
 
-1. mtype: map available types are: HYBRID, ROADMAP, SATELLITE, TERRAIN
+1. mtype: map available types are: HYBRID, ROADMAP, SATELLITE, TERRAIN, OSM1 (Open Street Map), OSM2 (Open Cycle Map), OSM3 (Hike & Bike), OSM4 (Open Cycle Map - Transport), OSM5 (Open Cycle Map - Landscape)
 
 1. waypoints: print the gpx waypoints inside the map (default is FALSE)
 
@@ -180,6 +181,10 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.43 =
+* Added Portuguese (Brazilian) translation, thanks to André Ramos
+* new map: Open Cycle Map - Transport
+* new map: Open Cycle Map - Landscape
 = 1.1.42 =
 * qTranslate compatible
 = 1.1.41 =

@@ -158,6 +158,8 @@
 		$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 	
 		$gpx->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'); 
 		
+		$count_wpt = count( $gpx->xpath('//wpt | //10:wpt | //11:wpt') );
+		
 		$nodes = $gpx->xpath('//trk | //10:trk | //11:trk');
 		
 		//normal gpx
@@ -489,7 +491,12 @@
 				}
 				else
 				{	
-					echo "Empty Gpx or not supported File!";
+				
+					if ($count_wpt == 0)
+					{
+						echo "Empty Gpx or not supported File!";					
+					}
+
 				}
 			}
 		
