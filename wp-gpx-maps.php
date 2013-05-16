@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.43
+Version: 1.1.44
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -59,7 +59,7 @@ function enqueue_WP_GPX_Maps_scripts()
     wp_enqueue_script( 'highcharts' );
 
     wp_deregister_script( 'WP-GPX-Maps' );
-    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.1.43");
+    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.1.44");
     wp_enqueue_script( 'WP-GPX-Maps' );
 
 }
@@ -76,6 +76,7 @@ function print_WP_GPX_Maps_scripts()
 	.wpgpxmaps .myngimages { border:1px solid #fff;position:absolute;cursor:pointer;margin:0;z-index:1; }
 	.wpgpxmaps_summary .summarylabel { }
 	.wpgpxmaps_summary .summaryvalue { font-weight: bold; }
+	.wpgpxmaps .report { line-height:120%; }
 </style>
 <?php
 }
@@ -461,6 +462,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			<div id="map_'.$r.'" style="width:'.$w.'; height:'.$mh.'"></div>
 			<div id="hchart_'.$r.'" class="plot" style="width:'.$w.'; height:'.$gh.'"></div>
 			<div id="ngimages_'.$r.'" class="ngimages" style="display:none">'.$ngimgs_data.'</div>
+			<div id="report_'.$r.'" class="report"></div>
 		</div>
 		'. $error .'
 		<script type="text/javascript">

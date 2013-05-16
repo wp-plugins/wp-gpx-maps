@@ -190,8 +190,8 @@
 				<input type="radio" name="wpgpxmaps_map_type" value="TERRAIN" <?php if ($t == 'TERRAIN') echo 'checked'; ?>> TERRAIN: maps with physical features such as terrain and vegetation.<br />
 				<input type="radio" name="wpgpxmaps_map_type" value="OSM1" <?php if ($t == 'OSM1') echo 'checked'; ?>> Open Street Map<br />
 				<input type="radio" name="wpgpxmaps_map_type" value="OSM2" <?php if ($t == 'OSM2') echo 'checked'; ?>> Open Cycle Map<br />
-				<input type="radio" name="wpgpxmaps_map_type" value="OSM2" <?php if ($t == 'OSM4') echo 'checked'; ?>> Open Cycle Map - Transport<br />
-				<input type="radio" name="wpgpxmaps_map_type" value="OSM2" <?php if ($t == 'OSM5') echo 'checked'; ?>> Open Cycle Map - Landscape<br />
+				<input type="radio" name="wpgpxmaps_map_type" value="OSM4" <?php if ($t == 'OSM4') echo 'checked'; ?>> Open Cycle Map - Transport<br />
+				<input type="radio" name="wpgpxmaps_map_type" value="OSM5" <?php if ($t == 'OSM5') echo 'checked'; ?>> Open Cycle Map - Landscape<br />
 				<input type="radio" name="wpgpxmaps_map_type" value="OSM3" <?php if ($t == 'OSM3') echo 'checked'; ?>> Hike & Bike<br />
 			</td>
 		</tr>

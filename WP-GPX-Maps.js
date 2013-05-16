@@ -160,9 +160,18 @@ function _wpgpxmaps(params)
 	var lng = params.langs;
 	var pluginUrl = params.pluginUrl;
 	
+	// Unit of measure settings
+	var l_s;
+	var l_x;
+	var l_y;
+	var l_grade = { suf : "%", dec : 1 };
+	var l_hr = { suf : "", dec : 0 };
+	var l_cad = { suf : "", dec : 0 };
+	
 	var el = document.getElementById("wpgpxmaps_" + targetId);
 	var el_map = document.getElementById("map_" + targetId);
 	var el_chart = document.getElementById("chart_" + targetId);
+	var el_report = document.getElementById("report_" + targetId);
 	
 	var mapWidth = el_map.style.width;
 	
@@ -600,8 +609,6 @@ function _wpgpxmaps(params)
 
 		var valLen = graphDist.length;
 	
-		var l_x;
-		var l_y;
 		var l_y_arr = [];
 		
 		if (unit=="1")
@@ -636,7 +643,62 @@ function _wpgpxmaps(params)
 		var hoptions = {
 			chart: {
 				renderTo: 'hchart_' + params.targetId,
-				type: 'area'
+				type: 'area',
+				events: {
+					selection: function(event) {
+
+						if (event.xAxis) {
+						
+							el_report.innerHTML = 'Zoom: '+ (event.xAxis[0].min).toFixed(l_x.dec) + ' ' + l_x.suf + ' -> '+ (event.xAxis[0].max).toFixed(decPoint) + ' ' + l_x.suf + '<br />';						
+						
+							var seriesLength = event.currentTarget.series.length;
+						
+							for (var i = 0; i < seriesLength; i++) {
+							
+								var dataX = {value: 0, count: 0};
+								
+								var serie = event.currentTarget.series[i];
+								var points = serie.points;
+								var min = event.xAxis[0].min, max = event.xAxis[0].max;
+								
+								for (var j = 0; j < points.length; j++) {
+									if (points[j].x >= min && points[j].x <= max) {
+										dataX.value += points[j].y;
+										dataX.count +=1;
+									}
+								}
+								
+								var name = serie.name;
+								
+								if (name == lng.altitude) {
+									el_report.innerHTML += name + ' avg: ' + (dataX.value / dataX.count).toFixed(l_y.dec) + " " + l_y.suf + "<br />";
+								} else if (name == lng.speed) {
+									el_report.innerHTML += name + ' avg: ' + (dataX.value / dataX.count).toFixed(l_s.dec) + " " + l_s.suf + "<br />";
+								} else if (name == lng.grade) {
+									el_report.innerHTML += name + ' avg: ' + (dataX.value / dataX.count).toFixed(l_grade.dec) + " " + l_grade.suf + "<br />";
+								} else if (name == lng.cadence) {
+									el_report.innerHTML += name + ' avg: ' + (dataX.value / dataX.count).toFixed(l_cad.dec) + " " + l_cad.suf + "<br />";
+								} else if (name == lng.heartRate) {
+									el_report.innerHTML += name + ' avg: ' + (dataX.value / dataX.count).toFixed(l_hr.dec) + " " + l_hr.suf + "<br />";
+								} else
+								{
+									el_report.innerHTML += serie.name + ' avg: ' + dataX.value / dataX.count + "<br />";
+								}
+								
+								
+								
+								
+							
+							}
+
+							el_report.innerHTML += "<br />"
+							
+						} else {
+							el_report.innerHTML = '';
+						}
+					}
+				},
+				zoomType: 'x'
 			},
 			title: {
 				text: null
@@ -665,7 +727,7 @@ function _wpgpxmaps(params)
 				formatter: function() {
 					if (marker)
 					{
-						var hchart_xserie = hchart.xAxis[0].series[0].data;				
+						var hchart_xserie = hchart.xAxis[0].series[0].data;
 						for(var i=0; i<hchart_xserie.length;i++){
 							var item = hchart_xserie[i];
 							if(item.x == this.x)
@@ -673,7 +735,7 @@ function _wpgpxmaps(params)
 								var point = getItemFromArray(mapData,i)
 								if (point)
 								{
-									marker.setPosition(new google.maps.LatLng(point[0],point[1]));									
+									marker.setPosition(new google.maps.LatLng(point[0],point[1]));
 								}
 								marker.setTitle(lng.currentPosition);
 								i+=10000000;
@@ -774,7 +836,7 @@ function _wpgpxmaps(params)
 		if (graphSpeed != '')
 		{
 			
-			var l_s;
+
 			
 			if (unitspeed == '5') // knos
 			{
@@ -848,8 +910,6 @@ function _wpgpxmaps(params)
 		if (graphHr != '')
 		{
 			
-			var l_hr = { suf : "", dec : 0 };
-			
 			var hrData = [];
 		
 			for (i=0; i<valLen; i++) 
@@ -873,7 +933,7 @@ function _wpgpxmaps(params)
 				},
 				opposite: true
 			}
-								
+
 			hoptions.yAxis.push(yaxe);
 			hoptions.series.push({
 									name: lng.heartRate,
@@ -889,8 +949,6 @@ function _wpgpxmaps(params)
 		
 		if (graphCad != '')
 		{
-			
-			var l_cad = { suf : "", dec : 0 };
 			
 			var cadData = [];
 		
@@ -931,8 +989,6 @@ function _wpgpxmaps(params)
 
 		if (graphGrade != '')
 		{
-			
-			var l_grade = { suf : "%", dec : 1 };
 			
 			var cadData = [];
 		
