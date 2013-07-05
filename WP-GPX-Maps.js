@@ -621,6 +621,11 @@ function _wpgpxmaps(params)
 			l_x = { suf : "km", dec : 1 };
 			l_y = { suf : "m", dec : 0 };
 		}
+		else if (unit=="3")
+		{
+			l_x = { suf : "NM", dec : 1 };
+			l_y = { suf : "m", dec : 0 };
+		}
 		else
 		{
 			l_x = { suf : "m", dec : 0 };
@@ -684,11 +689,7 @@ function _wpgpxmaps(params)
 								{
 									el_report.innerHTML += serie.name + ' avg: ' + dataX.value / dataX.count + "<br />";
 								}
-								
-								
-								
-								
-							
+
 							}
 
 							el_report.innerHTML += "<br />"
@@ -836,11 +837,9 @@ function _wpgpxmaps(params)
 		if (graphSpeed != '')
 		{
 			
-
-			
-			if (unitspeed == '5') // knos
+			if (unitspeed == '5') // knots
 			{
-				l_s = { suf : "knos", dec : 2 };
+				l_s = { suf : "knots", dec : 2 };
 			} 
 			else if (unitspeed == '4') // min/miles
 			{

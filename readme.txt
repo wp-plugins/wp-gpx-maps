@@ -5,17 +5,11 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.5
-Stable tag: 1.1.44
+Stable tag: 1.1.45
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
 == Description ==
-
-IMPORTANT NOTICE
-
-wp-gpx-maps will no longer be available on wordpress.org, because highcharts is not GPL licensed.
-If you want to keep wp-gpx-maps updated, follow this link: http://www.devfarm.it/forums/forum/wp-gpx-maps/
-
 
 This plugin has, as input, the GPX file with the track you've made and as output it shows the map of the track and an interactive altitude graph (where available).
 
@@ -98,7 +92,7 @@ The attributes are:
 
 1. pointsoffset: skip points closer than XX meters(default is 10)
 
-1. uom: the unit of measure of distance/altitude are values are: 0, 1, 2 (0 = meters, 1 = feet/miles, 2 = meters/kilometers)
+1. uom: the unit of measure of distance/altitude are values are: 0, 1, 2 (0 = meters, 1 = feet/miles, 2 = meters/kilometers, 3 = meters/nautical miles)
 
 1. mlinecolor: map line color (default is #3366cc)
 
@@ -120,7 +114,7 @@ The attributes are:
 
 1. glinecolorgrade: grade line color (default is #beecff)
 
-1. uomspeed: the unit of measure of speed are: 0, 1, 2, 3, 4 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles)
+1. uomspeed: the unit of measure of speed are: 0, 1, 2, 3, 4 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles, 5 = Nautical Miles/Hour (Knots))
 
 1. chartFrom1: minimun value for altitude chart
 
@@ -181,6 +175,8 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.45 =
+* Added nautical miles as distance (Many thanks to Anders)
 = 1.1.44 =
 * Added Chart zoom feature
 * Some small bug fixes
