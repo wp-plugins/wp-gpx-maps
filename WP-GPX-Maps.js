@@ -625,6 +625,11 @@ function _wpgpxmaps(params)
 		{
 			l_x = { suf : "NM", dec : 1 };
 			l_y = { suf : "m", dec : 0 };
+		}		
+		else if (unit=="4")
+		{
+			l_x = { suf : "mi", dec : 1 };
+			l_y = { suf : "m", dec : 0 };
 		}
 		else
 		{

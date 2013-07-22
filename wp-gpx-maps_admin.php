@@ -108,7 +108,7 @@ function WP_GPX_Maps_html_page() {
 				<li><b>waypoints</b>: print the gpx waypoints inside the map (default is FALSE)</li>
 				<li><b>donotreducegpx</b>: print all the point without reduce it (default is FALSE)</li>
 				<li><b>pointsoffset</b>: skip points closer than XX meters(default is 10)</li>
-				<li><b>uom</b>: the unit of measure values are: 0, 1, 2 (0 = meters, 1 = miles/feet, 2 = meters/kilometers)</li>
+				<li><b>uom</b>: distance/altitude possible unit of measure are: 0, 1, 2, 3, 4 (0 = meters, 1 = feet/miles, 2 = meters/kilometers, 3 = meters/nautical miles, 4 = meters/miles)</li>
 				<li><b>mlinecolor</b>: map line color (default is #3366cc)</li>
 				<li><b>glinecolor</b>: graph line color (default is #3366cc)</li>
 				<li><b>glinecolorspeed</b>: speed line color (default is #ff0000)</li>
@@ -119,7 +119,7 @@ function WP_GPX_Maps_html_page() {
 				<li><b>showhr</b>: show heart rate inside the chart (default is FALSE)</li>
 				<li><b>showcad</b>: show cadence inside the chart (default is FALSE)</li>
 				<li><b>showgrade</b>: show grade inside the chart (default is FALSE)</li>
-				<li><b>uomspeed</b>: the unit of measure of speed are: 0, 1, 2 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles)</li>
+				<li><b>uomspeed</b>: unit of measure for speed are: 0, 1, 2, 3, 4 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles, 5 = Nautical Miles/Hour (Knots))</li>
 				<li><b>chartFrom1</b>: minimun value for altitude chart</li>
 				<li><b>chartTo1</b>: maxumin value for altitude chart</li>
 				<li><b>chartFrom2</b>: minimun value for speed chart</li>

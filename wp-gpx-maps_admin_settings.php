@@ -255,6 +255,7 @@
 					<option value="1" <?php if ($uom == '1') echo 'selected'; ?>>feet/miles</option>
 					<option value="2" <?php if ($uom == '2') echo 'selected'; ?>>meters/kilometers</option>
 					<option value="3" <?php if ($uom == '3') echo 'selected'; ?>>meters/nautical miles</option>
+					<option value="4" <?php if ($uom == '4') echo 'selected'; ?>>meters/miles</option>
 				</select>
 			</td>
 		</tr>

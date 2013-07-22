@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.5
-Stable tag: 1.1.45
+Stable tag: 1.1.46
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -26,7 +26,7 @@ Even if you don't have a gps camera, this plugin can retrive the image position 
 
 Old NGGallery Images (without gps data) and gpx: <a href="http://www.pedemontanadelgrappa.it/mappe/itinerario-3-alta-via-degli-eroi/">http://www.pedemontanadelgrappa.it/mappe/itinerario-3-alta-via-degli-eroi/</a>
 
-Translated into 11 languages:
+Translated into 12 languages:
 
 - Dutch nl_NL
 - English (default)
@@ -36,6 +36,7 @@ Translated into 11 languages:
 - Italian it_IT
 - Polish pl_PL
 - Portuguese (Brazilian) pt_BR
+- Russian ru_RU
 - Spanish es_ES
 - Swedish sv_SE
 - Turkish tr_TR
@@ -92,7 +93,7 @@ The attributes are:
 
 1. pointsoffset: skip points closer than XX meters(default is 10)
 
-1. uom: the unit of measure of distance/altitude are values are: 0, 1, 2 (0 = meters, 1 = feet/miles, 2 = meters/kilometers, 3 = meters/nautical miles)
+1. uom: distance/altitude possible unit of measure are: 0, 1, 2, 3, 4 (0 = meters, 1 = feet/miles, 2 = meters/kilometers, 3 = meters/nautical miles, 4 = meters/miles)
 
 1. mlinecolor: map line color (default is #3366cc)
 
@@ -114,7 +115,7 @@ The attributes are:
 
 1. glinecolorgrade: grade line color (default is #beecff)
 
-1. uomspeed: the unit of measure of speed are: 0, 1, 2, 3, 4 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles, 5 = Nautical Miles/Hour (Knots))
+1. uomspeed: unit of measure for speed are: 0, 1, 2, 3, 4, 5 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles, 5 = Nautical Miles/Hour (Knots))
 
 1. chartFrom1: minimun value for altitude chart
 
@@ -175,6 +176,9 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.1.46 =
+* Added meters/miles chart unit of measure
+* Added Russian translation, thanks to G.A.P
 = 1.1.45 =
 * Added nautical miles as distance (Many thanks to Anders)
 = 1.1.44 =

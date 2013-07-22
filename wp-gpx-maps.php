@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.45
+Version: 1.1.46
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -59,7 +59,7 @@ function enqueue_WP_GPX_Maps_scripts()
     wp_enqueue_script( 'highcharts' );
 
     wp_deregister_script( 'WP-GPX-Maps' );
-    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.1.45");
+    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.1.46");
     wp_enqueue_script( 'WP-GPX-Maps' );
 
 }
@@ -301,6 +301,10 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 				{
 					// meters / kilometers / nautical miles
 					$_dist = (float)($_dist / 1000 / 1.852);
+ 				} else if ($uom == '4')
+				{
+					// meters / miles
+					$_dist *= 0.000621371192;
  				}
 				
 				$points_graph_dist .= number_format ( $_dist , 2 , '.' , '' ).',';
@@ -347,6 +351,14 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		else if ($uom == '3') {
 			// meters / kilometers / nautical miles
 			$tot_len = round($tot_len / 1000/1.852, 2)." NM";
+			$max_ele = round($max_ele, 0) ." m";
+			$min_ele = round($min_ele, 0) ." m";
+			$total_ele_up = round($total_ele_up, 0) ." m";
+			$total_ele_down = round($total_ele_down, 0) ." m";
+		}
+		else if ($uom == '4') {
+			// meters / kilometers / nautical miles
+			$tot_len = round($tot_len * 0.000621371192, 2)." mi";
 			$max_ele = round($max_ele, 0) ." m";
 			$min_ele = round($min_ele, 0) ." m";
 			$total_ele_up = round($total_ele_up, 0) ." m";
