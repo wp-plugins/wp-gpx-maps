@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.1.46
+Version: 1.2.0
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -500,6 +500,8 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 							currentIcon : "'.$currentIcon.'",
 							waypointIcon : "'.$waypointIcon.'",
 							zoomOnScrollWheel : "'.$zoomOnScrollWheel.'", 
+							ngGalleries : ['.$ngGalleries.'],
+							ngImages : ['.$ngImages.'],
 							pluginUrl : "'.plugins_url().'",
 							langs : { altitude              : "'.__("Altitude", "wp-gpx-maps").'",
 									  currentPosition       : "'.__("Current Position", "wp-gpx-maps").'",

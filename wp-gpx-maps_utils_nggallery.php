@@ -3,13 +3,20 @@
 	function isNGGalleryActive() {
 		if (!function_exists('is_plugin_active')) {
 			require_once(sitePath() . '/wp-admin/includes/plugin.php');
-		}		
+		}
 		return is_plugin_active("nextgen-gallery/nggallery.php");
+	}
+	
+	function isNGGalleryProActive() {
+		if (!function_exists('is_plugin_active')) {
+			require_once(sitePath() . '/wp-admin/includes/plugin.php');
+		}
+		return is_plugin_active("nextgen-gallery-pro/nggallery-pro.php");
 	}
 	
 	function getNGGalleryImages($ngGalleries, $ngImages, $dt, $lat, $lon, $dtoffset, &$error)
 	{
-
+	
 		$result = array();
 		$galids = explode(',', $ngGalleries);
 		$imgids = explode(',', $ngImages);
@@ -25,10 +32,12 @@
 			foreach ($imgids as $i) {
 				array_push($pictures, nggdb::find_image($i));
 			}
-
+			
 			foreach ($pictures as $p) {
+			
 				$item = array();
 				$item["data"] = $p->thumbHTML;
+				
 				if (is_callable('exif_read_data'))
 				{
 					$exif = @exif_read_data($p->imagePath);	
@@ -57,7 +66,36 @@
 				{
 					$error .= "Sorry, <a href='http://php.net/manual/en/function.exif-read-data.php' target='_blank' >exif_read_data</a> function not found! check your hosting..<br />";
 				}
-			}			
+			}
+			
+
+/* START FIX NEXT GEN GALLERY 2.x */
+
+			$renderer  = C_Component_Registry::get_instance()->get_utility('I_Displayed_Gallery_Renderer');
+			$params['gallery_ids']     = $ngGalleries;
+			$params['image_ids']       = $ngImages;
+			$params['display_type']    = NEXTGEN_GALLERY_BASIC_THUMBNAILS;
+			$params['images_per_page'] = 999;
+			// also add js references to get the gallery working
+			$dummy = $renderer->display_images($params, $inner_content);
+				
+/* START FIX NEXT GEN GALLERY PRO */	
+		
+			if (preg_match("/data-nplmodal-gallery-id=[\"'](.*?)[\"']/", $dummy, $m))
+			{
+				$galid = $m[1];
+				if ($galid)
+				{
+					for($i = 0; $i < count($result); ++$i) 
+					{
+						$result[$i]["data"] = str_replace("%PRO_LIGHTBOX_GALLERY_ID%", $galid, $result[$i]["data"]);
+					}
+				}
+			}
+		
+/* END FIX NEXT GEN GALLERY PRO */
+
+/* END FIX NEXT GEN GALLERY 2.x */
 			
 		} catch (Exception $e) {
 			$error .= 'Error When Retrieving NextGen Gallery galleries/images: $e <br />';

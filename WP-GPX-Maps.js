@@ -388,6 +388,40 @@ function _wpgpxmaps(params)
 	
 	});
 	
+	/*
+	
+	// Nextgen Pro Lightbox FIX
+	var _xx = jQuery("#ngimages_" + targetId + " .nextgen_pro_lightbox");
+	if (_xx.length > 0)
+	{
+	
+		var rnd1 = Math.random().toString(36).substring(7);
+		var rnd2 = Math.random().toString(36).substring(7);
+	
+		//get first gallery without images
+		for (var _temp in galleries) {  
+			var _gal = galleries[_temp];
+			
+			if (_gal.source == "random_images" && _gal.wpgpxmaps != true )
+			{
+			
+				_gal.source == "galleries";
+				_gal.wpgpxmaps = true;
+				_transient_id = _temp.replace("gallery_","")
+				_gal["entity_ids"] = [];
+				_gal["image_ids"] = [];
+				_gal["gallery_ids"] = [96];
+				for (var i=0;i<_xx.length;i++)
+				{ 
+					var __xx = jQuery(_xx[i]);
+					__xx.attr("data-nplmodal-gallery-id", _transient_id);
+					_gal["image_ids"].push(__xx.attr("data-image-id"));			
+				}
+				break;
+			}
+		}
+	}
+	*/
 	
 	if ( jQuery("#ngimages_" + targetId + " span").length > 0 )
 	{
