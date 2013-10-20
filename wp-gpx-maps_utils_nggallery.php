@@ -71,29 +71,33 @@
 
 /* START FIX NEXT GEN GALLERY 2.x */
 
-			$renderer  = C_Component_Registry::get_instance()->get_utility('I_Displayed_Gallery_Renderer');
-			$params['gallery_ids']     = $ngGalleries;
-			$params['image_ids']       = $ngImages;
-			$params['display_type']    = NEXTGEN_GALLERY_BASIC_THUMBNAILS;
-			$params['images_per_page'] = 999;
-			// also add js references to get the gallery working
-			$dummy = $renderer->display_images($params, $inner_content);
-				
-/* START FIX NEXT GEN GALLERY PRO */	
-		
-			if (preg_match("/data-nplmodal-gallery-id=[\"'](.*?)[\"']/", $dummy, $m))
+			if ( class_exists("C_Component_Registry") )
 			{
-				$galid = $m[1];
-				if ($galid)
+
+				$renderer  = C_Component_Registry::get_instance()->get_utility('I_Displayed_Gallery_Renderer');
+				$params['gallery_ids']     = $ngGalleries;
+				$params['image_ids']       = $ngImages;
+				$params['display_type']    = NEXTGEN_GALLERY_BASIC_THUMBNAILS;
+				$params['images_per_page'] = 999;
+				// also add js references to get the gallery working
+				$dummy = $renderer->display_images($params, $inner_content);
+					
+	/* START FIX NEXT GEN GALLERY PRO */	
+
+				if (preg_match("/data-nplmodal-gallery-id=[\"'](.*?)[\"']/", $dummy, $m))
 				{
-					for($i = 0; $i < count($result); ++$i) 
+					$galid = $m[1];
+					if ($galid)
 					{
-						$result[$i]["data"] = str_replace("%PRO_LIGHTBOX_GALLERY_ID%", $galid, $result[$i]["data"]);
+						for($i = 0; $i < count($result); ++$i) 
+						{
+							$result[$i]["data"] = str_replace("%PRO_LIGHTBOX_GALLERY_ID%", $galid, $result[$i]["data"]);
+						}
 					}
 				}
+
+	/* END FIX NEXT GEN GALLERY PRO */
 			}
-		
-/* END FIX NEXT GEN GALLERY PRO */
 
 /* END FIX NEXT GEN GALLERY 2.x */
 			
