@@ -1128,8 +1128,6 @@ function getItemFromArray(arr,index)
 }
 
 
-
-
 function getClosestIndex(points,lat,lon)
 {
 	var dd=10000;
@@ -1158,6 +1156,10 @@ function getClosestImage(lat,lon,targetId)
 	for (var i = 0; i < img_spans.length; i++) {   
 		var imageLat = img_spans[i].getAttribute("lat");
 		var imageLon = img_spans[i].getAttribute("lon");	
+					
+		imageLat = imageLat.replace(",", ".");
+		imageLon = imageLon.replace(",", ".");
+		
 		var d = dist(imageLat, imageLon, lat, lon);
 		if ( d < dd )
 		{
