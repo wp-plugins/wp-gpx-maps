@@ -193,6 +193,7 @@
 				<input type="radio" name="wpgpxmaps_map_type" value="OSM4" <?php if ($t == 'OSM4') echo 'checked'; ?>> Open Cycle Map - Transport<br />
 				<input type="radio" name="wpgpxmaps_map_type" value="OSM5" <?php if ($t == 'OSM5') echo 'checked'; ?>> Open Cycle Map - Landscape<br />
 				<input type="radio" name="wpgpxmaps_map_type" value="OSM3" <?php if ($t == 'OSM3') echo 'checked'; ?>> Hike & Bike<br />
+				<input type="radio" name="wpgpxmaps_map_type" value="OSM6" <?php if ($t == 'OSM6') echo 'checked'; ?>> MapToolKit - Terrain<br />
 			</td>
 		</tr>
 		

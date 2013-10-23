@@ -184,6 +184,7 @@ function _wpgpxmaps(params)
 	mapTypeIds.push("OSM3");
 	mapTypeIds.push("OSM4");
 	mapTypeIds.push("OSM5");
+	mapTypeIds.push("OSM6");
 	
 	var ngImageMarkers = [];
 	
@@ -197,6 +198,7 @@ function _wpgpxmaps(params)
 		case 'OSM3': { mapType = "OSM3"; break;}
 		case 'OSM4': { mapType = "OSM4"; break;}
 		case 'OSM5': { mapType = "OSM5"; break;}
+		case 'OSM6': { mapType = "OSM6"; break;}
 		default: { mapType = google.maps.MapTypeId.HYBRID; break;}
 	}
 
@@ -214,7 +216,8 @@ function _wpgpxmaps(params)
 			return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 		},
 		tileSize: new google.maps.Size(256, 256),
-		name: "Open Street Map",
+		name: "OSM",
+		alt : "Open Street Map",
 		maxZoom: 18
 	}));
 	
@@ -223,7 +226,8 @@ function _wpgpxmaps(params)
 			return "http://a.tile.opencyclemap.org/cycle/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 		},
 		tileSize: new google.maps.Size(256, 256),
-		name: "Open Cycle Map",
+		name: "OCM",
+		alt : "Open Cycle Map",
 		maxZoom: 18
 	}));
 	
@@ -232,7 +236,8 @@ function _wpgpxmaps(params)
 			return "http://a.tile2.opencyclemap.org/transport/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 		},
 		tileSize: new google.maps.Size(256, 256),
-		name: "Open Cycle Map - Transport",
+		name: "OCM-Tran",
+		alt : "Open Cycle Map - Transport",
 		maxZoom: 18
 	}));
 	
@@ -241,19 +246,21 @@ function _wpgpxmaps(params)
 			return "http://a.tile3.opencyclemap.org/landscape/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 		},
 		tileSize: new google.maps.Size(256, 256),
-		name: "Open Cycle Map - Landscape",
+		name: "OCM-Land",
+		alt : "Open Cycle Map - Landscape",
 		maxZoom: 18
 	}));
 	
-	map.mapTypes.set("OSM3", new google.maps.ImageMapType({
+	map.mapTypes.set("OSM6", new google.maps.ImageMapType({
 		getTileUrl: function(coord, zoom) {
-			return "http://toolserver.org/tiles/hikebike/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+			return "http://tile2.maptoolkit.net/terrain/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 		},
 		tileSize: new google.maps.Size(256, 256),
-		name: "Hike & Bike",
+		name: "MTK-Terr",
+		alt : "MapToolKit - Terrain",
 		maxZoom: 18
 	}));
-	
+
 	
 	// FULL SCREEN BUTTON
 	var controlDiv = document.createElement('div');
@@ -350,7 +357,7 @@ function _wpgpxmaps(params)
 	jQuery("#ngimages_" + targetId + " span").each(function(){
 	
 		var imageLat  = jQuery(this).attr("lat");
-		var imageLon  = jQuery(this).attr("lon");	
+		var imageLon  = jQuery(this).attr("lon");
 		
 		jQuery("img",this).each(function() {
 		
@@ -359,6 +366,9 @@ function _wpgpxmaps(params)
 				var imageUrl  = jQuery(this).attr("src");
 				var img_w = jQuery(this).width();
 				var img_h = jQuery(this).height();
+				
+				imageLat = imageLat.replace(",", ".");
+				imageLon = imageLon.replace(",", ".");
 				
 				var p = new google.maps.LatLng(imageLat, imageLon);
 				bounds.extend(p);
