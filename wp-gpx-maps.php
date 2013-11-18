@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.2.3
+Version: 1.2.4
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -113,8 +113,9 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$showCad =            findValue($attr, "showcad",            "wpgpxmaps_show_cadence",   		 false);
 	$showHr =             findValue($attr, "showhr",             "wpgpxmaps_show_hr",   		 	 false);
 	$showW =              findValue($attr, "waypoints",          "wpgpxmaps_show_waypoint",   		 false);
+	$showEle =            findValue($attr, "showele",            "wpgpxmaps_show_elevation",   		 "true");
 	$showSpeed =          findValue($attr, "showspeed",          "wpgpxmaps_show_speed",      		 false);
-	$showGrade =          findValue($attr, "showgrade",          "wpgpxmaps_show_grade",      		 false);
+	$showGrade =          findValue($attr, "showgrade",          "wpgpxmaps_show_grade",      		 false);	
 	$zoomOnScrollWheel =  findValue($attr, "zoomonscrollwheel",  "wpgpxmaps_zoomonscrollwheel",      false);
 	$donotreducegpx =     findValue($attr, "donotreducegpx",     "wpgpxmaps_donotreducegpx", 		 false);
 	$pointsoffset =       findValue($attr, "pointsoffset",       "wpgpxmaps_pointsoffset",     		 10);
@@ -154,7 +155,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	
 	$gpxurl = $gpx;
 	
-	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$showGrade,$uomspeed,$uom,v1.1.38";
+	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showEle,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$showGrade,$uomspeed,$uom,v1.1.38";
 
 	$cacheFileName = md5($cacheFileName);
 	
@@ -217,6 +218,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$isGpxUrl = (preg_match('/^(http(s)?\:\/\/)/', trim($gpx)) == 1);
 
 	if ((!isset($points_maps) || $points_maps == '') && $gpx != '')	{
+	//if (true)	{
 	
 		$sitePath = sitePath();
 		
@@ -383,6 +385,11 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			}
 		}
 
+		if ($showEle == "false")
+		{
+			$points_graph_ele = "";
+		}
+
 		$p="/(,|,null,)$/";
 
 		$points_maps = preg_replace($p, "", $points_maps);
@@ -413,7 +420,6 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			
 		if (preg_match("/^(0,?)+$/", $points_graph_grade)) 
 			$points_graph_grade = "";
-
 		
 	}
 	

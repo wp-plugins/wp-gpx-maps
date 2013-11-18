@@ -4,8 +4,8 @@ Contributors: bastianonm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8VHWLRW6JBTML
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
-Tested up to: 3.6.1
-Stable tag: 1.2.3
+Tested up to: 3.7.1
+Stable tag: 1.2.4
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -26,7 +26,7 @@ Even if you don't have a gps camera, this plugin can retrive the image position 
 
 Old NGGallery Images (without gps data) and gpx: <a href="http://www.pedemontanadelgrappa.it/mappe/itinerario-3-alta-via-degli-eroi/">http://www.pedemontanadelgrappa.it/mappe/itinerario-3-alta-via-degli-eroi/</a>
 
-Translated into 12 languages:
+Translated into 13 languages:
 
 - Dutch nl_NL
 - English (default)
@@ -40,6 +40,7 @@ Translated into 12 languages:
 - Spanish es_ES
 - Swedish sv_SE
 - Turkish tr_TR
+- Bulgarian bg_BG
 
 (many thanks to all guys who helped me with the translations)
 
@@ -102,6 +103,8 @@ The attributes are:
 1. showspeed: show speed inside the chart (default is FALSE)
 
 1. showhr: show heart rate inside the chart (default is FALSE)
+
+1. showele: show elevation data inside the chart (default is TRUE)
 
 1. showcad: show cadence inside the chart (default is FALSE)
 
@@ -176,6 +179,9 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.2.4 =
+* Added Bulgarian translation, thanks to Svilen Savov
+* Added possibility to hide the elevation chart
 = 1.2.2 =
 * Smaller map type selector
 * New map: MapToolKit - Terrain

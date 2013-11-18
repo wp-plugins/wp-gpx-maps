@@ -15,6 +15,7 @@
 	$t = get_option('wpgpxmaps_map_type');
 	$uom = get_option('wpgpxmaps_unit_of_measure');
 	$uomSpeed = get_option('wpgpxmaps_unit_of_measure_speed');
+	$showEle = get_option("wpgpxmaps_show_elevation");
 	$showSpeed = get_option('wpgpxmaps_show_speed');
 	$showHr = get_option('wpgpxmaps_show_hr');
 	$showCad = get_option('wpgpxmaps_show_cadence');
@@ -31,6 +32,9 @@
 	$total_ele_down = get_option("wpgpxmaps_summary_total_ele_down");
 	$avg_speed = get_option("wpgpxmaps_summary_avg_speed");
 	$total_time = get_option("wpgpxmaps_summary_total_time");
+	
+	if (empty($showEle))
+		$showEle = "true";
 	
 	if (!($t))
 		$t = 'HYBRID';
@@ -270,10 +274,18 @@
 				<em>(leave empty for auto scale)</em>
 			</td>
 		</tr>
+		
+		<tr>
+			<th scope="row">Show elevation:</th>
+			<td>
+				<input type="checkbox" <?php if($showEle == "true"){echo('checked');} ?> onchange="wpgpxmaps_show_elevation.value = this.checked" onload="wpgpxmaps_show_elevation.value = this.checked" /> <i>Show elevation</i>
+				<input name="wpgpxmaps_show_elevation" type="hidden" value="<?php echo $showEle; ?>">
+			</td>
+		</tr>
 		<tr>
 			<th scope="row">Show speed:</th>
 			<td>
-				<input name="wpgpxmaps_show_speed" type="checkbox" value="true" <?php if($showSpeed == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i>Show Speed</i>
+				<input name="wpgpxmaps_show_speed" type="checkbox" value="true" <?php if($showSpeed == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Show Speed</i>
 			</td>
 		</tr>		
 		<tr>
@@ -350,7 +362,7 @@
 
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
-    	<input name="page_options" type="hidden" value="wpgpxmaps_unit_of_measure,wpgpxmaps_graph_line_color,wpgpxmaps_show_speed,wpgpxmaps_graph_line_color_speed,wpgpxmaps_show_hr,wpgpxmaps_graph_line_color_hr,wpgpxmaps_unit_of_measure_speed,wpgpxmaps_graph_offset_from1,wpgpxmaps_graph_offset_to1,wpgpxmaps_graph_offset_from2,wpgpxmaps_graph_offset_to2,wpgpxmaps_graph_line_color_cad,wpgpxmaps_show_cadence,wpgpxmaps_show_grade,wpgpxmaps_graph_line_color_grade" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_unit_of_measure,wpgpxmaps_graph_line_color,wpgpxmaps_show_elevation,wpgpxmaps_show_speed,wpgpxmaps_graph_line_color_speed,wpgpxmaps_show_hr,wpgpxmaps_graph_line_color_hr,wpgpxmaps_unit_of_measure_speed,wpgpxmaps_graph_offset_from1,wpgpxmaps_graph_offset_to1,wpgpxmaps_graph_offset_from2,wpgpxmaps_graph_offset_to2,wpgpxmaps_graph_line_color_cad,wpgpxmaps_show_cadence,wpgpxmaps_show_grade,wpgpxmaps_graph_line_color_grade" />
 		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
 	</p>
 
