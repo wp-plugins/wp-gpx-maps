@@ -79,7 +79,7 @@
 		return TRUE;
 	}
 
-	function getPoints($gpxPath,$gpxOffset = 10, $donotreducegpx)
+	function getPoints($gpxPath,$gpxOffset = 10, $donotreducegpx, $distancetype)
 	{
 
 		$points = array();
@@ -92,7 +92,7 @@
 				
 		if (file_exists($gpxPath))
 		{
-			$points = @parseXml($gpxPath, $gpxOffset);			
+			$points = @parseXml($gpxPath, $gpxOffset, $distancetype);			
 		}
 		else
 		{
@@ -125,7 +125,7 @@
 		return $points;
 	}
 
-	function parseXml($filePath, $gpxOffset)
+	function parseXml($filePath, $gpxOffset, $distancetype)
 	{
 
 		$points = null;
@@ -242,7 +242,7 @@
 					else
 					{
 						//Normal Case
-						$offset = calculateDistance((float)$lat, (float)$lon, (float)$ele, (float)$lastLat, (float)$lastLon, (float)$lastEle);
+						$offset = calculateDistance((float)$lat, (float)$lon, (float)$ele, (float)$lastLat, (float)$lastLon, (float)$lastEle, $distancetype);
 						$dist = $dist + $offset;
 						
 						$points->totalLength = $dist;
@@ -397,7 +397,7 @@
 					else
 					{
 						//Normal Case
-						$offset = calculateDistance($lat, $lon, 0,$lastLat, $lastLon, 0);
+						$offset = calculateDistance($lat, $lon, 0,$lastLat, $lastLon, 0, $distancetype);
 						$dist = $dist + $offset;
 						if (((float) $offset + (float) $lastOffset) > $gpxOffset)
 						{
@@ -462,7 +462,7 @@
 						else
 						{
 							//Normal Case
-							$offset = calculateDistance($lat, $lon, 0,$lastLat, $lastLon, 0);
+							$offset = calculateDistance($lat, $lon, 0,$lastLat, $lastLon, 0, $distancetype);
 							$dist = $dist + $offset;
 							if (((float) $offset + (float) $lastOffset) > $gpxOffset)
 							{
@@ -499,7 +499,6 @@
 
 				}
 			}
-		
 		
 		}
 		
@@ -543,15 +542,33 @@
 		return (float)($degrees * 3.1415926535897932385 / 180);
 	}
 	
-	function calculateDistance($lat1,$lon1,$ele1,$lat2,$lon2,$ele2)
+	function calculateDistance($lat1,$lon1,$ele1,$lat2,$lon2,$ele2,$distancetype)
 	{
-		$alpha = (float)sin((float)toRadians((float) $lat2 - (float) $lat1) / 2);
-		$beta = (float)sin((float)toRadians((float) $lon2 - (float) $lon1) / 2);
-		//Distance in meters
-		$a = (float) ( (float)$alpha * (float)$alpha) +  (float) ( (float)cos( (float)toRadians($lat1)) * (float)cos( (float)toRadians($lat2)) * (float)$beta * (float)$beta );
-		$dist = 2 * 6369628.75 * (float)atan2((float)sqrt((float)$a), (float)sqrt(1 - (float) $a));
-		$d = (float)sqrt((float)pow((float)$dist, 2) + pow((float) $lat1 - (float)$lat2, 2));	
-		return sqrt((float)pow((float)$ele1-(float)$ele2,2)+(float)pow((float)$d,2));
+	
+		if ($distancetype == '2') // climb
+		{
+			return (float)$ele1 - (float)$ele2;
+		}
+		else if ($distancetype == '1') // flat
+		{
+			$alpha = (float)sin((float)toRadians((float) $lat2 - (float) $lat1) / 2);
+			$beta = (float)sin((float)toRadians((float) $lon2 - (float) $lon1) / 2);
+			//Distance in meters
+			$a = (float) ( (float)$alpha * (float)$alpha) +  (float) ( (float)cos( (float)toRadians($lat1)) * (float)cos( (float)toRadians($lat2)) * (float)$beta * (float)$beta );
+			$dist = 2 * 6369628.75 * (float)atan2((float)sqrt((float)$a), (float)sqrt(1 - (float) $a));
+			return (float)sqrt((float)pow((float)$dist, 2) + pow((float) $lat1 - (float)$lat2, 2));	
+		}
+		else // normal
+		{
+			$alpha = (float)sin((float)toRadians((float) $lat2 - (float) $lat1) / 2);
+			$beta = (float)sin((float)toRadians((float) $lon2 - (float) $lon1) / 2);
+			//Distance in meters
+			$a = (float) ( (float)$alpha * (float)$alpha) +  (float) ( (float)cos( (float)toRadians($lat1)) * (float)cos( (float)toRadians($lat2)) * (float)$beta * (float)$beta );
+			$dist = 2 * 6369628.75 * (float)atan2((float)sqrt((float)$a), (float)sqrt(1 - (float) $a));
+			$d = (float)sqrt((float)pow((float)$dist, 2) + pow((float) $lat1 - (float)$lat2, 2));	
+			return sqrt((float)pow((float)$ele1-(float)$ele2,2)+(float)pow((float)$d,2));
+		}
+
 	}
 	
 	function my_date_diff($old_date, $new_date) {

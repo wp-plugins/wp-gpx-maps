@@ -33,6 +33,8 @@
 	$avg_speed = get_option("wpgpxmaps_summary_avg_speed");
 	$total_time = get_option("wpgpxmaps_summary_total_time");
 	
+	$distanceType = get_option("wpgpxmaps_distance_type");	
+	
 	if (empty($showEle))
 		$showEle = "true";
 	
@@ -69,6 +71,17 @@
 			</td>
 		</tr>
 		<tr>
+			<th scope="row">Distance type:</th>
+			<td>
+				<select name='wpgpxmaps_distance_type'>
+					<option value="0" <?php if ($distanceType == '0' || $distanceType == '') echo 'selected'; ?>>Normal (default)</option>
+					<option value="1" <?php if ($distanceType == '1') echo 'selected'; ?>>Flat &#8594; (Only flat distance, don't take care of altitude)</option>
+					<option value="2" <?php if ($distanceType == '2') echo 'selected'; ?>>Climb &#8593; (Only climb distance)</option>
+				</select>
+			</td>
+		</tr>
+		
+		<tr>
 			<th scope="row">Cache:</th>
 			<td>
 				<input name="wpgpxmaps_skipcache" type="checkbox" value="true" <?php if($skipcache == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Do not use cache</i>
@@ -84,7 +97,7 @@
 	
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
-    	<input name="page_options" type="hidden" value="wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_download,wpgpxmaps_skipcache" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_download,wpgpxmaps_skipcache,wpgpxmaps_distance_type" />
 		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
 	</p>
 

@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.2.4
+Version: 1.2.5
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -140,6 +140,8 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$ngImages =           findValue($attr, "ngimages",           "wpgpxmaps_map_ngImages", 		     "");
 	$download =           findValue($attr, "download",           "wpgpxmaps_download", 		     	 "");
 	$dtoffset =           findValue($attr, "dtoffset",           "wpgpxmaps_dtoffset", 		     	 0);
+	$distanceType =       findValue($attr, "distanceType",        "wpgpxmaps_distance_type", 		 0);
+	
 	$skipcache =          findValue($attr, "skipcache",          "wpgpxmaps_skipcache", 	     	 "");
 	
 	$summary =            findValue($attr, "summary",            "wpgpxmaps_summary", 		     	 "");	
@@ -151,11 +153,12 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$p_avg_speed =        findValue($attr, "summaryavgspeed",    "wpgpxmaps_summary_avg_speed",      false);
 	$p_total_time =       findValue($attr, "summarytotaltime",   "wpgpxmaps_summary_total_time",     false);
 	
+
 	$colors_map = "\"".implode("\",\"",(explode(" ",$color_map)))."\"";
 	
 	$gpxurl = $gpx;
 	
-	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showEle,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$showGrade,$uomspeed,$uom,v1.1.38";
+	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showEle,$showW,$showHr,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$showGrade,$uomspeed,$uom,$distanceType,v1.1.38";
 
 	$cacheFileName = md5($cacheFileName);
 	
@@ -165,6 +168,8 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		@mkdir($gpxcache,0755,true);
 	
 	$gpxcache.= DIRECTORY_SEPARATOR.$cacheFileName.".tmp";
+	
+	$skipcache=true;
 	
 	// Try to load cache
 	if (file_exists($gpxcache) && !($skipcache == true)) {
@@ -236,7 +241,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			return "No gpx found";
 		}
 		
-		$points = getPoints( $gpx, $pointsoffset, $donotreducegpx);
+		$points = getPoints( $gpx, $pointsoffset, $donotreducegpx, $distanceType);
 		
 		$points_maps = '';
 		$points_graph_dist = '';

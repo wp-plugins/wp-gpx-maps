@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-gpx-maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-30 14:42+0100\n"
+"POT-Creation-Date: 2012-10-30 14:41+0100\n"
 "PO-Revision-Date: 2013-12-14 21:43+0100\n"
 "Last-Translator: edgar <forced_to_confess@yahoo.com>\n"
 "Language-Team: \n"
@@ -20,35 +20,35 @@ msgstr "Altitud"
 
 #: ../wp-gpx-maps.php:468
 msgid "Current Position"
-msgstr "Posición actual"
+msgstr "Posició actual"
 
 #: ../wp-gpx-maps.php:469
 msgid "Speed"
-msgstr "Velocidad"
+msgstr "Velocitat"
 
 #: ../wp-gpx-maps.php:470
 msgid "Heart rate"
-msgstr "Ritmo cardíaco"
+msgstr "Ritme cardíac"
 
 #: ../wp-gpx-maps.php:471
 msgid "Cadence"
-msgstr "Cadencia"
+msgstr "Cadència"
 
 #: ../wp-gpx-maps.php:472
 msgid "Go Full Screen"
-msgstr "Ir a pantalla completa"
+msgstr "Anar a pantalla completa"
 
 #: ../wp-gpx-maps.php:473
 msgid "Exit Full Screen"
-msgstr "Salir de pantalla completa"
+msgstr "Sortir de pantalla completa"
 
 #: ../wp-gpx-maps.php:474
 msgid "Hide Images"
-msgstr "Ocultar Imágenes"
+msgstr "Amagar imatges"
 
 #: ../wp-gpx-maps.php:475
 msgid "Show Images"
-msgstr "Mostrar Imágenes"
+msgstr "Mostrar imatges"
 
 #: ../wp-gpx-maps.php:476
 msgid "Back to center"
@@ -56,38 +56,38 @@ msgstr "Centrar"
 
 #: ../wp-gpx-maps.php:489
 msgid "Total distance"
-msgstr "Distancia total"
+msgstr "Distància total"
 
 #: ../wp-gpx-maps.php:494
 msgid "Max elevation"
-msgstr "Elevación máxima"
+msgstr "Altitud màxima"
 
 #: ../wp-gpx-maps.php:496
 msgid "Min elevation"
-msgstr "Elevación mínima"
+msgstr "Altitud mínima"
 
 #: ../wp-gpx-maps.php:498
 msgid "Total climbing"
-msgstr "Total ascendido"
+msgstr "Ascensió total"
 
 #: ../wp-gpx-maps.php:500
 msgid "Total descent"
-msgstr "Total descendido"
+msgstr "Descens total"
 
 #: ../wp-gpx-maps.php:504
 msgid "Average speed"
-msgstr "Velocidad media"
+msgstr "Velocitat mitjana"
 
 #: ../wp-gpx-maps.php:509
 msgid "Total Time"
-msgstr "Tiempo total"
+msgstr "Temps total"
 
 #: ../wp-gpx-maps.php:525
 msgid "Download"
-msgstr "Descargar"
+msgstr "Descarregar"
 
 #: ../wp-gpx-maps_admin_settings.php:83 ../wp-gpx-maps_admin_settings.php:151
 #: ../wp-gpx-maps_admin_settings.php:229 ../wp-gpx-maps_admin_settings.php:333
 #: ../wp-gpx-maps_admin_settings.php:364
 msgid "Save Changes"
-msgstr "Salvar cambios"
+msgstr "Desar canvis"

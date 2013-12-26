@@ -2,92 +2,92 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-gpx-maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-30 14:42+0100\n"
-"PO-Revision-Date: 2013-12-14 21:43+0100\n"
-"Last-Translator: edgar <forced_to_confess@yahoo.com>\n"
+"POT-Creation-Date: 2012-10-30 14:41+0100\n"
+"PO-Revision-Date: 2013-11-16 23:13+0200\n"
+"Last-Translator: Svilen Savov <svilen@svilen.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../wp-gpx-maps.php:467
 msgid "Altitude"
-msgstr "Altitud"
+msgstr "Височина"
 
 #: ../wp-gpx-maps.php:468
 msgid "Current Position"
-msgstr "Posición actual"
+msgstr "Текуща Позиция"
 
 #: ../wp-gpx-maps.php:469
 msgid "Speed"
-msgstr "Velocidad"
+msgstr "Скорост"
 
 #: ../wp-gpx-maps.php:470
 msgid "Heart rate"
-msgstr "Ritmo cardíaco"
+msgstr "Пулс"
 
 #: ../wp-gpx-maps.php:471
 msgid "Cadence"
-msgstr "Cadencia"
+msgstr "Ритъм"
 
 #: ../wp-gpx-maps.php:472
 msgid "Go Full Screen"
-msgstr "Ir a pantalla completa"
+msgstr "Покажи на цял екран"
 
 #: ../wp-gpx-maps.php:473
 msgid "Exit Full Screen"
-msgstr "Salir de pantalla completa"
+msgstr "Изход от цял екран"
 
 #: ../wp-gpx-maps.php:474
 msgid "Hide Images"
-msgstr "Ocultar Imágenes"
+msgstr "Скрий Снимките"
 
 #: ../wp-gpx-maps.php:475
 msgid "Show Images"
-msgstr "Mostrar Imágenes"
+msgstr "Покажи Снкмките"
 
 #: ../wp-gpx-maps.php:476
 msgid "Back to center"
-msgstr "Centrar"
+msgstr "Центрирай"
 
 #: ../wp-gpx-maps.php:489
 msgid "Total distance"
-msgstr "Distancia total"
+msgstr "Обща дистанция"
 
 #: ../wp-gpx-maps.php:494
 msgid "Max elevation"
-msgstr "Elevación máxima"
+msgstr "Максимална височина"
 
 #: ../wp-gpx-maps.php:496
 msgid "Min elevation"
-msgstr "Elevación mínima"
+msgstr "Минимална височина"
 
 #: ../wp-gpx-maps.php:498
 msgid "Total climbing"
-msgstr "Total ascendido"
+msgstr "Общо изкачване"
 
 #: ../wp-gpx-maps.php:500
 msgid "Total descent"
-msgstr "Total descendido"
+msgstr "Общо спускане"
 
 #: ../wp-gpx-maps.php:504
 msgid "Average speed"
-msgstr "Velocidad media"
+msgstr "Средна скорост"
 
 #: ../wp-gpx-maps.php:509
 msgid "Total Time"
-msgstr "Tiempo total"
+msgstr "Общо Време"
 
 #: ../wp-gpx-maps.php:525
 msgid "Download"
-msgstr "Descargar"
+msgstr "Свали"
 
 #: ../wp-gpx-maps_admin_settings.php:83 ../wp-gpx-maps_admin_settings.php:151
 #: ../wp-gpx-maps_admin_settings.php:229 ../wp-gpx-maps_admin_settings.php:333
 #: ../wp-gpx-maps_admin_settings.php:364
 msgid "Save Changes"
-msgstr "Salvar cambios"
+msgstr "Запази Промените"

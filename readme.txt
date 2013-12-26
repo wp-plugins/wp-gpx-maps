@@ -4,8 +4,8 @@ Contributors: bastianonm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8VHWLRW6JBTML
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
-Tested up to: 3.7.1
-Stable tag: 1.2.4
+Tested up to: 3.8
+Stable tag: 1.2.5
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -26,8 +26,9 @@ Even if you don't have a gps camera, this plugin can retrive the image position 
 
 Old NGGallery Images (without gps data) and gpx: <a href="http://www.pedemontanadelgrappa.it/mappe/itinerario-3-alta-via-degli-eroi/">http://www.pedemontanadelgrappa.it/mappe/itinerario-3-alta-via-degli-eroi/</a>
 
-Translated into 13 languages:
+Translated into 14 languages:
 
+- Catalan ca
 - Dutch nl_NL
 - English (default)
 - French fr_FR
@@ -179,6 +180,10 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.2.5 =
+* Added Catalan translation, thanks to Edgar
+* Updated Spanish translation, thanks to Dani
+* Added different types of distance:  Normal, Flat (don't consider altitude) and Climb distance
 = 1.2.4 =
 * Added Bulgarian translation, thanks to Svilen Savov
 * Added possibility to hide the elevation chart
