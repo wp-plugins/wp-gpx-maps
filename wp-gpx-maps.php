@@ -169,8 +169,6 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	
 	$gpxcache.= DIRECTORY_SEPARATOR.$cacheFileName.".tmp";
 	
-	$skipcache=true;
-	
 	// Try to load cache
 	if (file_exists($gpxcache) && !($skipcache == true)) {
 	
