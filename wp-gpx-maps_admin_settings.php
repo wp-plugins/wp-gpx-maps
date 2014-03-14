@@ -18,6 +18,8 @@
 	$showEle = get_option("wpgpxmaps_show_elevation");
 	$showSpeed = get_option('wpgpxmaps_show_speed');
 	$showHr = get_option('wpgpxmaps_show_hr');
+	$showAtemp = get_option('wpgpxmaps_show_atemp');
+	
 	$showCad = get_option('wpgpxmaps_show_cadence');
 	$showGrade = get_option('wpgpxmaps_show_grade');
 	$zoomonscrollwheel = get_option("wpgpxmaps_zoomonscrollwheel");	
@@ -32,6 +34,8 @@
 	$total_ele_down = get_option("wpgpxmaps_summary_total_ele_down");
 	$avg_speed = get_option("wpgpxmaps_summary_avg_speed");
 	$total_time = get_option("wpgpxmaps_summary_total_time");
+	
+	$usegpsposition = get_option("wpgpxmaps_usegpsposition");
 	
 	$distanceType = get_option("wpgpxmaps_distance_type");	
 	
@@ -92,12 +96,19 @@
 			<td>
 				<input name="wpgpxmaps_download" type="checkbox" value="true" <?php if($download == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Allow users to download your GPX file</i>
 			</td>
-		</tr>		
+		</tr>
+		<tr>
+			<th scope="row">Use browser GPS position:</th>
+			<td>
+				<input name="wpgpxmaps_usegpsposition" type="checkbox" value="true" <?php if($usegpsposition == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Allow users to use browser GPS in order to display their current position on map</i>
+			</td>
+		</tr>
+		
 	</table>
 	
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
-    	<input name="page_options" type="hidden" value="wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_download,wpgpxmaps_skipcache,wpgpxmaps_distance_type" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_height,wpgpxmaps_graph_height,wpgpxmaps_width,wpgpxmaps_download,wpgpxmaps_skipcache,wpgpxmaps_distance_type,wpgpxmaps_usegpsposition" />
 		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
 	</p>
 
@@ -236,6 +247,13 @@
 		</tr>
 		
 		<tr>
+			<th scope="row">Current GPS Position Icon:</th>
+			<td>
+				<input name="wpgpxmaps_currentpositioncon" value="<?php echo get_option('wpgpxmaps_currentpositioncon'); ?>" style="width:400px" /> <em>(Url to image) Leave empty for default</em>
+			</td>
+		</tr>
+		
+		<tr>
 			<th scope="row">Custom Waypoint Icon:</th>
 			<td>
 				<input name="wpgpxmaps_map_waypoint_icon" value="<?php echo get_option('wpgpxmaps_map_waypoint_icon'); ?>" style="width:400px" /> <em>(Url to image) Leave empty for default</em>
@@ -246,7 +264,7 @@
 
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
-    	<input name="page_options" type="hidden" value="wpgpxmaps_show_waypoint,wpgpxmaps_map_line_color,wpgpxmaps_map_type,wpgpxmaps_map_start_icon,wpgpxmaps_map_end_icon,wpgpxmaps_map_current_icon,wpgpxmaps_zoomonscrollwheel,wpgpxmaps_map_waypoint_icon" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_show_waypoint,wpgpxmaps_map_line_color,wpgpxmaps_map_type,wpgpxmaps_map_start_icon,wpgpxmaps_map_end_icon,wpgpxmaps_map_current_icon,wpgpxmaps_zoomonscrollwheel,wpgpxmaps_map_waypoint_icon,wpgpxmaps_currentpositioncon" />
 		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
 	</p>
 
@@ -259,6 +277,13 @@
 	<h3 class="title">Chart</h3>
 	
 	<table class="form-table">
+		<tr>
+			<th scope="row">Show altitude:</th>
+			<td>
+				<input type="checkbox" <?php if($showEle == "true"){echo('checked');} ?> onchange="wpgpxmaps_show_elevation.value = this.checked" onload="wpgpxmaps_show_elevation.value = this.checked" /> <i>Show Altitude</i>
+				<input name="wpgpxmaps_show_elevation" type="hidden" value="<?php echo $showEle; ?>">
+			</td>
+		</tr>
 		<tr>
 			<tr>
 				<th scope="row">Altitude line color:</th>
@@ -285,14 +310,6 @@
 				To
 				<input name="wpgpxmaps_graph_offset_to1" value="<?php echo get_option('wpgpxmaps_graph_offset_to1'); ?>" style="width:50px;" />
 				<em>(leave empty for auto scale)</em>
-			</td>
-		</tr>
-		
-		<tr>
-			<th scope="row">Show elevation:</th>
-			<td>
-				<input type="checkbox" <?php if($showEle == "true"){echo('checked');} ?> onchange="wpgpxmaps_show_elevation.value = this.checked" onload="wpgpxmaps_show_elevation.value = this.checked" /> <i>Show elevation</i>
-				<input name="wpgpxmaps_show_elevation" type="hidden" value="<?php echo $showEle; ?>">
 			</td>
 		</tr>
 		<tr>
@@ -342,6 +359,21 @@
 				<input name="wpgpxmaps_graph_line_color_hr" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_graph_line_color_hr'); ?>" />
 			</td>
 		</tr>
+		
+		<tr>
+			<th scope="row">Show Temperature (where aviable):</th>
+			<td>
+				<input name="wpgpxmaps_show_atemp" type="checkbox" value="true" <?php if($showAtemp == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /> <i>Show Temperature</i>
+			</td>
+		</tr>		
+		<tr>
+			<th scope="row">Temperature line color:</th>
+			<td>
+				<input name="wpgpxmaps_graph_line_color_atemp" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_graph_line_color_atemp'); ?>" />
+			</td>
+		</tr>
+		
+		
 		<tr>
 			<th scope="row">Show Cadence (where aviable):</th>
 			<td>
@@ -375,7 +407,7 @@
 
 	<p class="submit">
 		<input type="hidden" name="action" value="update" />
-    	<input name="page_options" type="hidden" value="wpgpxmaps_unit_of_measure,wpgpxmaps_graph_line_color,wpgpxmaps_show_elevation,wpgpxmaps_show_speed,wpgpxmaps_graph_line_color_speed,wpgpxmaps_show_hr,wpgpxmaps_graph_line_color_hr,wpgpxmaps_unit_of_measure_speed,wpgpxmaps_graph_offset_from1,wpgpxmaps_graph_offset_to1,wpgpxmaps_graph_offset_from2,wpgpxmaps_graph_offset_to2,wpgpxmaps_graph_line_color_cad,wpgpxmaps_show_cadence,wpgpxmaps_show_grade,wpgpxmaps_graph_line_color_grade" />
+    	<input name="page_options" type="hidden" value="wpgpxmaps_unit_of_measure,wpgpxmaps_graph_line_color,wpgpxmaps_show_elevation,wpgpxmaps_show_speed,wpgpxmaps_graph_line_color_speed,wpgpxmaps_show_hr,wpgpxmaps_graph_line_color_hr,wpgpxmaps_unit_of_measure_speed,wpgpxmaps_graph_offset_from1,wpgpxmaps_graph_offset_to1,wpgpxmaps_graph_offset_from2,wpgpxmaps_graph_offset_to2,wpgpxmaps_graph_line_color_cad,wpgpxmaps_show_cadence,wpgpxmaps_show_grade,wpgpxmaps_graph_line_color_grade,wpgpxmaps_show_atemp,wpgpxmaps_graph_line_color_atemp" />
 		<input type="submit" class="button-primary" value="<?php _e('Save Changes', "wp_gpx_maps") ?>" />
 	</p>
 

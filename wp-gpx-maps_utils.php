@@ -117,6 +117,7 @@
 							unset($points->dist[$i]);						
 							unset($points->speed[$i]);						
 							unset($points->hr[$i]);
+							unset($points->atemp[$i]);
 							unset($points->cad[$i]);
 							unset($points->grade[$i]);
 						}
@@ -137,6 +138,7 @@
 		$points->dist = array();
 		$points->speed = array();
 		$points->hr = array();
+		$points->atemp = array();	
 		$points->cad = array();
 		$points->grade = array();
 		
@@ -195,6 +197,7 @@
 					$time = $trkpt->time;
 					$speed = (float)$trkpt->speed;
 					$hr = 0;
+					$atemp = 0;
 					$cad = 0;
 					$grade = 0;
 
@@ -211,6 +214,14 @@
 							}
 						}
 						
+						$_atemp = @$trkpt->xpath('extensions/gpxtpx:TrackPointExtension/gpxtpx:atemp/text() | extensions/TrackPointExtension/atemp/text()');
+						if ($_atemp)
+						{
+							foreach ($_atemp as $node) {
+								$atemp = (float)$node;
+							}
+						}
+						
 						$_cad = @$trkpt->xpath('extensions/gpxtpx:TrackPointExtension/gpxtpx:cad/text() | extensions/TrackPointExtension/cad/text()');
 						if ($_cad)
 						{
@@ -224,15 +235,16 @@
 					{
 						//Base Case
 
-						array_push($points->dt,   strtotime($time));
-						array_push($points->lat,  (float)$lat);
-						array_push($points->lon,  (float)$lon);
-						array_push($points->ele,  (float)round($ele,2));
-						array_push($points->dist, (float)round($dist,2));
-						array_push($points->speed, 0);
-						array_push($points->hr,    $hr);
-						array_push($points->cad,   $cad);
-						array_push($points->grade,   $grade);
+						array_push($points->dt,   		strtotime($time));
+						array_push($points->lat,  		(float)$lat);
+						array_push($points->lon,  		(float)$lon);
+						array_push($points->ele,  		(float)round($ele,2));
+						array_push($points->dist, 		(float)round($dist,2));
+						array_push($points->speed, 		0);
+						array_push($points->hr,    		$hr);
+						array_push($points->atemp,    	$atemp);
+						array_push($points->cad,   		$cad);
+						array_push($points->grade,   	$grade);
 						
 						$lastLat=$lat;
 						$lastLon=$lon;
@@ -297,7 +309,10 @@
 							array_push($points->ele,   (float)round($ele, 2) );
 							array_push($points->dist,  (float)round($dist, 2) );
 							array_push($points->speed, (float)round($avgSpeed, 1) );
-							array_push($points->hr, $hr);
+							array_push($points->hr, 	$hr);
+							array_push($points->atemp,	$atemp);
+							
+							
 							array_push($points->cad, $cad);
 							array_push($points->grade, (float)round($grade, 2) );
 							
@@ -322,6 +337,7 @@
 				array_push($points->dist, null);
 				array_push($points->speed, null);
 				array_push($points->hr, null);
+				array_push($points->atemp, null);
 				array_push($points->cad, null);
 				array_push($points->grade, null);
 				
@@ -340,6 +356,7 @@
 				array_pop($points->dist, null);
 				array_pop($points->speed, null);
 				array_pop($points->hr, null);
+				array_pop($points->atemp, null);
 				array_pop($points->cad, null);
 				array_pop($points->grade, null);
 			
@@ -389,6 +406,7 @@
 						array_push($points->dist,  0 );
 						array_push($points->speed, 0 );
 						array_push($points->hr,    0 );
+						array_push($points->atemp, 0 );
 						array_push($points->cad,   0 );
 						array_push($points->grade, 0 );
 						$lastLat=$lat;
@@ -409,6 +427,7 @@
 							array_push($points->dist,  0 );
 							array_push($points->speed, 0 );	
 							array_push($points->hr,    0 );
+							array_push($points->atemp, 0 );
 							array_push($points->cad,   0 );
 							array_push($points->grade, 0 );
 						}
@@ -454,6 +473,7 @@
 							array_push($points->dist,  0 );
 							array_push($points->speed, 0 );
 							array_push($points->hr,    0 );
+							array_push($points->atemp, 0 );
 							array_push($points->cad,   0 );
 							array_push($points->grade, 0 );
 							$lastLat=$lat;
@@ -474,6 +494,7 @@
 								array_push($points->dist,  0 );
 								array_push($points->speed, 0 );	
 								array_push($points->hr,    0 );
+								array_push($points->atemp, 0 );
 								array_push($points->cad,   0 );
 								array_push($points->grade, 0 );
 							}

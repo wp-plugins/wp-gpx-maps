@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.8
-Stable tag: 1.2.6
+Stable tag: 1.3.0
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -14,10 +14,17 @@ Draws a gpx track with altitude graph. You can also display your nextgen gallery
 This plugin has, as input, the GPX file with the track you've made and as output it shows the map of the track and an interactive altitude graph (where available).
 
 Fully configurable: 
-
 - Custom colors 
 - Custom icons
 - Multiple language support
+
+Supported charts:
+- Altitude  
+- Speed
+- Heart Rate
+- Temperature 
+- Cadence  
+- Grade 
 
 NextGen Gallery Integration:
 
@@ -180,6 +187,11 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.3.0 =
+* Speed improvement
+* Rewritten js classes
+* Added Temperature chart
+* Added HTML5 Gps position (you can now follow the gpx with your mobile phone/tablet/pc)
 = 1.2.6 =
 * Speed improvement
 = 1.2.5 =
