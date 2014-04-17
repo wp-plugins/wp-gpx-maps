@@ -79,7 +79,7 @@
 		return TRUE;
 	}
 
-	function getPoints($gpxPath,$gpxOffset = 10, $donotreducegpx, $distancetype)
+	function getPoints($gpxPath, $gpxOffset = 10, $donotreducegpx, $distancetype)
 	{
 
 		$points = array();
@@ -96,7 +96,7 @@
 		}
 		else
 		{
-			echo "File $gpxPath not found!";
+			echo "WP GPX Maps Error: File $gpxPath not found!";
 		}
 		
 		// reduce the points to around 200 to speedup
@@ -159,8 +159,6 @@
 		$gpx->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
 		$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 	
 		$gpx->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'); 
-		
-		$count_wpt = count( $gpx->xpath('//wpt | //10:wpt | //11:wpt') );
 		
 		$nodes = $gpx->xpath('//trk | //10:trk | //11:trk');
 		
@@ -510,15 +508,7 @@
 					unset($nodes);
 					
 				}
-				else
-				{	
-				
-					if ($count_wpt == 0)
-					{
-						echo "Empty Gpx or not supported File!";					
-					}
 
-				}
 			}
 		
 		}
@@ -532,8 +522,13 @@
 		$points = array();
 		if (file_exists($gpxPath))
 		{
-			$points = array();
-			$gpx = simplexml_load_file($gpxPath);	
+			try {
+				$gpx = simplexml_load_file($gpxPath);	    
+			} catch (Exception $e) {
+				echo "WP GPX Maps Error: Cant parse xml file " . $gpxPath;
+				return $points;
+			}
+		
 			$gpx->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
 			$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 
 			$nodes = $gpx->xpath('//wpt | //10:wpt | //11:wpt');

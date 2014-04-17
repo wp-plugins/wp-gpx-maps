@@ -2,8 +2,8 @@
 /*
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
-Description: Draws a gpx track with altitude graph
-Version: 1.3.0
+Description: Draws a GPX track with altitude chart
+Version: 1.3.1
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -48,21 +48,10 @@ function WP_GPX_Maps_action_links($links, $file) {
 
 function enqueue_WP_GPX_Maps_scripts()
 {
-
 	wp_enqueue_script( 'jquery' );
-
-	wp_deregister_script( 'googlemaps' );
-    wp_register_script( 'googlemaps', 'https://maps.googleapis.com/maps/api/js?sensor=false&v=3.9', null, null);
-    wp_enqueue_script( 'googlemaps' );
-
-    wp_deregister_script( 'highcharts' );
-    wp_register_script( 'highcharts', "http://code.highcharts.com/highcharts.js", array('jquery'), "2.3.3", true);
-    wp_enqueue_script( 'highcharts' );
-
-    wp_deregister_script( 'WP-GPX-Maps' );
-    wp_register_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.3.0");
-    wp_enqueue_script( 'WP-GPX-Maps' );
-
+    wp_enqueue_script( 'googlemaps', '//maps.googleapis.com/maps/api/js?sensor=false', null, null);
+    wp_enqueue_script( 'highcharts', "//code.highcharts.com/highcharts.js", array('jquery'), "2.3.3", true);
+    wp_enqueue_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.3.0");
 }
 
 function print_WP_GPX_Maps_scripts()
@@ -474,7 +463,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		}
 
 		$avg_speed = convertSpeed($avg_speed,$uomspeed,true);
-			
+						
 		if ($showW == true) {
 			$wpoints = getWayPoints($gpx);
 			foreach ($wpoints as $p) {

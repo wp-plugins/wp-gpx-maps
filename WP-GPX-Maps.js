@@ -266,7 +266,8 @@ Author URI: http://www.pedemontanadelgrappa.it/
 				  css('left', 0).
 				  css("width", '100%').
 				  css("height", '100%').
-				  css("z-index", '100');
+				  css("z-index", '100'),
+				  css("z-index", '100000');
 				jQuery("#wpadminbar").each(function(){
 					jQuery(mapDiv).css('top', jQuery(this).height());
 				});
