@@ -239,7 +239,6 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		// Setup the click event listeners
 		google.maps.event.addDomListener(controlUI, 'click', function(event) {
 			var isFullScreen = (controlUI.isfullscreen == true);
-			var fullScreenCss = "position: absolute;left:0;top:0;";
 			var mapDiv = map.getDiv();
 			var center = map.getCenter();
 			
@@ -266,8 +265,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 				  css('left', 0).
 				  css("width", '100%').
 				  css("height", '100%').
-				  css("z-index", '100'),
-				  css("z-index", '100000');
+				  css("z-index", '100');
 				jQuery("#wpadminbar").each(function(){
 					jQuery(mapDiv).css('top', jQuery(this).height());
 				});
@@ -465,7 +463,6 @@ Author URI: http://www.pedemontanadelgrappa.it/
 			// Setup the click event listeners
 			google.maps.event.addDomListener(controlUIhi, 'click', function(event) {
 				var isImagesHidden = (controlUIhi.isImagesHidden == true);
-				var fullScreenCss = "position: absolute;left:0;top:0;";
 				var mapDiv = map.getDiv();
 				var center = map.getCenter();
 				
