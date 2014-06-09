@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a GPX track with altitude chart
-Version: 1.3.2
+Version: 1.3.3
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -18,7 +18,7 @@ add_shortcode('sgpxf','handle_WP_GPX_Maps_folder_Shortcodes');
 register_activation_hook(__FILE__,'WP_GPX_Maps_install'); 
 register_deactivation_hook( __FILE__, 'WP_GPX_Maps_remove');
 add_filter('plugin_action_links', 'WP_GPX_Maps_action_links', 10, 2);
-add_action( 'wp_print_scripts', 'print_WP_GPX_Maps_scripts' );
+add_action('wp_print_styles', 'print_WP_GPX_Maps_styles' );
 add_action('wp_enqueue_scripts', 'enqueue_WP_GPX_Maps_scripts');
 add_action('plugins_loaded' ,'WP_GPX_Maps_lang_init');
 
@@ -51,10 +51,10 @@ function enqueue_WP_GPX_Maps_scripts()
 	wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'googlemaps', '//maps.googleapis.com/maps/api/js?sensor=false', null, null);
     wp_enqueue_script( 'highcharts', "//code.highcharts.com/3.0.10/highcharts.js", array('jquery'), "3.0.10", true);
-    wp_enqueue_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.3.2");
+    wp_enqueue_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.3.3");
 }
 
-function print_WP_GPX_Maps_scripts()
+function print_WP_GPX_Maps_styles()
 {
 ?>
 <style type="text/css">
@@ -68,6 +68,19 @@ function print_WP_GPX_Maps_scripts()
 	.wpgpxmaps_summary .summaryvalue { font-weight: bold; }
 	.wpgpxmaps .report { line-height:120%; }
 	.wpgpxmaps .gmnoprint div:first-child { height: 20px; }	
+	.wpgpxmaps .wpgpxmaps_osm_footer {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		height: 25px;
+		margin: 0;
+		padding: 6px;
+		z-index: 999;
+		background: WHITE;
+		font-size: 12px;
+	}
 </style>
 <?php
 }
@@ -153,6 +166,11 @@ function handle_WP_GPX_Maps_folder_Shortcodes($attr, $content=''){
 					{
 						// meters / miles
 						$_dist *= 0.000621371192;
+					} else if ($uom == '5')
+					{
+						// meters / kilometers / nautical miles and feet
+						$_dist = (float)($_dist / 1000 / 1.852);
+						$_ele *= 3.2808399;
 					}
 					
 					$points_graph_dist .= number_format ( $_dist , 2 , '.' , '' ).',';
@@ -390,7 +408,12 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 				{
 					// meters / miles
 					$_dist *= 0.000621371192;
- 				}
+				} else if ($uom == '5')
+				{
+					// meters / kilometers / nautical miles and feet
+					$_dist = (float)($_dist / 1000 / 1.852);
+					$_ele *= 3.2808399;
+				}
 				
 				$points_graph_dist .= number_format ( $_dist , 2 , '.' , '' ).',';
 				$points_graph_ele .= number_format ( $_ele , 2 , '.' , '' ).',';
@@ -452,6 +475,14 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			$min_ele = round($min_ele, 0) ." m";
 			$total_ele_up = round($total_ele_up, 0) ." m";
 			$total_ele_down = round($total_ele_down, 0) ." m";
+		}
+		else if ($uom == '5') {
+			// meters / kilometers / nautical miles and feet
+			$tot_len = round($tot_len / 1000/1.852, 2)." NM";
+			$max_ele = round($max_ele * 3.2808399, 0)." ft";
+			$min_ele = round($min_ele * 3.2808399, 0)." ft";
+			$total_ele_up = round($total_ele_up * 3.2808399, 0)." ft";
+			$total_ele_down = round($total_ele_down * 3.2808399, 0)." ft";
 		}
 		else {
 			// meters / meters
@@ -562,8 +593,11 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$r = $post->ID."_".rand(1,5000000);	
 	
 	$output = '
-		<div id="" class="wpgpxmaps">
-			<div id="map_'.$r.'" style="width:'.$w.'; height:'.$mh.'"></div>
+		<div id="wpgpxmaps_'.$r.'" class="wpgpxmaps">
+			<div id="map_'.$r.'_cont" style="width:'.$w.'; height:'.$mh.';position:relative" >
+				<div id="map_'.$r.'" style="width:'.$w.'; height:'.$mh.'"></div>
+				<div id="wpgpxmaps_'.$r.'_osm_footer" class="wpgpxmaps_osm_footer" style="display:none;">&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors</div>			
+			</div>
 			<div id="hchart_'.$r.'" class="plot" style="width:'.$w.'; height:'.$gh.'"></div>
 			<div id="ngimages_'.$r.'" class="ngimages" style="display:none">'.$ngimgs_data.'</div>
 			<div id="report_'.$r.'" class="report"></div>

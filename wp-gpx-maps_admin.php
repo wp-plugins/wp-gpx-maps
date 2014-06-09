@@ -108,7 +108,7 @@ function WP_GPX_Maps_html_page() {
 				<li><b>waypoints</b>: print the gpx waypoints inside the map (default is FALSE)</li>
 				<li><b>donotreducegpx</b>: print all the point without reduce it (default is FALSE)</li>
 				<li><b>pointsoffset</b>: skip points closer than XX meters(default is 10)</li>
-				<li><b>uom</b>: distance/altitude possible unit of measure are: 0, 1, 2, 3, 4 (0 = meters, 1 = feet/miles, 2 = meters/kilometers, 3 = meters/nautical miles, 4 = meters/miles)</li>
+				<li><b>uom</b>: distance/altitude possible unit of measure are: 0, 1, 2, 3, 4, 5 (0 = meters, 1 = feet/miles, 2 = meters/kilometers, 3 = meters/nautical miles, 4 = meters/miles, 5 = feet/nautical miles)</li>
 				<li><b>mlinecolor</b>: map line color (default is #3366cc)</li>
 				<li><b>glinecolor</b>: graph line color (default is #3366cc)</li>
 				<li><b>glinecolorspeed</b>: speed line color (default is #ff0000)</li>

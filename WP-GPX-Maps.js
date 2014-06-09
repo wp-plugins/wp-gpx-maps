@@ -2,7 +2,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.3.0
+Version: 1.3.3
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -11,6 +11,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 
 	var infowindow;
 	var CustomMarker;
+	var map;
 
 	CustomMarker = function( map, latlng, src, img_w, img_h) {
 		this.latlng_ = latlng;
@@ -135,6 +136,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		var el_map = document.getElementById("map_" + targetId);
 		var el_chart = document.getElementById("chart_" + targetId);
 		var el_report = document.getElementById("report_" + targetId);
+		var el_osm_credits = document.getElementById("wpgpxmaps_" + targetId + "_osm_footer");
 		
 		var mapWidth = el_map.style.width;
 		
@@ -164,8 +166,16 @@ Author URI: http://www.pedemontanadelgrappa.it/
 			case 'OSM6': { mapType = "OSM6"; break;}
 			default: { mapType = google.maps.MapTypeId.HYBRID; break;}
 		}
-
-		var map = new google.maps.Map(el_map, {
+		
+		if ( mapType == "TERRAIN" || mapType == "SATELLITE" || mapType == "ROADMAP" )
+		{
+			// google maps
+		} else {
+			// Show OpenStreetMaps credits
+			$(el_osm_credits).show();
+		}
+		
+		map = new google.maps.Map(el_map, {
 			mapTypeId: mapType,
 			scrollwheel: (zoomOnScrollWheel == 'true'),
 			mapTypeControlOptions: {
@@ -223,8 +233,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 			alt : "MapToolKit - Terrain",
 			maxZoom: 18
 		}));
-
-		
+			
 		// FULL SCREEN BUTTON
 		var controlDiv = document.createElement('div');
 		controlDiv.style.padding = '5px';
@@ -239,7 +248,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		// Setup the click event listeners
 		google.maps.event.addDomListener(controlUI, 'click', function(event) {
 			var isFullScreen = (controlUI.isfullscreen == true);
-			var mapDiv = map.getDiv();
+			var mapDiv = [ map.getDiv(), map.getDiv().parentNode ];
 			var center = map.getCenter();
 			
 			if (isFullScreen)
@@ -630,6 +639,18 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		map.setCenter(bounds.getCenter()); 
 		map.fitBounds(bounds);
 		
+		// FIX post tabs	
+		var $_tab = $(el).closest(".wordpress-post-tabs").eq(0);	
+		if ($_tab)
+		{
+			$("div > ul > li > a", $_tab).click(function(e){
+				setTimeout(function(e){			
+					map.fitBounds(bounds);
+					google.maps.event.trigger(map, 'resize');
+				},10);
+			});
+		}	
+		
 		var controlUIcenter = null;
 		var idFirstCenterChanged = true;
 		
@@ -690,6 +711,11 @@ Author URI: http://www.pedemontanadelgrappa.it/
 			{
 				l_x = { suf : "mi", dec : 1 };
 				l_y = { suf : "m", dec : 0 };
+			}
+			else if (unit=="5")
+			{
+				l_x = { suf : "NM", dec : 1 };
+				l_y = { suf : "ft", dec : 0 };
 			}
 			else
 			{

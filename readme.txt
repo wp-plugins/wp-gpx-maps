@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
 Tested up to: 3.9
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -14,7 +14,7 @@ Draws a gpx track with altitude graph. You can also display your nextgen gallery
 This plugin has, as input, the GPX file with the track you've made and as output it shows the map of the track and an interactive altitude graph (where available).
 
 Fully configurable: 
-- Custom colors 
+- Custom colors
 - Custom icons
 - Multiple language support
 
@@ -102,7 +102,7 @@ The attributes are:
 
 1. pointsoffset: skip points closer than XX meters(default is 10)
 
-1. uom: distance/altitude possible unit of measure are: 0, 1, 2, 3, 4 (0 = meters, 1 = feet/miles, 2 = meters/kilometers, 3 = meters/nautical miles, 4 = meters/miles)
+1. uom: distance/altitude possible unit of measure are: 0, 1, 2, 3, 4, 5 (0 = meters, 1 = feet/miles, 2 = meters/kilometers, 3 = meters/nautical miles, 4 = meters/miles, 5 = feet/nautical miles)
 
 1. mlinecolor: map line color (default is #3366cc)
 
@@ -187,6 +187,10 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.3.3 =
+* Add feet/Nautical Miles units (thanks  to elperepat)
+* Update OpenStreetMaps Credits
+* WP Tabs fix
 = 1.3.2 =
 * fix: left axis not visible (downgrade highcharts to v3.0.10)
 * fix: fullscreen map js error
