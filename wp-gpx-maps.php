@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a GPX track with altitude chart
-Version: 1.3.3
+Version: 1.3.4
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -249,7 +249,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	
 	$gpxurl = $gpx;
 	
-	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showEle,$showW,$showHr,$showAtemp,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$showGrade,$uomspeed,$uom,$distanceType,v1.2.7";
+	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showEle,$showW,$showHr,$showAtemp,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$showGrade,$uomspeed,$uom,$distanceType,v1.3.4";
 
 	$cacheFileName = md5($cacheFileName);
 	

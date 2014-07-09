@@ -1199,6 +1199,14 @@ Author URI: http://www.pedemontanadelgrappa.it/
 			infowindow = new google.maps.InfoWindow({ content: cnt});
 			infowindow.open(map,m);
 		});	
+			
+		google.maps.event.addListener(m, "mouseout", function () {
+			if (infowindow)
+			{
+				infowindow.close();
+			}
+		});
+		
 	}
 
 	function getItemFromArray(arr,index)

@@ -201,32 +201,21 @@
 
 					if (isset($trkpt->extensions))
 					{				
-					
+
 						$trkpt->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1');
 						
-						$_hr = @$trkpt->xpath('extensions/gpxtpx:TrackPointExtension/gpxtpx:hr/text() | extensions/TrackPointExtension/hr/text()');
-						if ($_hr)
+						$_ext = @$trkpt->xpath('extensions/gpxtpx:TrackPointExtension | extensions/TrackPointExtension');
+						
+						if ($_ext)
 						{
-							foreach ($_hr as $node) {
-								$hr = (float)$node;
+							if ($_ext[0])
+							{
+								$hr =    @$_ext[0]->hr;
+								$atemp = @$_ext[0]->atemp;
+								$cad =   @$_ext[0]->cad;
 							}
 						}
 						
-						$_atemp = @$trkpt->xpath('extensions/gpxtpx:TrackPointExtension/gpxtpx:atemp/text() | extensions/TrackPointExtension/atemp/text()');
-						if ($_atemp)
-						{
-							foreach ($_atemp as $node) {
-								$atemp = (float)$node;
-							}
-						}
-						
-						$_cad = @$trkpt->xpath('extensions/gpxtpx:TrackPointExtension/gpxtpx:cad/text() | extensions/TrackPointExtension/cad/text()');
-						if ($_cad)
-						{
-							foreach ($_cad as $node) {
-								$cad = (float)$node;
-							}
-						}
 					}
 
 					if ($lastLat == 0 && $lastLon == 0)
@@ -239,9 +228,9 @@
 						array_push($points->ele,  		(float)round($ele,2));
 						array_push($points->dist, 		(float)round($dist,2));
 						array_push($points->speed, 		0);
-						array_push($points->hr,    		$hr);
-						array_push($points->atemp,    	$atemp);
-						array_push($points->cad,   		$cad);
+						array_push($points->hr,    		(float)$hr);
+						array_push($points->atemp,    	(float)$atemp);
+						array_push($points->cad,   		(float)$cad);
 						array_push($points->grade,   	$grade);
 						
 						$lastLat=$lat;
