@@ -201,19 +201,22 @@
 
 					if (isset($trkpt->extensions))
 					{				
+						
+						$arr = json_decode( json_encode($trkpt->extensions) , 1);
 
-						$trkpt->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1');
-						
-						$_ext = @$trkpt->xpath('extensions/gpxtpx:TrackPointExtension | extensions/TrackPointExtension');
-						
-						if ($_ext)
+						if (isset($arr['gpxtpx:TrackPointExtension']))
 						{
-							if ($_ext[0])
-							{
-								$hr =    @$_ext[0]->hr;
-								$atemp = @$_ext[0]->atemp;
-								$cad =   @$_ext[0]->cad;
-							}
+							$tpe = $arr['gpxtpx:TrackPointExtension'];
+							$hr =    @$tpe["gpxtpx:hr"];
+							$atemp = @$tpe["gpxtpx:atemp"];
+							$cad =   @$tpe["gpxtpx:cad"];			
+						}
+						else if (isset($arr['TrackPointExtension']))
+						{
+							$tpe = $arr['TrackPointExtension'];
+							$hr =    @$tpe["hr"];
+							$atemp = @$tpe["atemp"];
+							$cad =   @$tpe["cad"];							
 						}
 						
 					}

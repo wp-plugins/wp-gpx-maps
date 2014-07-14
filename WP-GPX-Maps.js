@@ -11,7 +11,6 @@ Author URI: http://www.pedemontanadelgrappa.it/
 
 	var infowindow;
 	var CustomMarker;
-	var map;
 
 	CustomMarker = function( map, latlng, src, img_w, img_h) {
 		this.latlng_ = latlng;
@@ -175,7 +174,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 			$(el_osm_credits).show();
 		}
 		
-		map = new google.maps.Map(el_map, {
+		var map = new google.maps.Map(el_map, {
 			mapTypeId: mapType,
 			scrollwheel: (zoomOnScrollWheel == 'true'),
 			mapTypeControlOptions: {
@@ -643,10 +642,12 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		var $_tab = $(el).closest(".wordpress-post-tabs").eq(0);	
 		if ($_tab)
 		{
-			$("div > ul > li > a", $_tab).click(function(e){
-				setTimeout(function(e){			
-					map.fitBounds(bounds);
+			$("div > ul > li > a", $_tab).click(function(e){		
+				setTimeout(function(e){		
 					google.maps.event.trigger(map, 'resize');
+					//map.setCenter(bounds.getCenter());
+					map.fitBounds(bounds);
+					tabResized = true;
 				},10);
 			});
 		}	
