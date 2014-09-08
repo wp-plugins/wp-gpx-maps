@@ -137,7 +137,7 @@ function WP_GPX_Maps_html_page() {
 			</ul>
 		
 			<p>
-				<a href="http://www.darwinner.it/forums/forum/wp-gpx-maps/">Bugs, problems, thanks and anything else here!</a>
+				<a href="http://devfarm.it/forums/forum/wp-gpx-maps/">Bugs, problems, thanks and anything else here!</a>
 			</p>
 			
 		</p>

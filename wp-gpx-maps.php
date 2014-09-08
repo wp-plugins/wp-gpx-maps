@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a GPX track with altitude chart
-Version: 1.3.5
+Version: 1.3.6
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -244,12 +244,19 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$usegpsposition =     findValue($attr, "usegpsposition",     "wpgpxmaps_usegpsposition",         false);
 	$currentpositioncon = findValue($attr, "currentpositioncon", "wpgpxmaps_currentpositioncon", 	 "");
 	
-
 	$colors_map = "\"".implode("\",\"",(explode(" ",$color_map)))."\"";
 	
 	$gpxurl = $gpx;
+		
+	// Add file modification time to cache filename to catch new uploads with same file name
+	$mtime = sitePath() . str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, trim($gpx));
+	if(file_exists($mtime)) {
+		$mtime = filemtime($mtime);
+	} else {
+		$mtime = 0;
+	}
 	
-	$cacheFileName = "$gpx,$w,$mh,$mt,$gh,$showEle,$showW,$showHr,$showAtemp,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$showGrade,$uomspeed,$uom,$distanceType,v1.3.5";
+	$cacheFileName = "$gpx,$mtime,$w,$mh,$mt,$gh,$showEle,$showW,$showHr,$showAtemp,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$showGrade,$uomspeed,$uom,$distanceType,v1.3.5";
 
 	$cacheFileName = md5($cacheFileName);
 	
@@ -691,7 +698,9 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 
 		}
 		else {
-			$gpxurl = get_bloginfo('url').$gpxurl;
+			// wpml fix
+			$dummy = ( defined('WP_SITEURL') ) ? WP_SITEURL : get_bloginfo('url');
+			$gpxurl = $dummy.$gpxurl;
 		}		
 		$output.="<a href='$gpxurl' target='_new'>".__("Download", "wp-gpx-maps")."</a>";
 	}
@@ -760,21 +769,38 @@ function downloadRemoteFile($remoteFile)
 {
 	try
 	{
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, str_replace(' ', '%20', $remoteFile)); 
-		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-		curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
-		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-		$resp = curl_exec($ch); 
-		curl_close($ch);
-		$tmpfname = tempnam ( '/tmp', 'gpx' );
+		$newfname = tempnam ( '/tmp', 'gpx' );	
 		
-		$fp = fopen($tmpfname, "w");
-		fwrite($fp, $resp);
-		fclose($fp);
+		if (function_exists ( "file_put_contents" )) // PHP 5.1.0 +
+		{					
+			file_put_contents($newfname , fopen($remoteFile, 'r'));
+			return $newfname;
+		} 
 		
-		return $tmpfname;
+		$file = fopen ($remoteFile, "rb");
+		if ($file) {
+			$newf = fopen ($newfname, "wb");
+
+			if ($newf)
+			while(!feof($file)) {
+				fwrite($newf, fread($file, 1024 * 8 ), 1024 * 8 );
+			}
+		}
+
+		if ($file) {
+			fclose($file);
+		}
+
+		if ($newf) {
+			fclose($newf);
+		}
+			
+		return $newfname;		
+		
 	} catch (Exception $e) {
+	
+		print_r($e);
+		
 		return '';
 	}
 }

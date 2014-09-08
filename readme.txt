@@ -4,8 +4,8 @@ Contributors: bastianonm
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8VHWLRW6JBTML
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
-Tested up to: 3.9
-Stable tag: 1.3.5
+Tested up to: 4.0
+Stable tag: 1.3.6
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -187,6 +187,10 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.3.6 =
+* Fix: remote file download issue
+* Fix: download file link with WPML
+* Improved cache with filetime (thanks to David)
 = 1.3.5 =
 * Fix: Garmin cadence again
 * Fix: WP Tabs
@@ -194,7 +198,7 @@ Yes!
 * Fix: Garmin cadence
 * Infowindows closing on mouseout
 = 1.3.3 =
-* Add feet/Nautical Miles units (thanks  to elperepat)
+* Add feet/Nautical Miles units (thanks to elperepat)
 * Update OpenStreetMaps Credits
 * WP Tabs fix
 = 1.3.2 =
