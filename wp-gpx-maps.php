@@ -226,6 +226,8 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$waypointIcon =       findValue($attr, "waypointicon",       "wpgpxmaps_map_waypoint_icon", 	 "");
 	$ngGalleries =        findValue($attr, "nggalleries",        "wpgpxmaps_map_ngGalleries", 		 "");
 	$ngImages =           findValue($attr, "ngimages",           "wpgpxmaps_map_ngImages", 		     "");
+	// folgende Zeile hinzugefügt:
+	$attachments =        findValue($attr, "attachments",        "wpgpxmaps_map_attachments", 	     false);
 	$download =           findValue($attr, "download",           "wpgpxmaps_download", 		     	 "");
 	$dtoffset =           findValue($attr, "dtoffset",           "wpgpxmaps_dtoffset", 		     	 0);
 	$distanceType =       findValue($attr, "distanceType",       "wpgpxmaps_distance_type", 		 0);
@@ -559,6 +561,15 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		$ngimgs = getNGGalleryImages($ngGalleries, $ngImages, $points_x_time, $points_x_lat, $points_x_lon, $dtoffset, $error);
 		$ngimgs_data ='';	
 		foreach ($ngimgs as $img) {		
+			$data = $img['data'];
+			$data = str_replace("\n","",$data);
+			$ngimgs_data .= '<span lat="'.$img['lat'].'" lon="'.$img['lon'].'">'.$data.'</span>';
+		}
+	}
+// Folgende Zeilen hinzugefügt
+	if ($attachments == true) {
+		$attimgs = getAttachedImages($points_x_time, $points_x_lat, $points_x_lon, $dtoffset, $error);
+		foreach ($attimgs as $img) {		
 			$data = $img['data'];
 			$data = str_replace("\n","",$data);
 			$ngimgs_data .= '<span lat="'.$img['lat'].'" lon="'.$img['lon'].'">'.$data.'</span>';

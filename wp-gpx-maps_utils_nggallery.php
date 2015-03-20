@@ -14,6 +14,7 @@
 		return is_plugin_active("nextgen-gallery-pro/nggallery-pro.php");
 	}
 	
+
 	function getNGGalleryImages($ngGalleries, $ngImages, $dt, $lat, $lon, $dtoffset, &$error)
 	{
 	
@@ -95,7 +96,6 @@
 						}
 					}
 				}
-
 	/* END FIX NEXT GEN GALLERY PRO */
 			}
 

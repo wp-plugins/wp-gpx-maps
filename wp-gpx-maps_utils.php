@@ -2,6 +2,66 @@
 
 	require_once("wp-gpx-maps_utils_nggallery.php");
 
+	function getAttachedImages($dt, $lat, $lon, $dtoffset, &$error)
+	{
+		$result = array();
+			
+		try {
+			$attachments = get_children( array(
+				 'post_parent'    => get_the_ID(),
+				 'post_type'      => 'attachment',
+				 'numberposts'    => -1, 			// show all -1
+				 'post_status'    => 'inherit',
+				 'post_mime_type' => 'image',
+				 'order'          => 'ASC',
+				 'orderby'        => 'menu_order ASC')
+			);
+
+			foreach ($attachments as $attachment_id => $attachment) {
+
+				$img_src  		= wp_get_attachment_image_src($attachment_id,'full');
+				$img_thmb  		= wp_get_attachment_image_src($attachment_id,'thumbnail');
+         		$img_metadata	= wp_get_attachment_metadata( $attachment_id);
+
+				$item = array();
+				$item["data"] = wp_get_attachment_link( $attachment_id, array(105,105) );
+
+				if (is_callable('exif_read_data')) {
+					$exif = @exif_read_data($img_src[0]);	
+					if ($exif !== false)
+					{
+						$item["lon"] = getExifGps($exif["GPSLongitude"], $exif['GPSLongitudeRef']);
+						$item["lat"] = getExifGps($exif["GPSLatitude"], $exif['GPSLatitudeRef']);
+						if (($item["lat"] != 0) || ($item["lon"] != 0)) 
+						{
+							$result[] = $item;
+						}
+						else if (isset($p->imagedate))
+						{
+							$_dt = strtotime($p->imagedate) + $dtoffset;
+							$_item = findItemCoordinate($_dt, $dt, $lat, $lon);
+							if ($_item != null)
+							{
+								$item["lat"] = $_item["lat"];
+								$item["lon"] = $_item["lon"];
+								$result[] = $item;
+							}
+						}
+					}
+				}
+				else
+				{
+					$error .= "Sorry, <a href='http://php.net/manual/en/function.exif-read-data.php' target='_blank' >exif_read_data</a> function not found! check your hosting..<br />";
+				}
+			}
+			
+		} catch (Exception $e) {
+			$error .= 'Error When Retrieving attached images: $e <br />';
+		}
+
+		return $result;
+	}
+
 	function sitePath()
 	{
 		return substr(substr(__FILE__, 0, strrpos(__FILE__,'wp-content')), 0, -1);
