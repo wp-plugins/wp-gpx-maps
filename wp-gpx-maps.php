@@ -2,10 +2,12 @@
 /*
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
-Description: Draws a GPX track with altitude chart
+Description: Draws a GPX track with altitude chart.
 Version: 1.3.7
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
+Text Domain: wp-gpx-map
+Domain Path: /languages
 */
 
 //error_reporting (E_ALL);
@@ -151,7 +153,7 @@ function handle_WP_GPX_Maps_folder_Shortcodes($attr, $content=''){
 					
 					if ($uom == '1')
 					{
-						// Miles and feet			
+						// miles and feet			
 						$_dist *= 0.000621371192;
 						$_ele *= 3.2808399;
 					} else if ($uom == '2')
@@ -226,7 +228,6 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	$waypointIcon =       findValue($attr, "waypointicon",       "wpgpxmaps_map_waypoint_icon", 	 "");
 	$ngGalleries =        findValue($attr, "nggalleries",        "wpgpxmaps_map_ngGalleries", 		 "");
 	$ngImages =           findValue($attr, "ngimages",           "wpgpxmaps_map_ngImages", 		     "");
-	// folgende Zeile hinzugefügt:
 	$attachments =        findValue($attr, "attachments",        "wpgpxmaps_map_attachments", 	     false);
 	$download =           findValue($attr, "download",           "wpgpxmaps_download", 		     	 "");
 	$dtoffset =           findValue($attr, "dtoffset",           "wpgpxmaps_dtoffset", 		     	 0);
@@ -402,7 +403,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 				
 				if ($uom == '1')
 				{
-					// Miles and feet			
+					// miles and feet			
 					$_dist *= 0.000621371192;
 					$_ele *= 3.2808399;
 				} else if ($uom == '2')
@@ -454,7 +455,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 		}	
 
 		if ($uom == '1') {
-			// Miles and feet			
+			// miles and feet			
 			$tot_len = round($tot_len * 0.000621371192, 2)." mi";
 			$max_ele = round($max_ele * 3.2808399, 0)." ft";
 			$min_ele = round($min_ele * 3.2808399, 0)." ft";
@@ -566,7 +567,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 			$ngimgs_data .= '<span lat="'.$img['lat'].'" lon="'.$img['lon'].'">'.$data.'</span>';
 		}
 	}
-// Folgende Zeilen hinzugefügt
+
 	if ($attachments == true) {
 		$attimgs = getAttachedImages($points_x_time, $points_x_lat, $points_x_lon, $dtoffset, $error);
 		foreach ($attimgs as $img) {		
