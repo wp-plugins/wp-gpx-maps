@@ -13,6 +13,10 @@ Draws a gpx track with altitude graph. You can also display your nextgen gallery
 
 This plugin has, as input, the GPX file with the track you've made and as output it shows the map of the track and an interactive altitude graph (where available).
 
+Now on github: https://github.com/devfarm-it/wp-gpx-maps
+On github you can contribuite easly with your code
+
+
 Fully configurable: 
 - Custom colors
 - Custom icons
