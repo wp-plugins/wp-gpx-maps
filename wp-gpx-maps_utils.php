@@ -584,21 +584,41 @@
 			$gpx->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
 			$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 
 			$nodes = $gpx->xpath('//wpt | //10:wpt | //11:wpt');
+			global $wpdb;
 			
 			if ( count($nodes) > 0 )	
 			{
 				// normal case
 				foreach($nodes as $wpt)
 				{
-					$lat = $wpt['lat'];
-					$lon = $wpt['lon'];
-					$ele = $wpt->ele;
-					$time = $wpt->time;
-					$name = $wpt->name;
-					$desc = $wpt->desc;
-					$sym = $wpt->sym;
-					$type = $wpt->type;
-					array_push($points, array((float)$lat,(float)$lon,(float)$ele,$time,$name,$desc,$sym,$type));
+					$lat  = $wpt['lat'];
+					$lon  = $wpt['lon'];
+					$ele  = (string) $wpt->ele;
+					$time = (string) $wpt->time;
+					$name = (string) $wpt->name;
+					$desc = (string) $wpt->desc;
+					$sym  = (string) $wpt->sym;
+					$type = (string) $wpt->type;
+					$img  = '';
+					
+					$img_name = 'map-marker-' . $sym;
+					$query = "SELECT ID FROM {$wpdb->prefix}posts WHERE post_name LIKE '{$img_name}' AND post_type LIKE 'attachment'";
+					$img_id = $wpdb->get_var($query);
+					if (!is_null($img_id)) {
+						$img = wp_get_attachment_url($img_id);
+					}
+					
+					array_push($points, array(
+						"lat"  => (float)$lat,
+						"lon"  => (float)$lon,
+						"ele"  => (float)$ele,
+						"time" => $time,
+						"name" => $name,
+						"desc" => $desc,
+						"sym"  => $sym,
+						"type" => $type,
+						"img"  => $img
+					));
 				}
 			}
 		}
