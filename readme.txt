@@ -1,11 +1,11 @@
 === WP GPX Maps ===
 
-Contributors: bastianonm, Stephan Klein
+Contributors: bastianonm, Stephan Klein, Michel Selerin
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8VHWLRW6JBTML
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
-Tested up to: 4.2.2
-Stable tag: 1.3.7
+Tested up to: 4.3.1
+Stable tag: 1.3.9
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -195,6 +195,10 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.3.9 =
+* Retrieve waypoints in JSON, possibility to add a custom marker (Changed by Michel Selerin)
+= 1.3.8 =
+* Improved Google Maps visualization
 = 1.3.7 =
 * NextGen Gallery's Attachment support. Thanks to Stephan Klein (https://klein-gedruckt.de/2015/03/wordpress-plugin-wp-gpx-maps/)
 = 1.3.6 =
