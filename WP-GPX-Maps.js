@@ -2,7 +2,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.3.3
+Version: 1.3.8
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -347,7 +347,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		
 		
 		// Print WayPoints
-		if (waypoints != '')
+		if (!jQuery.isEmptyObject(waypoints))
 		{
 
 			var image = new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/micons/flag.png',
@@ -365,15 +365,26 @@ Author URI: http://www.pedemontanadelgrappa.it/
 			{
 				image = new google.maps.MarkerImage(waypointIcon);
 				shadow = '';
-			}		
-			
-			for (i=0; i < waypoints.length; i++) 
-			{
-				var lat= waypoints[i][0];
-				var lon= waypoints[i][1];
-				addWayPoint(map, image, shadow, lat, lon, waypoints[i][2], waypoints[i][3]);
-				bounds.extend(new google.maps.LatLng(lat, lon));
 			}
+			
+			jQuery.each(waypoints, function(i, wpt) {
+				
+				var lat= wpt.lat;
+				var lon= wpt.lon;
+				var sym= wpt.sym;
+				var typ= wpt.type;
+				var wim= image;
+				var wsh= shadow;
+
+				if (wpt.img) {
+					wim = new google.maps.MarkerImage(wpt.img);
+					wsh = '';
+				}
+
+				addWayPoint(map, wim, wsh, lat, lon, wpt.name, wpt.desc);
+				bounds.extend(new google.maps.LatLng(lat, lon));
+				
+			});
 		}
 		
 		// Print Images
@@ -1183,31 +1194,35 @@ Author URI: http://www.pedemontanadelgrappa.it/
 							  zIndex: 5
 						  });
 						  
-		google.maps.event.addListener(m, 'mouseover', function() {
+		google.maps.event.addListener(m, 'click', function() {
 			if (infowindow)
 			{
 				infowindow.close(); 		
 			}
 			var cnt = '';	
+			
 			if (title=='')
 			{
-				cnt = "<div style='text-align:center;'>" + unescape(descr) + "</div>";
+				cnt = "<div>" + unescape(descr) + "</div>";
 			}
 			else
 			{
-				cnt = "<div style='font-size:0.8em; text-align:center;'><b>" + title + "</b><br />" + unescape(descr) + "</div>";
+				cnt = "<div><b>" + title + "</b><br />" + unescape(descr) + "</div>";
 			}
+			
+			cnt += "<br /><p><a href='https://maps.google.com?daddr=" + lat + "," + lon + "' target='_blank'>Itin&eacute;raire</a></p>";
+			
 			infowindow = new google.maps.InfoWindow({ content: cnt});
 			infowindow.open(map,m);
 		});	
-			
+		/*
 		google.maps.event.addListener(m, "mouseout", function () {
 			if (infowindow)
 			{
 				infowindow.close();
 			}
 		});
-		
+		*/
 	}
 
 	function getItemFromArray(arr,index)
