@@ -154,7 +154,7 @@ Yes!
 
 == Changelog ==
 = 1.3.10 =
-* Improved german translations (thanks to Konrad)
+* Improved german translations (thanks to Konrad) http://tadesse.de/7882/2015-wanderung-ostrov-tisa-ii/
 = 1.3.9 =
 * Retrieve waypoints in JSON, possibility to add a custom marker (Changed by Michel Selerin)
 = 1.3.8 =
