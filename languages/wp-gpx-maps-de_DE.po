@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: wp-gpx-maps\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-30 14:41+0100\n"
-"PO-Revision-Date: 2012-10-30 14:41+0100\n"
+"PO-Revision-Date: 2016-01-18 10:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
+"Language: de_DE\n"
+"X-Generator: Poedit 1.7.5\n"
 "X-Poedit-SearchPath-0: ..\n"
+"X-Poedit-SearchPath-1: ..\n"
 
 #: ../wp-gpx-maps.php:467
 msgid "Altitude"
@@ -43,19 +46,19 @@ msgstr "Vollbildansicht beenden"
 
 #: ../wp-gpx-maps.php:474
 msgid "Hide Images"
-msgstr ""
+msgstr "Bilder verbergen"
 
 #: ../wp-gpx-maps.php:475
 msgid "Show Images"
-msgstr ""
+msgstr "Bilder anzeigen"
 
 #: ../wp-gpx-maps.php:476
 msgid "Back to center"
-msgstr ""
+msgstr "Zurück zur Mitte"
 
 #: ../wp-gpx-maps.php:489
 msgid "Total distance"
-msgstr "Distanz"
+msgstr "volle Distanz"
 
 #: ../wp-gpx-maps.php:494
 msgid "Max elevation"
@@ -78,9 +81,8 @@ msgid "Average speed"
 msgstr "Durchschnittsgeschwindigkeit"
 
 #: ../wp-gpx-maps.php:509
-#, fuzzy
 msgid "Total Time"
-msgstr "Distanz"
+msgstr "Gesamtzeit"
 
 #: ../wp-gpx-maps.php:525
 msgid "Download"
