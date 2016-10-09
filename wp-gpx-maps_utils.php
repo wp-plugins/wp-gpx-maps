@@ -216,12 +216,11 @@
 		if($gpx === FALSE) 
 			return;
 		
-		$gpx->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
-		$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 	
-		$gpx->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'); 
+		$gpx->registerXPathNamespace('a', 'http://www.topografix.com/GPX/1/0');
+		$gpx->registerXPathNamespace('b', 'http://www.topografix.com/GPX/1/1');
+		$gpx->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1');
 		
-		$nodes = $gpx->xpath('//trk | //10:trk | //11:trk');
-		
+		$nodes = $gpx->xpath('//trk | //a:trk | //b:trk');
 		//normal gpx
 		
 		if ( count($nodes) > 0 )	
@@ -232,11 +231,11 @@
 			
 				$trk = simplexml_load_string($_trk->asXML()); 
 				
-				$trk->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
-				$trk->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 
-				$trk->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'); 				
+				$trk->registerXPathNamespace('a', 'http://www.topografix.com/GPX/1/0');
+				$trk->registerXPathNamespace('b', 'http://www.topografix.com/GPX/1/1');
+				$trk->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1');
 
-				$trkpts = $trk->xpath('//trkpt | //10:trkpt | //11:trkpt');		
+				$trkpts = $trk->xpath('//trkpt | //a:trkpt | //b:trkpt');
 				
 				$lastLat = 0;
 				$lastLon = 0;
@@ -498,7 +497,7 @@
 			
 				//gpx strange case
 
-				$nodes = $gpx->xpath('//rtept | //10:rtept | //11:rtept');
+				$nodes = $gpx->xpath('//rtept | //a:rtept | //b:rtept');
 				if ( count($nodes) > 0 )
 				{
 				
@@ -581,9 +580,9 @@
 				return $points;
 			}
 		
-			$gpx->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
-			$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 
-			$nodes = $gpx->xpath('//wpt | //10:wpt | //11:wpt');
+			$gpx->registerXPathNamespace('a', 'http://www.topografix.com/GPX/1/0');
+			$gpx->registerXPathNamespace('b', 'http://www.topografix.com/GPX/1/1');
+			$nodes = $gpx->xpath('//wpt | //a:wpt | //b:wpt');
 			global $wpdb;
 			
 			if ( count($nodes) > 0 )	
