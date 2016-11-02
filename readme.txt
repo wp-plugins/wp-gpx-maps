@@ -57,6 +57,7 @@ Translated into 14 languages:
 - Swedish sv_SE
 - Turkish tr_TR
 - Bulgarian bg_BG
+- Slovak cs_CZ
 
 (many thanks to all guys who helped me with the translations)
 
@@ -153,6 +154,8 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.3.12 =
+* Fix incompatibility with Debian PHP7 (thanks to phbaer) https://github.com/devfarm-it/wp-gpx-maps/pull/5
 = 1.3.10 =
 * Improved german translations (thanks to Konrad) http://tadesse.de/7882/2015-wanderung-ostrov-tisa-ii/
 = 1.3.9 =
