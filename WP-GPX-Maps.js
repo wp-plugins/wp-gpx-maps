@@ -2,7 +2,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.3.9
+Version: 1.3.14
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -122,7 +122,10 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		var pluginUrl = params.pluginUrl;
 		var usegpsposition = params.usegpsposition;
 		var currentpositioncon= params.currentpositioncon;
+		var ThunderforestApiKey = params.TFApiKey;
 		
+		var hasThunderforestApiKey = (ThunderforestApiKey + '').length > 0;
+
 		// Unit of measure settings
 		var l_s;
 		var l_x;
@@ -185,7 +188,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 			
 		map.mapTypes.set("OSM1", new google.maps.ImageMapType({
 			getTileUrl: function(coord, zoom) {
-				return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+				return "https://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 			},
 			tileSize: new google.maps.Size(256, 256),
 			name: "OSM",
@@ -195,7 +198,10 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		
 		map.mapTypes.set("OSM2", new google.maps.ImageMapType({
 			getTileUrl: function(coord, zoom) {
-				return "http://a.tile.opencyclemap.org/cycle/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+				if (hasThunderforestApiKey)
+					return "https://a.tile.thunderforest.com/cycle/" + zoom + "/" + coord.x + "/" + coord.y + ".png?apikey=" + ThunderforestApiKey;
+				else
+					return "http://a.tile.opencyclemap.org/cycle/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 			},
 			tileSize: new google.maps.Size(256, 256),
 			name: "OCM",
@@ -205,7 +211,10 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		
 		map.mapTypes.set("OSM4", new google.maps.ImageMapType({
 			getTileUrl: function(coord, zoom) {
-				return "http://a.tile2.opencyclemap.org/transport/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+				if (hasThunderforestApiKey)
+					return "https://a.tile.thunderforest.com/transport/" + zoom + "/" + coord.x + "/" + coord.y + ".png?apikey=" + ThunderforestApiKey;
+				else
+					return "http://a.tile2.opencyclemap.org/transport/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 			},
 			tileSize: new google.maps.Size(256, 256),
 			name: "OCM-Tran",
@@ -215,7 +224,10 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		
 		map.mapTypes.set("OSM5", new google.maps.ImageMapType({
 			getTileUrl: function(coord, zoom) {
-				return "http://a.tile3.opencyclemap.org/landscape/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+				if (hasThunderforestApiKey)
+					return "https://a.tile.thunderforest.com/landscape/" + zoom + "/" + coord.x + "/" + coord.y + ".png?apikey=" + ThunderforestApiKey;
+				else
+					return "http://a.tile3.opencyclemap.org/landscape/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 			},
 			tileSize: new google.maps.Size(256, 256),
 			name: "OCM-Land",
@@ -225,7 +237,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		
 		map.mapTypes.set("OSM6", new google.maps.ImageMapType({
 			getTileUrl: function(coord, zoom) {
-				return "http://tile2.maptoolkit.net/terrain/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+				return "https://tile2.maptoolkit.net/terrain/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 			},
 			tileSize: new google.maps.Size(256, 256),
 			name: "MTK-Terr",
@@ -350,12 +362,12 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		if (!jQuery.isEmptyObject(waypoints))
 		{
 
-			var image = new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/micons/flag.png',
+			var image = new google.maps.MarkerImage('https://maps.google.com/mapfiles/ms/micons/flag.png',
 				new google.maps.Size(32, 32),
 				new google.maps.Point(0,0),
 				new google.maps.Point(16, 32)
 			);
-			var shadow = new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/micons/flag.shadow.png',
+			var shadow = new google.maps.MarkerImage('https://maps.google.com/mapfiles/ms/micons/flag.shadow.png',
 				new google.maps.Size(59, 32),
 				new google.maps.Point(0,0),
 				new google.maps.Point(16, 32)
@@ -601,7 +613,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 			
 			if (currentIcon == '')
 			{
-				currentIcon = "http://maps.google.com/mapfiles/kml/pal4/icon25.png";
+				currentIcon = "https://maps.google.com/mapfiles/kml/pal4/icon25.png";
 			}
 			
 			var current = new google.maps.MarkerImage(currentIcon,
@@ -937,26 +949,25 @@ Author URI: http://www.pedemontanadelgrappa.it/
 				l_y_arr.push(l_y);
 			}
 			
-			if (graphSpeed != '')
-			{
-				
-				if (unitspeed == '5') // knots
+			if (graphSpeed != '')			{
+				if (unitspeed == '6') /* min/100m */				{					l_s = { suf : "min/100m", dec : 2 };				} 
+				else if (unitspeed == '5') /* knots */
 				{
 					l_s = { suf : "knots", dec : 2 };
 				} 
-				else if (unitspeed == '4') // min/miles
+				else if (unitspeed == '4') /* min/miles */
 				{
 					l_s = { suf : "min/mi", dec : 2 };
 				} 
-				else if (unitspeed == '3') // min/km
+				else if (unitspeed == '3') /* min/km */
 				{
 					l_s = { suf : "min/km", dec : 2 };
 				} 
-				else if (unitspeed == '2') // miles/h
+				else if (unitspeed == '2') /* miles/h */
 				{
 					l_s = { suf : "mi/h", dec : 0 };
 				} 
-				else if (unitspeed == '1') // km/h
+				else if (unitspeed == '1') /* km/h */
 				{
 					l_s = { suf : "km/h", dec : 0 };
 				} 
