@@ -1,11 +1,11 @@
 === WP GPX Maps ===
 
-Contributors: bastianonm, Stephan Klein
+Contributors: bastianonm, Stephan Klein, Michel Selerin
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8VHWLRW6JBTML
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
-Tested up to: 4.2.2
-Stable tag: 1.3.7
+Tested up to: 4.7.2
+Stable tag: 1.3.14
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -57,6 +57,7 @@ Translated into 14 languages:
 - Swedish sv_SE
 - Turkish tr_TR
 - Bulgarian bg_BG
+- Slovak cs_CZ
 
 (many thanks to all guys who helped me with the translations)
 
@@ -95,89 +96,47 @@ Up to version 1.1.15 [Highcharts-API](http://www.highcharts.com/) is the only av
 The attributes are:
 
 1. gpx: relative path to gpx
-
 1. width: width in pixels
-
 1. mheight: map height
-
 1. gheight: graph height
-
 1. mtype: map available types are: HYBRID, ROADMAP, SATELLITE, TERRAIN, OSM1 (Open Street Map), OSM2 (Open Cycle Map), OSM3 (Hike & Bike), OSM4 (Open Cycle Map - Transport), OSM5 (Open Cycle Map - Landscape), OSM6 (MapToolKit - Terrain)
-
 1. waypoints: print the gpx waypoints inside the map (default is FALSE)
-
 1. donotreducegpx: print all the point without reduce it (default is FALSE)
-
 1. pointsoffset: skip points closer than XX meters(default is 10)
-
 1. uom: distance/altitude possible unit of measure are: 0, 1, 2, 3, 4, 5 (0 = meters, 1 = feet/miles, 2 = meters/kilometers, 3 = meters/nautical miles, 4 = meters/miles, 5 = feet/nautical miles)
-
 1. mlinecolor: map line color (default is #3366cc)
-
 1. glinecolor: altitude line color (default is #3366cc)
-
 1. showspeed: show speed inside the chart (default is FALSE)
-
 1. showhr: show heart rate inside the chart (default is FALSE)
-
 1. showele: show elevation data inside the chart (default is TRUE)
-
 1. showcad: show cadence inside the chart (default is FALSE)
-
 1. showgrade: show grade inside the chart (default is FALSE)
-
 1. glinecolorspeed: speed line color (default is #ff0000)
-
 1. glinecolorhr: heart rate line color (default is #ff77bd)
-
 1. glinecolorcad: cadence line color (default is #beecff)
-
 1. glinecolorgrade: grade line color (default is #beecff)
-
 1. uomspeed: unit of measure for speed are: 0, 1, 2, 3, 4, 5 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles, 5 = Nautical Miles/Hour (Knots))
-
 1. chartFrom1: minimun value for altitude chart
-
 1. chartTo1: maxumin value for altitude chart
-
 1. chartFrom2: minimun value for speed chart
-
 1. chartTo2: maxumin value for speed chart
-
 1. startIcon: Start track icon
-
 1. endIcon: End track icon
-
 1. currentIcon: Current position icon (when mouse hover)
-
 1. waypointicon: waypoint custom icon
-
 1. nggalleries: NextGen Gallery id or a list of Galleries id separated by a comma
-
 1. ngimages: NextGen Image id or a list of Images id separated by a comma
-
 1. dtoffset: the difference (in seconds) between your gpx tool date and your camera date
-
 1. zoomonscrollwheel: zoom on map when mouse scroll wheel 
-
 1. download: Allow users to download your GPX file 
-
 1. skipcache: Do not use cache. If TRUE might be very slow (default is FALSE) 
-
 1. summary: Print summary details of your GPX (default is FALSE) 
-
 1. summarytotlen: Print Total distance in summary table (default is FALSE) 
-
 1. summarymaxele: Print Max Elevation in summary table (default is FALSE) 
-
 1. summaryminele: Print Min Elevation in summary table (default is FALSE) 
-
 1. summaryeleup: Print Total climbing in summary table (default is FALSE) 
-
 1. summaryeledown: Print Total descent in summary table (default is FALSE) 
-
 1. summaryavgspeed: Print Average Speed in summary table (default is FALSE) 
-
 1. summarytotaltime: Print Total time in summary table (default is FALSE) 
 
 = What happening if I've a very large gpx? =
@@ -195,6 +154,20 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.3.14 =
+* Added Thunderforest Api Key on settings: for OpenCycleMap
+= 1.3.13 =
+* Added google maps api key on settings
+* Removed parameter 'sensor' on google maps js
+* Added unit of measure of speed for swimmers: min/100 meters
+= 1.3.12 =
+* Fix incompatibility with Debian PHP7 (thanks to phbaer) https://github.com/devfarm-it/wp-gpx-maps/pull/5
+= 1.3.10 =
+* Improved german translations (thanks to Konrad) http://tadesse.de/7882/2015-wanderung-ostrov-tisa-ii/
+= 1.3.9 =
+* Retrieve waypoints in JSON, possibility to add a custom marker (Changed by Michel Selerin)
+= 1.3.8 =
+* Improved Google Maps visualization
 = 1.3.7 =
 * NextGen Gallery's Attachment support. Thanks to Stephan Klein (https://klein-gedruckt.de/2015/03/wordpress-plugin-wp-gpx-maps/)
 = 1.3.6 =
@@ -249,7 +222,7 @@ Yes!
 * Added Chart zoom feature
 * Some small bug fixes
 = 1.1.43 =
-* Added Portuguese (Brazilian) translation, thanks to André Ramos
+* Added Portuguese (Brazilian) translation, thanks to AndrÃ© Ramos
 * new map: Open Cycle Map - Transport
 * new map: Open Cycle Map - Landscape
 = 1.1.42 =
@@ -262,7 +235,7 @@ Yes!
 * Improved italian translation
 * Added grade chart (beta) 
 = 1.1.39 =
-* Added French translation, thanks to Hervé
+* Added French translation, thanks to HervÃ©
 * Added Nautical Miles per Hour (Knots) unit of measure
 = 1.1.38 =
 * Fix: garmin gpx cadence and heart rate
