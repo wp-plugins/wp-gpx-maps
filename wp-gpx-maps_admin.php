@@ -121,7 +121,7 @@ function WP_GPX_Maps_html_page() {
 </li><li><b>glinecolorhr</b>: heart rate line color (default is #ff77bd)
 </li><li><b>glinecolorcad</b>: cadence line color (default is #beecff)
 </li><li><b>glinecolorgrade</b>: grade line color (default is #beecff)
-</li><li><b>uomspeed</b>: unit of measure for speed are: 0, 1, 2, 3, 4, 5 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles, 5 = Nautical Miles/Hour (Knots))
+</li><li><b>uomspeed</b>: unit of measure for speed are: 0, 1, 2, 3, 4, 5 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles, 5 = Nautical Miles/Hour (Knots), 6 = min/100 meters)
 </li><li><b>chartFrom1</b>: minimun value for altitude chart
 </li><li><b>chartTo1</b>: maxumin value for altitude chart
 </li><li><b>chartFrom2</b>: minimun value for speed chart

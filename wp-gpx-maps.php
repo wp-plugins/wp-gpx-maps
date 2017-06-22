@@ -3,7 +3,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a GPX track with altitude chart
-Version: 1.3.12
+Version: 1.3.14
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -47,11 +47,11 @@ function WP_GPX_Maps_action_links($links, $file) {
 }
 
 function enqueue_WP_GPX_Maps_scripts()
-{
-	wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'googlemaps', '//maps.googleapis.com/maps/api/js?sensor=false', null, null);
+{		$wpgpxmaps_googlemapsv3_apikey = get_option('wpgpxmaps_googlemapsv3_apikey');
+	wp_enqueue_script( 'jquery' );	if ($wpgpxmaps_googlemapsv3_apikey)	{		wp_enqueue_script( 'googlemaps', '//maps.googleapis.com/maps/api/js?key='.$wpgpxmaps_googlemapsv3_apikey, null, null);					}	else	{		wp_enqueue_script( 'googlemaps', '//maps.googleapis.com/maps/api/js', null, null);			}	
+
     wp_enqueue_script( 'highcharts', "//code.highcharts.com/3.0.10/highcharts.js", array('jquery'), "3.0.10", true);
-    wp_enqueue_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.3.8");
+    wp_enqueue_script( 'WP-GPX-Maps', plugins_url('/WP-GPX-Maps.js', __FILE__), array('jquery','googlemaps','highcharts'), "1.3.14");
 }
 
 function print_WP_GPX_Maps_styles()
@@ -265,7 +265,6 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	} else {
 		$mtime = 0;
 	}
-	
 	$cacheFileName = "$gpx,$mtime,$w,$mh,$mt,$gh,$showEle,$showW,$showHr,$showAtemp,$showCad,$donotreducegpx,$pointsoffset,$showSpeed,$showGrade,$uomspeed,$uom,$distanceType,v1.3.9";
 
 	$cacheFileName = md5($cacheFileName);
@@ -670,6 +669,7 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 					ngGalleries : ['.$ngGalleries.'],
 					ngImages : ['.$ngImages.'],
 					pluginUrl : "'.plugins_url().'",
+					TFApiKey : "'.get_option('wpgpxmaps_openstreetmap_apikey').'",
 					langs : { altitude              : "'.__("Altitude", "wp-gpx-maps").'",
 							  currentPosition       : "'.__("Current Position", "wp-gpx-maps").'",
 							  speed                 : "'.__("Speed", "wp-gpx-maps").'", 
@@ -734,10 +734,8 @@ function handle_WP_GPX_Maps_Shortcodes($attr, $content='')
 	return $output;
 }
 
-function convertSeconds($s)
-{
-	if ($s ==0)
-		return 0;
+function convertSeconds($s){
+	if ($s ==0)		return 0;
 	$s =  1.0 / $s;
 	$_sSecT = $s * 60; //sec/km
 	$_sMin = floor ( $_sSecT / 60 );
@@ -745,50 +743,35 @@ function convertSeconds($s)
 	return $_sMin + $_sSec / 100;
 }
 
-function convertSpeed($speed,$uomspeed, $addUom = false)
-{
-
+function convertSpeed($speed,$uomspeed, $addUom = false){
 	$uom = '';
-	
-	if ($uomspeed == '5') // knots
-	{
-		$speed *= 1.94384449;
+	if ($uomspeed == '6') /* min/100 meters */	{		
+		$speed = 1 / $speed * 100 / 60 ;		
+		$uom = " min/100m";	
+	} 	else if ($uomspeed == '5') /* knots */	{
+		$speed *= 1.94384449;		
 		$uom = " knots";
-	} 
-	else if ($uomspeed == '4') // min/mi
-	{
-		$speed = convertSeconds($speed * 0.037282272);	
+	} 	else if ($uomspeed == '4') /* min/mi */	{
+		$speed = convertSeconds($speed * 0.037282272);			
 		$uom = " min/mi";
-	} 
-	else if ($uomspeed == '3') // min/km
-	{
-		$speed = convertSeconds($speed * 0.06);
+	} 	else if ($uomspeed == '3') /* min/km */	{
+		$speed = convertSeconds($speed * 0.06);		
 		$uom = " min/km";
-	} 
-	else if ($uomspeed == '2') // miles/h
-	{
-		$speed *= 2.2369362920544025;
+	} 	else if ($uomspeed == '2') /* miles/h */	{
+		$speed *= 2.2369362920544025;		
 		$uom = " mi/h";
-	} 
-	else if ($uomspeed == '1') // km/h
-	{
-		$speed *= 3.6;
+	} 	else if ($uomspeed == '1') /* km/h */	{
+		$speed *= 3.6;		
 		$uom = " km/h";
-	}
-	else	// dafault m/s
-	{
-		$uom = " m/s";
-	}
+	}	else	/* dafault m/s */	{				
+		$uom = " m/s";			
+	}	
 	
-	if ($addUom == true)
-	{
-		return number_format ( $speed , 2 , '.' , '' ) . $uom;
+	if ($addUom == true)	{		
+		return number_format ( $speed , 2 , '.' , '' ) . $uom;	
+	}	else	{		
+		return number_format ( $speed , 2 , '.' , '' );	
 	}
-	else
-	{
-		return number_format ( $speed , 2 , '.' , '' );
-	}
-	
 }
 
 function downloadRemoteFile($remoteFile)
