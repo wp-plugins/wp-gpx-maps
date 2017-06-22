@@ -2,7 +2,7 @@
 Plugin Name: WP-GPX-Maps
 Plugin URI: http://www.devfarm.it/
 Description: Draws a gpx track with altitude graph
-Version: 1.3.14
+Version: 1.3.15
 Author: Bastianon Massimo
 Author URI: http://www.pedemontanadelgrappa.it/
 */
@@ -188,7 +188,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 			
 		map.mapTypes.set("OSM1", new google.maps.ImageMapType({
 			getTileUrl: function(coord, zoom) {
-				return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+				return "https://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 			},
 			tileSize: new google.maps.Size(256, 256),
 			name: "OSM",
@@ -199,7 +199,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		map.mapTypes.set("OSM2", new google.maps.ImageMapType({
 			getTileUrl: function(coord, zoom) {
 				if (hasThunderforestApiKey)
-					return "http://a.tile.thunderforest.com/cycle/" + zoom + "/" + coord.x + "/" + coord.y + ".png?apikey=" + ThunderforestApiKey;
+					return "https://a.tile.thunderforest.com/cycle/" + zoom + "/" + coord.x + "/" + coord.y + ".png?apikey=" + ThunderforestApiKey;
 				else
 					return "http://a.tile.opencyclemap.org/cycle/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 			},
@@ -212,7 +212,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		map.mapTypes.set("OSM4", new google.maps.ImageMapType({
 			getTileUrl: function(coord, zoom) {
 				if (hasThunderforestApiKey)
-					return "http://a.tile.thunderforest.com/transport/" + zoom + "/" + coord.x + "/" + coord.y + ".png?apikey=" + ThunderforestApiKey;
+					return "https://a.tile.thunderforest.com/transport/" + zoom + "/" + coord.x + "/" + coord.y + ".png?apikey=" + ThunderforestApiKey;
 				else
 					return "http://a.tile2.opencyclemap.org/transport/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 			},
@@ -225,7 +225,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		map.mapTypes.set("OSM5", new google.maps.ImageMapType({
 			getTileUrl: function(coord, zoom) {
 				if (hasThunderforestApiKey)
-					return "http://a.tile.thunderforest.com/landscape/" + zoom + "/" + coord.x + "/" + coord.y + ".png?apikey=" + ThunderforestApiKey;
+					return "https://a.tile.thunderforest.com/landscape/" + zoom + "/" + coord.x + "/" + coord.y + ".png?apikey=" + ThunderforestApiKey;
 				else
 					return "http://a.tile3.opencyclemap.org/landscape/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 			},
@@ -237,7 +237,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		
 		map.mapTypes.set("OSM6", new google.maps.ImageMapType({
 			getTileUrl: function(coord, zoom) {
-				return "http://tile2.maptoolkit.net/terrain/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+				return "https://tile2.maptoolkit.net/terrain/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 			},
 			tileSize: new google.maps.Size(256, 256),
 			name: "MTK-Terr",
@@ -362,12 +362,12 @@ Author URI: http://www.pedemontanadelgrappa.it/
 		if (!jQuery.isEmptyObject(waypoints))
 		{
 
-			var image = new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/micons/flag.png',
+			var image = new google.maps.MarkerImage('https://maps.google.com/mapfiles/ms/micons/flag.png',
 				new google.maps.Size(32, 32),
 				new google.maps.Point(0,0),
 				new google.maps.Point(16, 32)
 			);
-			var shadow = new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/micons/flag.shadow.png',
+			var shadow = new google.maps.MarkerImage('https://maps.google.com/mapfiles/ms/micons/flag.shadow.png',
 				new google.maps.Size(59, 32),
 				new google.maps.Point(0,0),
 				new google.maps.Point(16, 32)
@@ -613,7 +613,7 @@ Author URI: http://www.pedemontanadelgrappa.it/
 			
 			if (currentIcon == '')
 			{
-				currentIcon = "http://maps.google.com/mapfiles/kml/pal4/icon25.png";
+				currentIcon = "https://maps.google.com/mapfiles/kml/pal4/icon25.png";
 			}
 			
 			var current = new google.maps.MarkerImage(currentIcon,
