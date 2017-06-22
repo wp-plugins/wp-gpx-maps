@@ -4,8 +4,8 @@ Contributors: bastianonm, Stephan Klein, Michel Selerin
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8VHWLRW6JBTML
 Tags: maps, gpx, gps, graph, chart, google maps, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
-Tested up to: 4.7.2
-Stable tag: 1.3.14
+Tested up to: 4.8
+Stable tag: 1.3.15
 
 Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
@@ -154,6 +154,8 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.3.15 =
+* Switched to HTTPS where possible (thanks to delitestudio)
 = 1.3.14 =
 * Added Thunderforest Api Key on settings: for OpenCycleMap
 = 1.3.13 =
