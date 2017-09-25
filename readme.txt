@@ -50,6 +50,7 @@ Translated into 14 languages:
 - German de_DE
 - Hungarian hu_HU
 - Italian it_IT
+- Norwegian nb_NO
 - Polish pl_PL
 - Portuguese (Brazilian) pt_BR
 - Russian ru_RU
