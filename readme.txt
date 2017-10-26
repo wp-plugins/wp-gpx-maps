@@ -59,6 +59,8 @@ Translated into 14 languages:
 - Turkish tr_TR
 - Bulgarian bg_BG
 - Slovak cs_CZ
+- Norwegian nb_NO
+- Japanese ja_JP
 
 (many thanks to all guys who helped me with the translations)
 
