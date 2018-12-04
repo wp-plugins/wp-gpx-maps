@@ -218,7 +218,7 @@
 		
 		$gpx->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
 		$gpx->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 	
-		$gpx->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'); 
+		$gpx->registerXPathNamespace('ns3', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'); 
 		
 		$nodes = $gpx->xpath('//trk | //10:trk | //11:trk');
 		
@@ -234,7 +234,7 @@
 				
 				$trk->registerXPathNamespace('10', 'http://www.topografix.com/GPX/1/0'); 
 				$trk->registerXPathNamespace('11', 'http://www.topografix.com/GPX/1/1'); 
-				$trk->registerXPathNamespace('gpxtpx', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'); 				
+				$trk->registerXPathNamespace('ns3', 'http://www.garmin.com/xmlschemas/TrackPointExtension/v1'); 				
 
 				$trkpts = $trk->xpath('//trkpt | //10:trkpt | //11:trkpt');		
 				
@@ -264,12 +264,12 @@
 						
 						$arr = json_decode( json_encode($trkpt->extensions) , 1);
 
-						if (isset($arr['gpxtpx:TrackPointExtension']))
+						if (isset($arr['ns3:TrackPointExtension']))
 						{
-							$tpe = $arr['gpxtpx:TrackPointExtension'];
-							$hr =    @$tpe["gpxtpx:hr"];
-							$atemp = @$tpe["gpxtpx:atemp"];
-							$cad =   @$tpe["gpxtpx:cad"];			
+							$tpe = $arr['ns3:TrackPointExtension'];
+							$hr =    @$tpe["ns3:hr"];
+							$atemp = @$tpe["ns3:atemp"];
+							$cad =   @$tpe["ns3:cad"];			
 						}
 						else if (isset($arr['TrackPointExtension']))
 						{
