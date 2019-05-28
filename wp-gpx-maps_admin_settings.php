@@ -1,8 +1,8 @@
 <?php
 
-	if ( !current_user_can('manage_options') )
-
+	if ( !current_user_can('read') )
 		return;
+	
 	$po = get_option('wpgpxmaps_pointsoffset');
 	$showW = get_option("wpgpxmaps_show_waypoint");
 	$donotreducegpx = get_option("wpgpxmaps_donotreducegpx");
@@ -31,7 +31,7 @@
 	$total_time = get_option("wpgpxmaps_summary_total_time");
 	$usegpsposition = get_option("wpgpxmaps_usegpsposition");
 	$distanceType = get_option("wpgpxmaps_distance_type");
-
+	$allow_other_users_view = get_option("wpgpxmaps_allow_users_view");
 
 	if (empty($showEle))
 		$showEle = "true";
@@ -108,15 +108,7 @@
 			<th scope="row"><?php _e( 'Thunderforest API Key (Open Cycle Map):', 'wp-gpx-maps' ); ?></th>
 			<td>
 				<input name="wpgpxmaps_openstreetmap_apikey" type="text" id="wpgpxmaps_openstreetmap_apikey" value="<?php echo get_option('wpgpxmaps_openstreetmap_apikey'); ?>" style="width:400px" />
-				<em>
-				<?php printf(
-					/* translators: 1: Link to documentation of Thunderforest API Key's 2: Additional link attribute */
-					__( 'Go to <a href="%1s" %2s>Thunderforest API Key</a> and signing in to your Thunderforest account.', 'wp-gpx-maps' ),
-					esc_url( 'http://www.thunderforest.com/docs/apikeys/' ),
-					'target="_blank" rel="noopener noreferrer"'
-				)
-				 ?>
-				</em>
+				<em><?php _e( 'Go to', 'wp-gpx-maps' ) ; echo ' ' ;?>'<a href="http://www.thunderforest.com/docs/apikeys/" target="_blank"><?php _e( 'Thunderforest API Keys', 'wp-gpx-maps' ); ?></a> <?php _e( 'and signing in to your Thunderforest account', 'wp-gpx-maps' ); ?> </em>
 			</td>
 		</tr>
 
@@ -141,7 +133,7 @@
 		<tr>
 			<th scope="row"><?php _e( 'Summary table:', 'wp-gpx-maps' ); ?></th>
 			<td>
-				<input name="wpgpxmaps_summary" type="checkbox" value="true" <?php if($summary == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i><?php echo ' ' ; _e( 'Print summary details of your GPX track', 'wp-gpx-maps' ); ?></i>
+				<input name="wpgpxmaps_summary" type="checkbox" value="true" <?php if($summary == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i><?php echo ' ' ; _e( 'Print summary table', 'wp-gpx-maps' ); ?></i>
 			</td>
 		</tr>
 
@@ -453,6 +445,7 @@
 			<th scope="row"><?php _e( 'Grade:', 'wp-gpx-maps' ); ?></th>
 			<td>
 				<input name="wpgpxmaps_show_grade" type="checkbox" value="true" <?php if($showGrade == true){echo('checked');} ?> onchange="this.value = (this.checked)"  /><i><?php echo ' ' ; _e( 'Show grade - BETA', 'wp-gpx-maps' ); ?></i>
+				<br />
 				<i><?php _e( '(Grade values depends on your GPS accuracy. If you have a poor GPS accuracy they might be totally wrong!)', 'wp-gpx-maps' ); ?></i>
 			</td>
 		</tr>
@@ -463,7 +456,7 @@
 				<input name="wpgpxmaps_graph_line_color_grade" type="color" data-hex="true" value="<?php echo get_option('wpgpxmaps_graph_line_color_grade'); ?>" />
 			</td>
 		</tr>
-
+		
 	</table>
 
 	<p class="submit">
@@ -497,13 +490,22 @@
 			</td>
 		</tr>
 
+		<tr>
+			<th scope="row"><?php _e( 'Allow other users to see GPX files', 'wp-gpx-maps'); ?></th>
+			<td>
+				<input name="wpgpxmaps_allow_users_view" type="checkbox" value="true" onchange="this.value = (this.checked)" <?php if(wpgpxmaps_findValue($attr, 'allow_other_users_view', 'wpgpxmaps_allow_users_view', false)){echo("checked");} ?>>
+			</td>
+		</tr>
+		
 	</table>
 
+	<input type="hidden" name="action" value="update" />
+	<input name="page_options" type="hidden" value="wpgpxmaps_pointsoffset,wpgpxmaps_donotreducegpx,wpgpxmaps_allow_users_view" />
+
 	<p class="submit">
-		<input type="hidden" name="action" value="update" />
-		<input name="page_options" type="hidden" value="wpgpxmaps_pointsoffset,wpgpxmaps_donotreducegpx" />
 		<input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'wp-gpx-maps' ) ?>" />
 	</p>
 
 </form>
-	<hr />
+
+<hr />

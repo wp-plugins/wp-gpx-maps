@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-gpx-maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-26 05:12+0200\n"
+"POT-Creation-Date: 2019-05-17 15:29+0200\n"
 "PO-Revision-Date: 2012-10-30 14:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -12,8 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 2.2.3\n"
-"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Generator: Poedit 2.2.2\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../wp-gpx-maps.php:51 ../wp-gpx-maps_admin.php:41
@@ -21,7 +20,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: ../wp-gpx-maps.php:724 ../wp-gpx-maps_admin_settings.php:331
+#: ../wp-gpx-maps.php:724 ../wp-gpx-maps_admin_settings.php:323
 msgid "Altitude"
 msgstr ""
 
@@ -121,16 +120,14 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#. translators: 1: Relative path of the GPX folder
 #: ../wp-gpx-maps_admin.php:116
 #, php-format
-msgid "Can not create the folder %1s for GPX files. Please create the folder and make it writable! If not, you will must update the files manually!"
+msgid "Can not create the folder %s for GPX files. Please create the folder and make it writable! If not, you will must update the files manually!"
 msgstr ""
 
-#. translators: 1: Relative path of the GPX cache folder
 #: ../wp-gpx-maps_admin.php:140
 #, php-format
-msgid "Can not create the cache folder %1s for the GPX files. Please create the folder and make it writable! If not, you will must update the files manually!"
+msgid "Can not create the cache folder %s for the GPX files. Please create the folder and make it writable! If not, you will must update the files manually!"
 msgstr ""
 
 #: ../wp-gpx-maps_admin_settings.php:51 ../wp-gpx-maps_help.php:41
@@ -193,373 +190,379 @@ msgstr ""
 msgid "Thunderforest API Key (Open Cycle Map):"
 msgstr ""
 
-#. translators: 1: Link to documentation of Thunderforest API Key's 2: Additional link attribute
-#: ../wp-gpx-maps_admin_settings.php:114
-#, php-format
-msgid "Go to <a href=\"%1s\" %2s>Thunderforest API Key</a> and signing in to your Thunderforest account."
+#: ../wp-gpx-maps_admin_settings.php:111
+msgid "Go to"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:128 ../wp-gpx-maps_admin_settings.php:222
-#: ../wp-gpx-maps_admin_settings.php:317 ../wp-gpx-maps_admin_settings.php:472
-#: ../wp-gpx-maps_admin_settings.php:505
+#: ../wp-gpx-maps_admin_settings.php:111
+msgid "Thunderforest API Keys"
+msgstr ""
+
+#: ../wp-gpx-maps_admin_settings.php:111
+msgid "and signing in to your Thunderforest account"
+msgstr ""
+
+#: ../wp-gpx-maps_admin_settings.php:120 ../wp-gpx-maps_admin_settings.php:214
+#: ../wp-gpx-maps_admin_settings.php:309 ../wp-gpx-maps_admin_settings.php:465
+#: ../wp-gpx-maps_admin_settings.php:499
 msgid "Save Changes"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:138 ../wp-gpx-maps_help.php:269
+#: ../wp-gpx-maps_admin_settings.php:130 ../wp-gpx-maps_help.php:269
 msgid "Summary table"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:142
+#: ../wp-gpx-maps_admin_settings.php:134
 msgid "Summary table:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:144 ../wp-gpx-maps_help.php:280
-msgid "Print summary details of your GPX track"
+#: ../wp-gpx-maps_admin_settings.php:136
+msgid "Print summary table"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:149
+#: ../wp-gpx-maps_admin_settings.php:141
 msgid "Total distance:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:151
+#: ../wp-gpx-maps_admin_settings.php:143
 msgid "Print total distance"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:156
+#: ../wp-gpx-maps_admin_settings.php:148
 msgid "Max elevation:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:158
+#: ../wp-gpx-maps_admin_settings.php:150
 msgid "Print max elevation"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:163
+#: ../wp-gpx-maps_admin_settings.php:155
 msgid "Min elevation:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:165
+#: ../wp-gpx-maps_admin_settings.php:157
 msgid "Print min elevation"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:170
+#: ../wp-gpx-maps_admin_settings.php:162
 msgid "Total climbing:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:172
+#: ../wp-gpx-maps_admin_settings.php:164
 msgid "Print total climbing"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:177
+#: ../wp-gpx-maps_admin_settings.php:169
 msgid "Total descent:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:179
+#: ../wp-gpx-maps_admin_settings.php:171
 msgid "Print total descent"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:183
+#: ../wp-gpx-maps_admin_settings.php:175
 msgid "Average speed:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:185
+#: ../wp-gpx-maps_admin_settings.php:177
 msgid "Print average speed"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:190
+#: ../wp-gpx-maps_admin_settings.php:182
 msgid "Average cadence:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:192
+#: ../wp-gpx-maps_admin_settings.php:184
 msgid "Print average cadence"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:197
+#: ../wp-gpx-maps_admin_settings.php:189
 msgid "Average heart rate:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:199
+#: ../wp-gpx-maps_admin_settings.php:191
 msgid "Print average heart rate"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:204
+#: ../wp-gpx-maps_admin_settings.php:196
 msgid "Average temperature:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:206
+#: ../wp-gpx-maps_admin_settings.php:198
 msgid "Print average temperature"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:211
+#: ../wp-gpx-maps_admin_settings.php:203
 msgid "Total time:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:213
+#: ../wp-gpx-maps_admin_settings.php:205
 msgid "Print total time"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:232 ../wp-gpx-maps_help.php:83
+#: ../wp-gpx-maps_admin_settings.php:224 ../wp-gpx-maps_help.php:83
 msgid "Map"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:237
+#: ../wp-gpx-maps_admin_settings.php:229
 msgid "On mouse scroll wheel:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:239
+#: ../wp-gpx-maps_admin_settings.php:231
 msgid "Enable zoom"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:244
+#: ../wp-gpx-maps_admin_settings.php:236
 msgid "Waypoints support:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:246
+#: ../wp-gpx-maps_admin_settings.php:238
 msgid "Show waypoints"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:251
+#: ../wp-gpx-maps_admin_settings.php:243
 msgid "Map line color:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:258
+#: ../wp-gpx-maps_admin_settings.php:250
 msgid "Default map type:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:260
+#: ../wp-gpx-maps_admin_settings.php:252
 msgid "Open Street Map"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:261
+#: ../wp-gpx-maps_admin_settings.php:253
 msgid "Open Cycle Map"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:262
+#: ../wp-gpx-maps_admin_settings.php:254
 msgid "Open Cycle Map - Transport"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:263
+#: ../wp-gpx-maps_admin_settings.php:255
 msgid "Open Cycle Map - Landscape"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:264 ../wp-gpx-maps_admin_settings.php:267
+#: ../wp-gpx-maps_admin_settings.php:256 ../wp-gpx-maps_admin_settings.php:259
 msgid "Hike & Bike"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:265
+#: ../wp-gpx-maps_admin_settings.php:257
 msgid "MapToolKit - Terrain"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:266
+#: ../wp-gpx-maps_admin_settings.php:258
 msgid "Open Street Map - Humanitarian map style"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:268
+#: ../wp-gpx-maps_admin_settings.php:260
 msgid "Open Sea Map"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:273
+#: ../wp-gpx-maps_admin_settings.php:265
 msgid "Start track icon:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:276 ../wp-gpx-maps_admin_settings.php:284
-#: ../wp-gpx-maps_admin_settings.php:292 ../wp-gpx-maps_admin_settings.php:300
-#: ../wp-gpx-maps_admin_settings.php:308
+#: ../wp-gpx-maps_admin_settings.php:268 ../wp-gpx-maps_admin_settings.php:276
+#: ../wp-gpx-maps_admin_settings.php:284 ../wp-gpx-maps_admin_settings.php:292
+#: ../wp-gpx-maps_admin_settings.php:300
 msgid "(URL to image) Leave empty to hide."
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:281
+#: ../wp-gpx-maps_admin_settings.php:273
 msgid "End track icon:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:289
+#: ../wp-gpx-maps_admin_settings.php:281
 msgid "Current position icon:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:297
+#: ../wp-gpx-maps_admin_settings.php:289
 msgid "Current GPS position icon:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:305
+#: ../wp-gpx-maps_admin_settings.php:297
 msgid "Custom waypoint icon:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:326
+#: ../wp-gpx-maps_admin_settings.php:318
 msgid "Chart"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:333
+#: ../wp-gpx-maps_admin_settings.php:325
 msgid "Show altitude"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:339
+#: ../wp-gpx-maps_admin_settings.php:331
 msgid "Altitude line color:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:346
+#: ../wp-gpx-maps_admin_settings.php:338
 msgid "Unit of measure:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:349
+#: ../wp-gpx-maps_admin_settings.php:341
 msgid "meters / meters"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:350
+#: ../wp-gpx-maps_admin_settings.php:342
 msgid "feet / miles"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:351
+#: ../wp-gpx-maps_admin_settings.php:343
 msgid "meters / kilometers"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:352
+#: ../wp-gpx-maps_admin_settings.php:344
 msgid "meters / nautical Miles"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:353
+#: ../wp-gpx-maps_admin_settings.php:345
 msgid "meters / miles"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:354
+#: ../wp-gpx-maps_admin_settings.php:346
 msgid "feet / nautical miles"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:360
+#: ../wp-gpx-maps_admin_settings.php:352
 msgid "Altitude display offset:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:362 ../wp-gpx-maps_admin_settings.php:402
+#: ../wp-gpx-maps_admin_settings.php:354 ../wp-gpx-maps_admin_settings.php:394
 msgid "From"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:364 ../wp-gpx-maps_admin_settings.php:404
+#: ../wp-gpx-maps_admin_settings.php:356 ../wp-gpx-maps_admin_settings.php:396
 msgid "to"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:366 ../wp-gpx-maps_admin_settings.php:406
+#: ../wp-gpx-maps_admin_settings.php:358 ../wp-gpx-maps_admin_settings.php:398
 msgid "(leave empty for auto scale)"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:371
+#: ../wp-gpx-maps_admin_settings.php:363
 msgid "Speed:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:373
+#: ../wp-gpx-maps_admin_settings.php:365
 msgid "Show speed"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:378
+#: ../wp-gpx-maps_admin_settings.php:370
 msgid "Speed line color:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:385
+#: ../wp-gpx-maps_admin_settings.php:377
 msgid "Speed unit of measure:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:388
+#: ../wp-gpx-maps_admin_settings.php:380
 msgid "m/s"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:389
+#: ../wp-gpx-maps_admin_settings.php:381
 msgid "km/h"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:390
+#: ../wp-gpx-maps_admin_settings.php:382
 msgid "miles/h"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:391
+#: ../wp-gpx-maps_admin_settings.php:383
 msgid "min/km"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:392
+#: ../wp-gpx-maps_admin_settings.php:384
 msgid "min/miles"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:393
+#: ../wp-gpx-maps_admin_settings.php:385
 msgid "Knots (nautical miles / hour)"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:394
+#: ../wp-gpx-maps_admin_settings.php:386
 msgid "min/100 meters"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:400
+#: ../wp-gpx-maps_admin_settings.php:392
 msgid "Speed display offset:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:411
+#: ../wp-gpx-maps_admin_settings.php:403
 msgid "Heart rate (where aviable):"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:413
+#: ../wp-gpx-maps_admin_settings.php:405
 msgid "Show heart rate"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:418
+#: ../wp-gpx-maps_admin_settings.php:410
 msgid "Heart rate line color:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:425
+#: ../wp-gpx-maps_admin_settings.php:417
 msgid "Temperature (where aviable):"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:427
+#: ../wp-gpx-maps_admin_settings.php:419
 msgid "Show temperature"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:432
+#: ../wp-gpx-maps_admin_settings.php:424
 msgid "Temperature line color:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:439
+#: ../wp-gpx-maps_admin_settings.php:431
 msgid "Cadence (where aviable):"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:441
+#: ../wp-gpx-maps_admin_settings.php:433
 msgid "Show cadence"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:446
+#: ../wp-gpx-maps_admin_settings.php:438
 msgid "Cadence line color:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:453
+#: ../wp-gpx-maps_admin_settings.php:445
 msgid "Grade:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:455
+#: ../wp-gpx-maps_admin_settings.php:447
 msgid "Show grade - BETA"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:456
+#: ../wp-gpx-maps_admin_settings.php:449
 msgid "(Grade values depends on your GPS accuracy. If you have a poor GPS accuracy they might be totally wrong!)"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:461
+#: ../wp-gpx-maps_admin_settings.php:454
 msgid "Grade line color:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:481
+#: ../wp-gpx-maps_admin_settings.php:474
 msgid "Advanced Options"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:482
+#: ../wp-gpx-maps_admin_settings.php:475
 msgid "(Do not edit if you don&#8217;t know what you are doing!)"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:487
+#: ../wp-gpx-maps_admin_settings.php:480
 msgid "Skip GPX points closer than:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:489
+#: ../wp-gpx-maps_admin_settings.php:482
 msgid "meters"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:494
+#: ../wp-gpx-maps_admin_settings.php:487
 msgid "Reduce GPX:"
 msgstr ""
 
-#: ../wp-gpx-maps_admin_settings.php:496
+#: ../wp-gpx-maps_admin_settings.php:489
 msgid "Do not reduce GPX"
 msgstr ""
 
@@ -571,10 +574,9 @@ msgstr ""
 msgid "Choose a file to upload:"
 msgstr ""
 
-#. translators: 1: GPX file name
 #: ../wp-gpx-maps_admin_tracks.php:56
 #, php-format
-msgid "The file %1s has been successfully uploaded."
+msgid "The file %s has been successfully uploaded."
 msgstr ""
 
 #: ../wp-gpx-maps_admin_tracks.php:62
@@ -589,22 +591,19 @@ msgstr ""
 msgid "Clear Cache"
 msgstr ""
 
-#. translators: 1: Relative path of the GPX folder
 #: ../wp-gpx-maps_admin_tracks.php:96
 #, php-format
-msgid "Your folder for GPX files %1s is not writable. Please change the folder permissions."
+msgid "Your folder for GPX files %s is not writable. Please change the folder permissions."
 msgstr ""
 
-#. translators: 1: GPX file name
 #: ../wp-gpx-maps_admin_tracks.php:124
 #, php-format
-msgid "The file %1s has been successfully deleted."
+msgid "The file %s has been successfully deleted."
 msgstr ""
 
-#. translators: 1: GPX file name
 #: ../wp-gpx-maps_admin_tracks.php:133
 #, php-format
-msgid "The file %1s could not be deleted."
+msgid "The file %s could not be deleted."
 msgstr ""
 
 #: ../wp-gpx-maps_admin_tracks.php:178
@@ -656,7 +655,7 @@ msgid "How can I use the GPX files?"
 msgstr ""
 
 #: ../wp-gpx-maps_help.php:18
-msgid "Go to the tab \"Tracks\" and copy the shortcode from the list and paste it in the page or post."
+msgid "Go to the tab \"Tracks\" and copy the shortcode from the list and paste it in the pages/posts."
 msgstr ""
 
 #: ../wp-gpx-maps_help.php:21
@@ -668,7 +667,7 @@ msgid "Can I also integrate GPX files from other sites?"
 msgstr ""
 
 #: ../wp-gpx-maps_help.php:27
-msgid "Yes, it&#8217s possible. Please use this scheme:"
+msgid "You can also use GPX file from other sites. Please use this scheme:"
 msgstr ""
 
 #: ../wp-gpx-maps_help.php:30
@@ -676,7 +675,7 @@ msgid "Can I change the attributes for each GPX shortcode?"
 msgstr ""
 
 #: ../wp-gpx-maps_help.php:33
-msgid "Yes, it&#8217s possible. These changes ignore the default settings for each attribute."
+msgid "Yes, you can. These changes ignore the default settings for each attribute."
 msgstr ""
 
 #: ../wp-gpx-maps_help.php:36
@@ -706,7 +705,7 @@ msgid "Possible values"
 msgstr ""
 
 #: ../wp-gpx-maps_help.php:52
-msgid "relative path to the GPX file"
+msgid "relative path to GPX file"
 msgstr ""
 
 #: ../wp-gpx-maps_help.php:57
@@ -892,8 +891,12 @@ msgstr ""
 msgid "Value in seconds"
 msgstr ""
 
+#: ../wp-gpx-maps_help.php:280
+msgid "Show summary details of your GPX track"
+msgstr ""
+
 #: ../wp-gpx-maps_help.php:285
-msgid "Print total distance in summary table"
+msgid "Print summary details of your GPX file"
 msgstr ""
 
 #: ../wp-gpx-maps_help.php:290

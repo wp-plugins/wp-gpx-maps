@@ -1,29 +1,31 @@
 ﻿=== WP GPX Maps ===
 
-Contributors: bastianonm, Stephan Klein, Michel Selerin
+Contributors: bastianonm, Stephan Klein, Michel Selerin, Simo56 (TosattoSimonePio)
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8VHWLRW6JBTML
 Tags: maps, gpx, gps, graph, chart, leaflet, track, garmin, image, nextgen-gallery, nextgen, exif, OpenStreetMap, OpenCycleMap, Hike&Bike, heart rate, heartrate, cadence
 Requires at least: 2.0.0
-Tested up to: 5.2.1
-Stable tag: 1.6.07
+Tested up to: 5.2.0
+Stable tag: 1.7.02
 
-Draws a GPX track with altitude graph. You can also display your nextgen gallery images in the map.
+Draws a gpx track with altitude graph. You can also display your nextgen gallery images in the map.
 
 == Description ==
 
 This plugin has, as input, the GPX file with the track you've made and as output it shows the map of the track and an interactive altitude graph (where available).
 
-Fully configurable:
+Now on github: https://github.com/devfarm-it/wp-gpx-maps
+On github you can contribuite easly with your code
 
+
+Fully configurable:
 - Custom colors
 - Custom icons
 - Multiple language support
 
 Supported charts:
-
 - Altitude
 - Speed
-- Heart rate
+- Heart Rate
 - Temperature
 - Cadence
 - Grade
@@ -31,24 +33,13 @@ Supported charts:
 NextGen Gallery Integration:
 
 Display your NextGen Gallery images inside the map!
-Even if you don't have a GPS camera, this plugin can retrive the image position starting from the image date and your GPX file.
+Even if you don't have a gps camera, this plugin can retrive the image position starting from the image date and you gpx file.
 
 Post Attachments Integration:
 
-This version is extended by: <a href="https://klein-gedruckt.de/2015/03/wordpress-plugin-wp-gpx-maps/" target="_blank" rel="noopener noreferrer">Stephan Klein</a> and supports displaying all images attached to a post without using NGG.
+This version is extended by Stephan Klein (https://klein-gedruckt.de/2015/03/wordpress-plugin-wp-gpx-maps/) and supports displaying all images attached to a post without using NGG.
 
-Try this plugin: <a href="https://devfarm.it/wp-gpx-maps-demo/" target="_blank" rel="noopener noreferrer">https://devfarm.it/wp-gpx-maps-demo/</a>
-
-Support:
-
-If you need help, please use: <a href="http://www.devfarm.it/forums/forum/wp-gpx-maps/" target="_blank" rel="noopener noreferrer">www.devfarm.it Support Forum</a>
-Would you like to help fix bugs or further develop the plugin? On <a href="https://github.com/devfarm-it/wp-gpx-maps" target="_blank" rel="noopener noreferrer">Github</a> you can contribuite easly with your code.
-
-Translations:
-
-Translators are welcome to contribute to the plugin. Please use the <a href="https://translate.wordpress.org/projects/wp-plugins/wp-gpx-maps/)" target="_blank" rel="noopener noreferrer">WordPress translation website</a>.
-
-The language files in the plugin contain 19 translatable texts for 14 languages:
+Translated into 14 languages:
 
 - Catalan ca
 - Dutch nl_NL
@@ -69,26 +60,25 @@ The language files in the plugin contain 19 translatable texts for 14 languages:
 - Norwegian nb_NO
 - Japanese ja_JP
 
-(Many thanks to all guys who helped me with the translations)
+(many thanks to all guys who helped me with the translations)
 
-Currently are 222 texts are translatable in the plugin.
+- iphone/ipad/ipod Compatible
 
-With your help, the plugin can be translated into any language. For updating the language file you no longer need to wait for a new version of the plugin.
-Are 95% WordPress generates a new language file for your language.
-If the translation is available via WP Translate, the language file will be deleted in the next version of the plugin.
-Please also help with the translation of the readme. The more languages ​​that are available, the wider the spread of the plugin will be.
+Try this plugin: <a href="https://devfarm.it/wp-gpx-maps-demo/">https://devfarm.it/wp-gpx-maps-demo/</a>
 
-Supported GPX namespaces are:
+<a href="http://www.devfarm.it/forums/forum/wp-gpx-maps/">Support Forum</a>
+
+Supported gpx namespaces are:
 
 1. http://www.topografix.com/GPX/1/0
 
-1. <a href="http://www.topografix.com/GPX/1/1" target="_blank" rel="noopener noreferrer">www.topografix.com/GPX/1/1</a>
+1. http://www.topografix.com/GPX/1/1
 
 1. http://www.garmin.com/xmlschemas/GpxExtensions/v3
 
 1. http://www.garmin.com/xmlschemas/TrackPointExtension/v1
 
-Thanks to: <a href="http://www.securcube.net/" target="_blank" rel="noopener noreferrer">www.securcube.net</a>, <a href="http://www.devfarm.it/" target="_blank" rel="noopener noreferrer">www.devfarm.it</a>
+Thanks to: <a href="http://www.securcube.net/">www.securcube.net</a>, <a href="http://www.devfarm.it/">www.devfarm.it</a>
 
 == Installation ==
 
@@ -100,60 +90,58 @@ Thanks to: <a href="http://www.securcube.net/" target="_blank" rel="noopener nor
 
 == Frequently Asked Questions ==
 
-= Which shortcode attributes are available? =
+= what are all available shortcode attributes? =
 
-You can use the following shortcodes:
+The attributes are:
 
-1. gpx: Relative path to the GPX file
-1. width: Width in pixels
-1. mheight: Map height
-1. gheight: Graph height
-1. mtype: Map available types are: HYBRID, ROADMAP, SATELLITE, TERRAIN, OSM1 (Open Street Map), OSM2 (Open Cycle Map), OSM3 (Hike & Bike), OSM4 (Open Cycle Map - Transport), OSM5 (Open Cycle Map - Landscape), OSM6 (MapToolKit - Terrain)
-1. waypoints: Print the gpx waypoints inside the map (default is FALSE)
-1. donotreducegpx: Print all the point without reduce it (default is FALSE)
-1. pointsoffset: Skip points closer than XX meters(default is 10)
-1. uom: Distance/altitude possible unit of measure are: 0, 1, 2, 3, 4, 5 (0 = meters, 1 = feet/miles, 2 = meters/kilometers, 3 = meters/nautical miles, 4 = meters/miles, 5 = feet/nautical miles)
-1. mlinecolor: Map line color (default is #3366cc)
-1. glinecolor: Altitude line color (default is #3366cc)
-1. showspeed: Show speed inside the chart (default is FALSE)
-1. showhr: Show heart rate inside the chart (default is FALSE)
-1. showele: Show elevation data inside the chart (default is TRUE)
-1. showcad: Show cadence inside the chart (default is FALSE)
-1. showgrade: Show grade inside the chart (default is FALSE)
-1. glinecolorspeed: Speed line color (default is #ff0000)
-1. glinecolorhr: Heart rate line color (default is #ff77bd)
-1. glinecolorcad: Cadence line color (default is #beecff)
-1. glinecolorgrade: Grade line color (default is #beecff)
-1. uomspeed: Unit of measure for speed are: 0, 1, 2, 3, 4, 5 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles, 5 = Nautical Miles/Hour (Knots), 6 = min/100 meters)
-1. chartFrom1: Minimun value for altitude chart
-1. chartTo1: Maxumin value for altitude chart
-1. chartFrom2: Minimun value for speed chart
-1. chartTo2: Maxumin value for speed chart
+1. gpx: relative path to gpx
+1. width: width in pixels
+1. mheight: map height
+1. gheight: graph height
+1. mtype: map available types are: HYBRID, ROADMAP, SATELLITE, TERRAIN, OSM1 (Open Street Map), OSM2 (Open Cycle Map), OSM3 (Hike & Bike), OSM4 (Open Cycle Map - Transport), OSM5 (Open Cycle Map - Landscape), OSM6 (MapToolKit - Terrain)
+1. waypoints: print the gpx waypoints inside the map (default is FALSE)
+1. donotreducegpx: print all the point without reduce it (default is FALSE)
+1. pointsoffset: skip points closer than XX meters(default is 10)
+1. uom: distance/altitude possible unit of measure are: 0, 1, 2, 3, 4, 5 (0 = meters, 1 = feet/miles, 2 = meters/kilometers, 3 = meters/nautical miles, 4 = meters/miles, 5 = feet/nautical miles)
+1. mlinecolor: map line color (default is #3366cc)
+1. glinecolor: altitude line color (default is #3366cc)
+1. showspeed: show speed inside the chart (default is FALSE)
+1. showhr: show heart rate inside the chart (default is FALSE)
+1. showele: show elevation data inside the chart (default is TRUE)
+1. showcad: show cadence inside the chart (default is FALSE)
+1. showgrade: show grade inside the chart (default is FALSE)
+1. glinecolorspeed: speed line color (default is #ff0000)
+1. glinecolorhr: heart rate line color (default is #ff77bd)
+1. glinecolorcad: cadence line color (default is #beecff)
+1. glinecolorgrade: grade line color (default is #beecff)
+1. uomspeed: unit of measure for speed are: 0, 1, 2, 3, 4, 5 (0 = m/s, 1 = km/h, 2 = miles/h, 3 = min/km, 4 = min/miles, 5 = Nautical Miles/Hour (Knots), 6 = min/100 meters)
+1. chartFrom1: minimun value for altitude chart
+1. chartTo1: maxumin value for altitude chart
+1. chartFrom2: minimun value for speed chart
+1. chartTo2: maxumin value for speed chart
 1. startIcon: Start track icon
 1. endIcon: End track icon
 1. currentIcon: Current position icon (when mouse hover)
-1. waypointicon: Waypoint custom icon
+1. waypointicon: waypoint custom icon
 1. nggalleries: NextGen Gallery id or a list of Galleries id separated by a comma
 1. ngimages: NextGen Image id or a list of Images id separated by a comma
-1. dtoffset: The difference (in seconds) between your gpx tool date and your camera date
-1. zoomonscrollwheel: Zoom on map when mouse scroll wheel (default is FALSE)
+1. dtoffset: the difference (in seconds) between your gpx tool date and your camera date
+1. zoomonscrollwheel: zoom on map when mouse scroll wheel (default is FALSE)
 1. download: Allow users to download your GPX file (default is FALSE)
 1. skipcache: Do not use cache. If TRUE might be very slow (default is FALSE)
-1. summary: Print summary details of your GPX track (default is FALSE)
-1. summarytotlen: Print total distance in summary table (default is FALSE)
-1. summarymaxele: Print max elevation in summary table (default is FALSE)
-1. summaryminele: Print min Elevation in summary table (default is FALSE)
-1. summaryeleup: Print total climbing in summary table (default is FALSE)
-1. summaryeledown: Print total descent in summary table (default is FALSE)
-1. summaryavgspeed: Print average Speed in summary table (default is FALSE)
-1. summarytotaltime: Print total time in summary table (default is FALSE)
-
-= What happening if I've a very large GPX files? =
-
+1. summary: Print summary details of your GPX (default is FALSE)
+1. summarytotlen: Print Total distance in summary table (default is FALSE)
+1. summarymaxele: Print Max Elevation in summary table (default is FALSE)
+1. summaryminele: Print Min Elevation in summary table (default is FALSE)
+1. summaryeleup: Print Total climbing in summary table (default is FALSE)
+1. summaryeledown: Print Total descent in summary table (default is FALSE)
+1. summaryavgspeed: Print Average Speed in summary table (default is FALSE)
+1. summarytotaltime: Print Total time in summary table (default is FALSE)
+1. allow other users to see files and the plugin: Allow others non-admin users to see their own gpx files
+= What happening if I've a very large gpx? =
 This plugin will print a small amout of points to speedup javascript and pageload.
 
 = Is it free? =
-
 Yes!
 
 == Screenshots ==
@@ -165,6 +153,16 @@ Yes!
 1. Altitude & Speed & Hearth rate
 
 == Changelog ==
+= 1.7.0.2 =
+* improved translations
+* allow_users_uploads changed to allow_users_view, because if enabled, non-admin accounts can only view, not upload, their own files
+* resolved bug for Linux users
+= 1.7.00 =
+* added possibility (for Admins and Editors) to use and remove all files in every user own folder
+* removed settings tab for non-Admin users (Contributor, Author, Editor and Subscriber)
+* now, uploaded gpx files are created in a folder called as *your user name*, inside ../wordpressSiteFolder/wp-content/uploads/gpx/[*your user name*]
+* added different size logos for the plugin store (icon.svg, icon128x128.png and icon256x256.png) [Located inside ../wordpressSiteFolder/wp-content/plugins/wp-gpx-maps/assets]
+* added button to instant copy the shortcode of the selected gpx file
 = 1.6.07 =
 * resolve admin error
 = 1.6.06 =

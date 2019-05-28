@@ -9,31 +9,31 @@
 	&nbsp; <?php _e( '1. Method: Upload the GPX file using the uploader in the tab "Tracks".', 'wp-gpx-maps' ); ?>
 </p>
 <p>
-	&nbsp; <?php _e( '2. Method: Upload the GPX file via FTP to your upload folder:', 'wp-gpx-maps' ); echo ' '; ?> <span class="code"><strong> <?php echo $relativeGpxPath; ?> </strong></span>
+	&nbsp; <?php _e( '2. Method: Upload the GPX file via FTP to your upload folder:', 'wp-gpx-maps' ); echo ' '; ?> <strong> <?php echo $relativeGpxPath; ?> </strong>
 </p>
 <p>
 	<strong><?php _e( 'How can I use the GPX files?', 'wp-gpx-maps' ); ?></strong>
 </p>
 <p>
-	&nbsp; <?php _e( 'Go to the tab "Tracks" and copy the shortcode from the list and paste it in the page or post.', 'wp-gpx-maps' ); ?>
+	&nbsp; <?php _e( 'Go to the tab "Tracks" and copy the shortcode from the list and paste it in the pages/posts.', 'wp-gpx-maps' ); ?>
 </p>
 <p>
-	&nbsp; <?php _e( 'You can manually set the relative path to your GPX file. Please use this scheme:', 'wp-gpx-maps' ); echo ' '; ?> <span class="code"><strong>[sgpx gpx="<?php echo $relativeGpxPath; ?>yourgpxfile.gpx"]</strong></span>
+	&nbsp; <?php _e( 'You can manually set the relative path to your GPX file. Please use this scheme:', 'wp-gpx-maps' ); echo ' '; ?><strong>[sgpx gpx="<?php echo $relativeGpxPath; ?>&lt; gpx file name &gt;"]</strong>
 </p>
 <p>
 	<strong><?php _e( 'Can I also integrate GPX files from other sites?', 'wp-gpx-maps' ); ?></strong>
 </p>
 <p>
-	&nbsp; <?php _e( 'Yes, it&#8217s possible. Please use this scheme:', 'wp-gpx-maps' ); echo ' '; ?> <span class="code"><strong>[sgpx gpx="http://www.someone.com/somewhere/somefile.gpx"]</strong></span>
+	&nbsp; <?php _e( 'You can also use GPX file from other sites. Please use this scheme:', 'wp-gpx-maps' ); echo ' '; ?> <strong>[sgpx gpx="http://www.someone.com/somewhere/somefile.gpx"]</strong>
 </p>
 <p>
 	<strong><?php _e( 'Can I change the attributes for each GPX shortcode?', 'wp-gpx-maps' ); ?></strong>
 </p>
 <p>
-	&nbsp; <?php _e( 'Yes, it&#8217s possible. These changes ignore the default settings for each attribute.', 'wp-gpx-maps' ); ?>
+	&nbsp; <?php _e( 'Yes, you can. These changes ignore the default settings for each attribute.', 'wp-gpx-maps' ); ?>
 </p>
 <p>
-	&nbsp; <?php _e( 'The Full set of optional attributes can be found below. Please use this scheme:', 'wp-gpx-maps' ); echo ' '; ?> <span class="code"><strong>[sgpx gpx="<?php echo $relativeGpxPath; ?>yourgpxfile.gpx &lt; <?php _e( 'read below all the optional attributes', 'wp-gpx-maps' ); ?> &gt;"]</strong></span>
+	&nbsp; <?php _e( 'The Full set of optional attributes can be found below. Please use this scheme:', 'wp-gpx-maps' ); echo ' '; ?><strong>[sgpx gpx="<?php echo $relativeGpxPath; ?>&lt; gpx file name &gt; <em>&lt; <?php _e( 'read below all the optional attributes', 'wp-gpx-maps' ); ?> &gt;</em>"]</strong>
 </p>
 
 <br />
@@ -47,10 +47,10 @@
 		<td><strong><?php _e( 'Description', 'wp-gpx-maps' ); ?></strong></td>
 		<td><strong><?php _e( 'Possible values', 'wp-gpx-maps' ); ?></strong></td>
 	</tr>
-		<tr>
+	<tr>
 		<td>gpx</td>
-		<td><?php _e( 'relative path to the GPX file', 'wp-gpx-maps' ); ?></td>
-		<td><span class="code"><strong>gpx="<?php echo $relativeGpxPath; ?>yourgpxfile.gpx"</strong></span></td>
+		<td><?php _e( 'relative path to GPX file', 'wp-gpx-maps' ); ?></td>
+		<td> gpx="<?php echo $relativeGpxPath; ?>&lt; gpx file name &gt;</td>
 	</tr>
 	<tr>
 		<td>width</td>
@@ -76,6 +76,11 @@
 		<td>skipcache</td>
 		<td><?php _e('Do not use cache. If TRUE might be very slow', 'wp-gpx-maps' ); ?></td>
 		<td><?php _e( 'Default is:', 'wp-gpx-maps' ); echo ' '; ?> <strong>False</strong></td>
+	</tr>
+	<tr>
+		<td>allow other users view</td>
+		<td><?php _e( 'Allow other non-admin users to see their own gpx files', 'wp-gpx-maps' ); ?></td>
+		<td><?php _e( 'Default is:', 'wp-gpx-maps' ); echo ' '?><strong>False</strong></td>
 	</tr>
 	</tbody>
 </table>
@@ -277,12 +282,12 @@
 </tr>
 	<tr>
 		<td>summary</td>
-		<td><?php _e( 'Print summary details of your GPX track', 'wp-gpx-maps' ); ?></td>
+		<td><?php _e( 'Show summary details of your GPX track', 'wp-gpx-maps' ); ?></td>
 		<td><?php _e( 'Default is:', 'wp-gpx-maps' ); echo ' '; ?> <strong>FALSE</strong></td>
 	</tr>
 	<tr>
 		<td>summarytotlen</td>
-		<td><?php _e( 'Print total distance in summary table', 'wp-gpx-maps' ); ?></td>
+		<td><?php _e( 'Print summary details of your GPX file', 'wp-gpx-maps' ); ?></td>
 		<td><?php _e( 'Default is:', 'wp-gpx-maps' ); echo ' '; ?> <strong>FALSE</strong></td>
 	</tr>
 	<tr>
@@ -334,5 +339,5 @@
 </table>
 
 <p>
-	<a href="http://devfarm.it/forums/forum/wp-gpx-maps/" target="_blank" rel="noopener noreferrer"><?php _e( 'Bugs, problems, thanks and anything else here!', 'wp-gpx-maps' ); ?></a>
+	<a href="http://devfarm.it/forums/forum/wp-gpx-maps/"><?php _e( 'Bugs, problems, thanks and anything else here!', 'wp-gpx-maps' ); ?></a>
 </p>
