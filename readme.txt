@@ -47,6 +47,7 @@ Translated into 14 languages:
 - Dutch nl_NL
 - English (default)
 - French fr_FR
+- Greek el
 - German de_DE
 - Hungarian hu_HU
 - Italian it_IT
